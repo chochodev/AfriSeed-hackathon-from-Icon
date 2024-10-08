@@ -1,12 +1,18 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Investor from './investors';
+import { Suspense, lazy } from 'react';
+
+const Investor = lazy(() => import ('./investors'));
+const Home = lazy(() => import ('./home'));
 
 const Pages = () => {
   return (
     <Router>
-      <Routes>
-        <Route path='/investors' element={<Investor />} />
-      </Routes>
+      <Suspense fallback={<div>Loading...</div>}>
+        <Routes>
+          <Route path='/' element={<Home />} />
+          <Route path='/investors' element={<Investor />} />
+        </Routes>
+      </Suspense>
     </Router>
   )
 }
