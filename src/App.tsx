@@ -1,4 +1,5 @@
 import Pages from './pages';
+import './index.css';
 
 function App() {
   return (

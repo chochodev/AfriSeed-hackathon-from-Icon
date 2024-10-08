@@ -1,6 +1,6 @@
 /** @type {import('tailwindcss').Config} */
-// const defaultTheme = require('tailwindcss/defaultTheme');
-import { defaultTheme } from 'tailwindcss/defaultTheme';
+const defaultTheme = require('tailwindcss/defaultTheme');
+// import { defaultTheme } from 'tailwindcss/defaultTheme';
 
 module.exports = {
   content: ["./src/**/*.{html,js,jsx,ts,tsx,svelte}"],
@@ -34,7 +34,7 @@ module.exports = {
 
         secondary: '#F2B49B',
         tertiary: '#A65E30',
-        // ...defaultTheme.colors
+        ...defaultTheme.colors
       },
     }
   },

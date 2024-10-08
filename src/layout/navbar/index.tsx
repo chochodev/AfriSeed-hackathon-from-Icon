@@ -15,7 +15,7 @@ const Navbar = () => {
             <RiSearch2Line className='absolute left-[1rem] text-[1rem] ' />
             <input 
               type='text' 
-              className='max-w-[12.5rem] h-[2.5rem] p-[1rem] rounded-[6.25rem] bg-green-500' 
+              className='max-w-[12.5rem] h-[2.5rem] p-[1rem] rounded-[6.25rem] bg-neutral-400' 
               placeholder='Search'
             />
           </div>
