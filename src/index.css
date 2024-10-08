@@ -46,18 +46,6 @@ html {
   @apply transition-all duration-[400ms] ease-in-out
 }
 
-/* @keyframes scroll-left {
-  0% {
-    transform: translateX(0);
-  }
-  100% {
-    transform: translateX(-100%);
-  }
-}
-
-.animate-scroll {
-  animation: scroll-left 6s linear infinite;
-} */
 
 @keyframes scroll {
   0% {
@@ -69,4 +57,7 @@ html {
 }
 .animate-scroll {
   animation: scroll 30s linear infinite;
+}
+.animate-pause {
+  animation-play-state: paused;
 }

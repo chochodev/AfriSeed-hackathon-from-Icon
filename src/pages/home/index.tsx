@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import MainLayout from '$/layout';
 import { Link } from 'react-router-dom';
 
@@ -27,6 +27,7 @@ const data = [
 
 const Home = () => {
   const scrollRef = useRef<HTMLDivElement>(null);
+  const [isPaused, setIsPaused] = useState(false);
 
   useEffect(() => {
     const scrollContainer = scrollRef.current
@@ -65,21 +66,26 @@ const Home = () => {
         <div className="w-full overflow-hidden bg-white p-4">
           <div
             ref={scrollRef}
-            className="flex animate-scroll overflow-hidden"
+            className={`flex animate-scroll ${isPaused && 'animate-pause'}`}
             style={{
               width: 'calc(25rem * 10)',
             }}
+            onMouseEnter={() => setIsPaused(true)}
+            onMouseLeave={() => setIsPaused(false)}
           >
             <div className="flex">
               {data.map((item, i) => (
-                <div key={i} className="relative w-[25rem] h-[19rem] flex flex-col text-start justify-end flex-shrink-0 mx-[1rem] bg-gradient-to-b from-transparent via-black/20 to-black/90 rounded-[8px] overflow-hidden p-[1rem] ">
+                <div key={i} className="relative w-[25rem] h-[19rem] flex flex-col text-start justify-end flex-shrink-0 mx-[1rem] rounded-[8px] overflow-hidden">
                   <img
                     src={`/images/hero${i+1}.jpg`}
                     alt={`Image ${i+1}`}
-                    className="absolute left-0 top-0 z-[-1] w-full h-full object-cover "
+                    className="absolute left-0 top-0 w-full h-full object-cover"
                   />
-                  <h3 className='text-white text-[1.25rem] font-[600]'>{item.title}</h3>
-                  <p className='text-white text-[0.875rem] '>{item.subtitle}</p>
+                  <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/20 to-black/90"></div>
+                  <div className="relative z-10 p-[1rem]">
+                    <h3 className='text-white text-[1.25rem] font-[600]'>{item.title}</h3>
+                    <p className='text-white text-[0.875rem]'>{item.subtitle}</p>
+                  </div>
                 </div>
               ))}
             </div>
