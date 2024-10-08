@@ -553,3 +553,13 @@ video {
 [hidden] {
   display: none;
 }
+
+.bg-green-500 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(34 197 94 / var(--tw-bg-opacity));
+}
+
+.text-secondary {
+  --tw-text-opacity: 1;
+  color: rgb(242 180 155 / var(--tw-text-opacity));
+}

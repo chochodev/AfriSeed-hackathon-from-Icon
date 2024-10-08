@@ -1,9 +1,9 @@
+import Pages from './pages';
+
 function App() {
   return (
-    <>
-    Home
-    </>
+    <Pages />
   )
 }
 
-export default App
+export default App;
