@@ -11,7 +11,7 @@ const MainLayout = ({ children }: MainLayoutProps) => {
       <Navbar />
 
       {/* ::::::::::::::::: child prop */}
-      <main>
+      <main className='size-full'>
       {children}
       </main>
 
