@@ -1,4 +1,5 @@
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
+import { RiSearch2Line } from "react-icons/ri";
 
 const Navbar = () => {
   return (
@@ -9,7 +10,16 @@ const Navbar = () => {
         <div className=''>
           <Link to='/investors'>Investors</Link>
           <Link to='/business'>Business</Link>
-          <input type='color' className='' placeholder=''/>
+          
+          <div className='relative size-max flex place-center '>
+            <RiSearch2Line className='absolute left-[1rem] text-[1rem] ' />
+            <input 
+              type='text' 
+              className='max-w-[12.5rem] h-[2.5rem] p-[1rem] rounded-[6.25rem] bg-green-500' 
+              placeholder='Search'
+            />
+          </div>
+          
         </div>
       </nav>
     </header>
