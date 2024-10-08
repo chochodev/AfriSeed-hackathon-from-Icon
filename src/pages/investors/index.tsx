@@ -1,6 +1,10 @@
+import MainLayout from '$/layout';
+
 const Investor = () => {
   return (
-    <div>Investor</div>
+    <MainLayout>
+      Investor
+    </MainLayout>
   )
 }
 
