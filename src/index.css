@@ -64,9 +64,9 @@ html {
     transform: translateX(0);
   }
   100% {
-    transform: translateX(calc(-20rem * 5 - 1rem * 10));
+    transform: translateX(calc(-25rem * 5 - 2rem * 10));
   }
 }
 .animate-scroll {
-  animation: scroll 20s linear infinite;
+  animation: scroll 30s linear infinite;
 }

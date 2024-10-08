@@ -2,6 +2,29 @@ import { useEffect, useRef } from 'react';
 import MainLayout from '$/layout';
 import { Link } from 'react-router-dom';
 
+const data = [
+  {
+    title: 'Empowering African Entreprenuers',
+    subtitle: 'Using blockchain technology, African small business can access capital.'
+  },
+  {
+    title: 'Unlocking Financial inclusion',
+    subtitle: 'Participate in the digital economy easily by empowering undeserved communities.'
+  },
+  {
+    title: 'Seamless crowdfunding for Growth',
+    subtitle: 'Support innovative venture with secure, transparent, and decentralized funding opportunities.'
+  },
+  {
+    title: 'Transparency  You Can Trust',
+    subtitle: 'Ensure your support matters with a crowdfunding platform built on integrity. Every contribution is tracked.'
+  },
+  {
+    title: 'Investing in Tomorrow',
+    subtitle: 'Join us in sharing a brighter future for Africa by promoting sustainable growth for generations to come.'
+  }
+]
+
 const Home = () => {
   const scrollRef = useRef<HTMLDivElement>(null);
 
@@ -39,22 +62,24 @@ const Home = () => {
         </div>
         
         {/* ::::::::::::::::::: carousel */}
-        <div className="w-full overflow-hidden bg-gray-100 p-4">
+        <div className="w-full overflow-hidden bg-white p-4">
           <div
             ref={scrollRef}
             className="flex animate-scroll overflow-hidden"
             style={{
-              width: 'calc(20rem * 10)',
+              width: 'calc(25rem * 10)',
             }}
           >
             <div className="flex">
-              {[1, 2, 3, 4, 5].map((num) => (
-                <div key={num} className="relative size-[20rem] flex-shrink-0 mx-2">
+              {data.map((item, i) => (
+                <div key={i} className="relative w-[25rem] h-[19rem] flex flex-col text-start justify-end flex-shrink-0 mx-[1rem] bg-gradient-to-b from-transparent via-black/20 to-black/90 rounded-[8px] overflow-hidden p-[1rem] ">
                   <img
-                    src={`/images/hero${num}.jpg`}
-                    alt={`Image ${num}`}
-                    className="w-full h-full object-cover rounded-lg"
+                    src={`/images/hero${i+1}.jpg`}
+                    alt={`Image ${i+1}`}
+                    className="absolute left-0 top-0 z-[-1] w-full h-full object-cover "
                   />
+                  <h3 className='text-white text-[1.25rem] font-[600]'>{item.title}</h3>
+                  <p className='text-white text-[0.875rem] '>{item.subtitle}</p>
                 </div>
               ))}
             </div>
