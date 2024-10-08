@@ -46,7 +46,7 @@ const Navbar = () => {
 
         {/* ::::::::::::::::::::::: large screen nav section */}
         <div className='hidden md:flex flex-1 items-center justify-between space-x-[2rem] h-full w-full '>
-          <div className='flex items-center space-x-[1.5rem] lg:space-x-[2rem] '>
+          <div className='flex items-center space-x-[1.5rem] lg:space-x-[2rem] h-full '>
             {/* ::::::::::::::::::::::: nav links */}
             <Link 
               to='/investors'
