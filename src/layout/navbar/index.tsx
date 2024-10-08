@@ -7,6 +7,11 @@ const Navbar = () => {
   const [smallScreen, setSmallScreen] = useState<boolean>(false);
 
   useEffect(() => {
+    const body = document.querySelector('body');
+
+    if (body) {
+      body.style.overflow = smallScreen? 'hidden' : 'auto';
+    }
     const handleResize = () => {
       setSmallScreen(window.innerWidth <= 768);
     };
@@ -19,7 +24,7 @@ const Navbar = () => {
     return () => {
       window.removeEventListener('resize', handleResize);
     };
-  }, [])
+  }, [smallScreen])
 
   return (
     <header className='relative flex justify-center w-full px-[1rem]'>
@@ -89,12 +94,12 @@ const Navbar = () => {
           {/* ::::::::::::::::::::::: nav links */}
           <Link 
             to='/investors'
-            className='flex items-center h-full ml-[1rem] text-center text-[1.25rem] hover:text-primary-600  ease-250'
-          >Investors <BsArrowRight className='' /></Link>
+            className='group flex items-center h-full ml-[1rem] font-[600] text-center text-[1.25rem] hover:text-primary-600 ease-250'
+          >Investors <BsArrowRight className='text-[1rem] translate-x-[-0.5rem] opacity-0 text-primary-600 group-hover:translate-x-[0.5rem] group-hover:opacity-100 ease-250' /></Link>
           <Link 
             to='/business'
-            className='flex items-center h-full ml-[1rem] text-center text-[1.25rem] hover:text-primary-600  ease-250'
-          >Businesses <BsArrowRight className='' /></Link>
+            className='group flex items-center h-full ml-[1rem] font-[600] text-center text-[1.25rem] hover:text-primary-600 ease-250'
+          >Businesses <BsArrowRight className='text-[1rem] translate-x-[-0.5rem] opacity-0 text-primary-600 group-hover:translate-x-[0.5rem] group-hover:opacity-100 ease-250' /></Link>
         </div>
         
         <div className='flex justify-center'>
