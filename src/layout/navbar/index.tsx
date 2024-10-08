@@ -13,10 +13,10 @@ const Navbar = () => {
       body.style.overflow = smallScreen? 'hidden' : 'auto';
     }
     const handleResize = () => {
-      setSmallScreen(window.innerWidth <= 768);
+      if (window.innerWidth > 768) {
+        setSmallScreen(window.innerWidth <= 768);
+      }
     };
-
-    handleResize();
 
     window.addEventListener('resize', handleResize);
 
