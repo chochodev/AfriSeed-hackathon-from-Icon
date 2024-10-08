@@ -5,7 +5,7 @@ const Navbar = () => {
   return (
     <header className='flex justify-center w-full'>
       <nav className='flex place-items-center gap-x-[2rem] w-full max-w-[72rem] h-[4.5rem] '>
-        <img src='/assets/vite.svg' alt='LOGO' className='' />
+        <img src='/assets/logo.svg' alt='LOGO' className='' />
 
         <nav className='flex flex-1 items-center space-x-[2rem] h-full w-full '>
           {/* ::::::::::::::::::::::: nav links */}
@@ -16,7 +16,7 @@ const Navbar = () => {
           <Link 
             to='/business'
             className='flex items-center h-full text-center hover:text-primary-600 border-solid border-0 border-b-2 border-transparent hover:border-primary-600 ease-250'
-          >Business</Link>
+          >Businesses</Link>
           
           <div className='relative size-max flex place-items-center '>
             <RiSearch2Line className='absolute left-[1rem] text-[1.25rem] text-neutral-500 ' />
