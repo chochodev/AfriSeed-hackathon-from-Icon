@@ -1,3 +1,7 @@
+# AFRI - SEED
+This is the frontend for a web3 based investment app for new entrepeneurs to pitch there ideas and get sponsors and share holders...
+
+
 # React + TypeScript + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
