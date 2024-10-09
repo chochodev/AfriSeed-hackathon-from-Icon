@@ -97,7 +97,7 @@ const Home = () => {
           <h3 className='text-[1.5rem] font-[600]'>Top Businesses</h3>
           <p className='text-[0.75rem] text-neutral-500 mb-[1rem] '>Only public open business are shown. Log in to see all businesses you’re eligible to invest in</p>
 
-          <div className='grid grid-cols-3 gap-[0.5rem] lg:gap-[2rem]'>
+          <div className='grid grid-cols-1 md:grid-cols-3 gap-[0.5rem] gap-y-[2rem] lg:gap-[2rem]'>
             {[1,2,3].map((_, i) => (
               <Link 
                 to='/'
@@ -112,7 +112,7 @@ const Home = () => {
 
                 {/* :::::::::::::::::::::: text content */}
                 <div 
-                  className='absolute bottom-0 left-0 z-1 flex flex-1 flex-col h-max space-y-[1rem] bg-white ease-400 delay-100 '
+                  className='absolute bottom-0 left-0 z-1 flex flex-1 flex-col h-max w-full space-y-[1rem] bg-white ease-400 delay-100 '
                 >
                   {/* :::::::::::::::::::::: logo */}
                   <div
@@ -125,14 +125,14 @@ const Home = () => {
                     />
                   </div>
 
-                  <div className='px-[1.5rem] '>
+                  <div className='px-[1.5rem] w-full '>
                     <h2 className='font-[700] text-[1.25rem] lg:text-[1.5rem]'>Business 1</h2>
-                    <p className='text-neutral-500 text-[0.75rem] lg:text-[0.875rem] '>Lorem ipsum dolor sit amet consectetur adipisicing elit. Cum aspernatur delectus optio tempore nostrum.</p>
+                    <p className='min-h-[3rem] text-neutral-500 text-[0.75rem] sm:max-md:text-[0.875rem] lg:text-[0.875rem] '>Lorem ipsum dolor sit amet consectetur adipisicing elit. Cum aspernatur delectus optio tempore nostrum.</p>
                   </div>
 
                   {/* :::::::::::::::::::: hidden content on hover */}
                   <div 
-                    className='max-lg:hidden space-y-[0.5rem] px-[1.5rem] translate-y-0 group-hover:translate-y-[15rem] h-[4rem] group-hover:h-0 ease-400 '
+                    className='max-lg:hidden w-full space-y-[0.5rem] px-[1.5rem] translate-y-0 group-hover:translate-y-[15rem] h-[4rem] group-hover:h-0 ease-400 '
                   >
                     <p className='text-neutral-400 text-[1rem]'>Lagos, Nigeria</p>
                     <div className='space-x-[0.5rem]'>
