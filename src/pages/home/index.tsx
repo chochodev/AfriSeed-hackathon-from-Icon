@@ -93,7 +93,75 @@ const Home = () => {
         </div>
 
         {/* ::::::::::::::::::: companies */}
-        
+        <div className='w-full max-w-[72rem] '>
+          <h3 className='text-[1.5rem] font-[600]'>Top Businesses</h3>
+          <p className='text-[0.75rem] text-neutral-500 mb-[1rem] '>Only public open business are shown. Log in to see all businesses you’re eligible to invest in</p>
+
+          <div className='grid grid-cols-3 gap-[2rem]'>
+            {[1,2,3].map((_, i) => (
+              <Link 
+                to='/'
+                key={i}
+                className='group relative flex flex-col h-[31.25rem] w-[22.5rem] rounded-[16px] overflow-hidden shadow-[0_2px_5px_-2px_rgba(0,0,0,0.25)] '
+              >
+                <img 
+                  src="/images/hero1.jpg" 
+                  alt="company" 
+                  className='w-full h-[15.625rem] rounded-t-[16px] object-cover '
+                />
+
+                {/* :::::::::::::::::::::: text content */}
+                <div 
+                  className='absolute bottom-0 left-0 z-1 flex flex-1 flex-col h-max space-y-[1rem] bg-white ease-400 delay-100 '
+                >
+                  {/* :::::::::::::::::::::: logo */}
+                  <div
+                    className='relative left-[1.5rem] top-[-1.875rem] mb-[-2rem] z-[2] size-[3.5rem] bg-white p-[5px] rounded-[4px] shadow-[0_1px_5px_-1px_rgba(0,0,0,0.25)] '
+                  >
+                    <img
+                      src='/images/hero3.jpg'
+                      alt='logo'
+                      className='size-full object-cover rounded-[4px]'
+                    />
+                  </div>
+
+                  <div className='px-[1.5rem] '>
+                    <h2 className='font-[700] text-[1.5rem]'>Business 1</h2>
+                    <p className='text-neutral-500 text-[0.875rem] '>Lorem ipsum dolor sit amet consectetur adipisicing elit. Cum aspernatur delectus optio tempore nostrum.</p>
+                  </div>
+
+                  {/* :::::::::::::::::::: hidden content on hover */}
+                  <div 
+                    className='space-y-[0.5rem] px-[1.5rem] translate-y-0 group-hover:translate-y-[15rem] h-[4rem] group-hover:h-0 ease-400 '
+                  >
+                    <p className='text-neutral-400 text-[1rem]'>Lagos, Nigeria</p>
+                    <div className='space-x-[0.5rem]'>
+                      <p className='text-neutral-600 bg-neutral-200 text-[0.625rem] w-max rounded-[2px] py-[2px] px-[0.375rem] '>TECH & FINANCE</p>
+                    </div>
+                    <small className='text-neutral-400 text-[0.625rem] '>Verified by AfriSeed plc.</small>
+                  </div>
+
+                  {/* :::::::::::::::::::: on hover content */}
+                  <div 
+                    className='h-0 opacity-0 overflow-hidden text-[1rem] pb-[1.5rem] group-hover:h-[10.5rem] group-hover:opacity-100 ease-400 '
+                  >
+                    <p className='pb-2 px-[1.5rem] '>
+                      <b>$100,000</b> raised
+                    </p>
+                    <p className='border-solid border-0 border-t-[1px] border-neutral-300 py-2 px-[1.5rem] '>
+                      <b>122</b> investors
+                    </p>
+                    <p className='border-solid border-0 border-t-[1px] border-neutral-300 py-2 px-[1.5rem] '>
+                      <b>$10</b> price per share
+                    </p>
+                    <p className='border-solid border-0 border-t-[1px] border-neutral-300 py-2 px-[1.5rem] '>
+                      <b>$30</b> minimum investment
+                    </p>
+                  </div>
+                </div>
+              </Link>))}
+          </div>
+        </div>
       </div>
     </MainLayout>
   )
