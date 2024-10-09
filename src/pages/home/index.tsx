@@ -165,7 +165,7 @@ const Home = () => {
         </div>
           <Link 
             className='w-full max-w-[15rem] py-[0.5rem] font-[600] text-[0.875rem] mx-auto text-center rounded-[8px] outline outline-[1px] outline-neutral-300 hover:bg-neutral-200/50 active:outline-primary-500 active:text-primary-600 ease-250'
-            to='/businesses'
+            to='/business'
           >View All</Link>
       </div>
     </MainLayout>
