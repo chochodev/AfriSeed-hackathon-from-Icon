@@ -91,6 +91,9 @@ const Home = () => {
             </div>
           </div>
         </div>
+
+        {/* ::::::::::::::::::: companies */}
+        
       </div>
     </MainLayout>
   )
