@@ -1,6 +1,13 @@
 import { RiFacebookFill, RiTwitterFill, RiInstagramFill, RiGithubFill, RiMailFill } from 'react-icons/ri';
 import { Link } from 'react-router-dom';
 
+const menuItems = [
+  { text: "About Us", link: "/about" },
+  { text: "Our Services", link: "/services" },
+  { text: "Privacy Policy", link: "/privacy" },
+  { text: "Terms of Service", link: "/terms" },
+];
+
 const Footer = () => {
   const new_date = new Date();
   const date = new_date.getFullYear();
@@ -17,19 +24,19 @@ const Footer = () => {
             </p>
             <div className="flex space-x-4">
               <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="text-neutral-600 hover:text-neutral-900">
-                <RiFacebookFill className="h-5 w-5" />
+                <RiFacebookFill className="text-[1.5rem] " />
                 <span className="sr-only">Facebook</span>
               </a>
               <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" className="text-neutral-600 hover:text-neutral-900">
-                <RiTwitterFill className="h-5 w-5" />
+                <RiTwitterFill className="text-[1.5rem] " />
                 <span className="sr-only">Twitter</span>
               </a>
               <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="text-neutral-600 hover:text-neutral-900">
-                <RiInstagramFill className="h-5 w-5" />
+                <RiInstagramFill className="text-[1.5rem] " />
                 <span className="sr-only">Instagram</span>
               </a>
               <a href="https://github.com" target="_blank" rel="noopener noreferrer" className="text-neutral-600 hover:text-neutral-900">
-                <RiGithubFill className="h-5 w-5" />
+                <RiGithubFill className="text-[1.5rem] " />
                 <span className="sr-only">GitHub</span>
               </a>
             </div>
@@ -38,41 +45,13 @@ const Footer = () => {
             <h2 className="text-lg font-semibold mb-4">Quick Links</h2>
             <nav>
               <ul className="space-y-2">
-                <li>
-                  <Link to="/about" className="text-sm text-neutral-600 hover:text-neutral-900">
-                    About Us
-                  </Link>
-                </li>
-                <li>
-                  <Link to="/services" className="text-sm text-neutral-600 hover:text-neutral-900">
-                    Our Services
-                  </Link>
-                </li>
-                <li>
-                  <Link to="/products" className="text-sm text-neutral-600 hover:text-neutral-900">
-                    Products
-                  </Link>
-                </li>
-                <li>
-                  <Link to="/contact" className="text-sm text-neutral-600 hover:text-neutral-900">
-                    Contact Us
-                  </Link>
-                </li>
-                <li>
-                  <Link to="/faq" className="text-sm text-neutral-600 hover:text-neutral-900">
-                    FAQ
-                  </Link>
-                </li>
-                <li>
-                  <Link to="/privacy" className="text-sm text-neutral-600 hover:text-neutral-900">
-                    Privacy Policy
-                  </Link>
-                </li>
-                <li>
-                  <Link to="/terms" className="text-sm text-neutral-600 hover:text-neutral-900">
-                    Terms of Service
-                  </Link>
-                </li>
+                {menuItems.map((item, index) => (
+                  <li key={index}>
+                    <Link to={item.link} className="text-sm text-neutral-600 hover:text-neutral-900">
+                      {item.text}
+                    </Link>
+                  </li>
+                ))}
               </ul>
             </nav>
           </div>
