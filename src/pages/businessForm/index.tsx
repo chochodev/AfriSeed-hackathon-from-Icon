@@ -107,7 +107,7 @@ export default function BusinessForm() {
     <div className='size-full py-[4rem] px-[1rem] lg:px-[2rem] bg-neutral-50'>
       <div className="max-w-[72rem] mx-auto">
         <h1 className="text-3xl font-bold mb-6">Pitch Your Business Ideas</h1>
-        <p className='text-[1rem] font-[600] text-neutral-600'>Instructions</p>
+        <p className='text-[1rem] font-[600] text-neutral-600'>Instructions:</p>
         <p className='text-[0.875rem] text-neutral-500 font-[600] pl-[1rem] mt-[1rem] '>
           1. Fill out the form truthfully.<br/>
           2. Submit your application for review.<br/>
