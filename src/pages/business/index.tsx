@@ -94,7 +94,7 @@ const Business = () => {
 
             {/* :::::::::::::::::::::::: add business button */}
             <Link
-              to='/'
+              to='/business/add'
               className='bg-neutral-800 text-neutral-100 font-[600] text-[0.875rem] px-[2rem] py-[0.375rem] rounded-[1rem] outline outline-1 outline-neutral-200 hover:bg-neutral-100 hover:text-neutral-800 active:bg-neutral-200 shadow-[0_0_20px_-1px_rgba(0,0,0,0.1)] ease-250 '
             >Add <span className='text-[1rem]'>+</span></Link>
           </nav>
