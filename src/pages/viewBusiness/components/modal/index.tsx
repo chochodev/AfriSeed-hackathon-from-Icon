@@ -1,4 +1,5 @@
 // components/Modal.tsx
+import Input from '$/components/input';
 import React, { useEffect } from 'react';
 import { RiCloseLine } from 'react-icons/ri';
 
@@ -37,15 +38,17 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, business }) => {
 
         <h2 className="text-xl font-bold mb-4">Invest in {business.name}</h2>
         <form>
-          <div className="mb-4">
+          <div className="mb-4 space-y-[1rem] ">
             <label htmlFor="amount" className="block text-sm font-medium text-gray-700">
               Amount
             </label>
-            <input
+            <Input
               type="number"
               id="amount"
               name="amount"
-              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+              value={1}
+              onChange={() => {}}
+              className=""
               placeholder={`Minimum $${business.minimumInvestment}`}
               required
             />
