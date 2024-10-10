@@ -104,166 +104,176 @@ export default function BusinessForm() {
   }
 
   return (
-    <div className="container mx-auto p-4">
-      <h1 className="text-3xl font-bold mb-6">Business Information Form</h1>  
-      <form onSubmit={handleSubmit} className="space-y-6">
-        <div className="space-y-2">
-          <label htmlFor="name">Business Name</label>
-          <input
-            id="name"
-            name="name"
-            value={business.name}
-            onChange={handleInputChange}
-            required
-          />
-        </div>
+    <div className='size-full py-[4rem] px-[1rem] lg:px-[2rem]'>
+      <div className="max-w-[72rem] mx-auto">
+        <h1 className="text-3xl font-bold mb-6">Pitch Your Business Ideas</h1>
+        <p className='text-[1rem] font-[600] text-neutral-600'>Instructions</p>
+        <p className='text-[0.875rem] text-neutral-500 font-[600] pl-[1rem]'>
+        1. Fill out the form truthfully.<br/>
+        2. Submit your application for review.<br/>
+        3. Once approved, your business will be visible to all investors.
+        </p> 
 
-        <div className="space-y-2">
-          <label>Logo</label>
-          <div {...getLogoRootProps()} className="border-2 border-dashed border-gray-300 rounded-lg p-6 cursor-pointer hover:border-primary-500">
-            <input {...getLogoInputProps()} />
-            <div className="flex flex-col items-center">
-              {business.logo ? (
-                <img src={business.logo} alt="Logo" className="size-[6.25rem] object-cover mb-4" />
-              ) : (
-                <svg className="w-12 h-12 text-gray-400 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
-                </svg>
-              )}
-              <p className="text-sm text-gray-500">Drag and drop or click to upload logo</p>
-            </div>
-          </div>
-        </div>
-
-        <div className="space-y-2">
-          <label>Cover Image</label>
-          <div {...getCoverRootProps()} className="border-2 border-dashed border-gray-300 rounded-lg p-6 cursor-pointer hover:border-primary-500">
-            <input {...getCoverInputProps()} />
-            <div className="flex flex-col items-center">
-              {business.coverImage ? (
-                <img src={business.coverImage} alt="Cover" className="size-[12.5rem] mb-4 object-cover" />
-              ) : (
-                <svg className="w-12 h-12 text-gray-400 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
-                </svg>
-              )}
-              <p className="text-sm text-gray-500">Drag and drop or click to upload cover image</p>
-            </div>
-          </div>
-        </div>
-
-        <div className="space-y-2">
-          <label htmlFor="shortDescription">Short Description</label>
-          <input
-            id="shortDescription"
-            name="shortDescription"
-            value={business.shortDescription}
-            onChange={handleInputChange}
-            required
-          />
-        </div>
-
-        <div className="space-y-2">
-          <label htmlFor="summary">Pitch Summary</label>
-          <textarea
-            id="summary"
-            name="summary"
-            value={business.pitch.summary}
-            onChange={handlePitchChange}
-            rows={3}
-            required
-          ></textarea>
-        </div>
-
-        {/* Add similar Textarea fields for other pitch sections */}
-
-        <div className="space-y-2">
-          <label htmlFor="location">Location</label>
-          <input
-            id="location"
-            name="location"
-            value={business.location}
-            onChange={handleInputChange}
-            required
-          />
-        </div>
-
-        <div className="space-y-2">
-          <label htmlFor="category">Category</label>
-          <input
-            id="category"
-            name="category"
-            value={business.category}
-            onChange={handleInputChange}
-            required
-          />
-        </div>
-
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+        {/* ::::::::::::::::::::::::::::::: form */}
+        <form onSubmit={handleSubmit} className="space-y-[1rem]">
           <div className="space-y-2">
-            <label htmlFor="amountRaised">Amount Raised</label>
+            <label htmlFor="name">Business Name</label>
             <input
-              type="number"
-              id="amountRaised"
-              name="amountRaised"
-              value={business.amountRaised}
-              onChange={handleNumberChange}
-              required
-            />
-          </div>
-
-          <div className="space-y-2">
-            <label htmlFor="investors">Number of Investors</label>
-            <input
-              type="number"
-              id="investors"
-              name="investors"
-              value={business.investors}
-              onChange={handleNumberChange}
-              required
-            />
-          </div>
-
-          <div className="space-y-2">
-            <label htmlFor="valuation">Valuation</label>
-            <input
-              id="valuation"
-              name="valuation"
-              value={business.valuation}
+              id="name"
+              name="name"
+              value={business.name}
               onChange={handleInputChange}
               required
             />
           </div>
 
           <div className="space-y-2">
-            <label htmlFor="minimumInvestment">Minimum Investment</label>
+            <label>Logo</label>
+            <div {...getLogoRootProps()} className="border-2 border-dashed border-gray-300 rounded-lg p-6 cursor-pointer hover:border-primary-500">
+              <input {...getLogoInputProps()} />
+              <div className="flex flex-col items-center">
+                {business.logo ? (
+                  <img src={business.logo} alt="Logo" className="size-[6.25rem] object-cover mb-4" />
+                ) : (
+                  <svg className="w-12 h-12 text-gray-400 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                  </svg>
+                )}
+                <p className="text-sm text-gray-500">Drag and drop or click to upload logo</p>
+              </div>
+            </div>
+          </div>
+
+          <div className="space-y-2">
+            <label>Cover Image</label>
+            <div {...getCoverRootProps()} className="border-2 border-dashed border-gray-300 rounded-lg p-6 cursor-pointer hover:border-primary-500">
+              <input {...getCoverInputProps()} />
+              <div className="flex flex-col items-center">
+                {business.coverImage ? (
+                  <img src={business.coverImage} alt="Cover" className="size-[12.5rem] mb-4 object-cover" />
+                ) : (
+                  <svg className="w-12 h-12 text-gray-400 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                  </svg>
+                )}
+                <p className="text-sm text-gray-500">Drag and drop or click to upload cover image</p>
+              </div>
+            </div>
+          </div>
+
+          <div className="space-y-2">
+            <label htmlFor="shortDescription">Short Description</label>
             <input
-              type="number"
-              id="minimumInvestment"
-              name="minimumInvestment"
-              value={business.minimumInvestment}
-              onChange={handleNumberChange}
+              id="shortDescription"
+              name="shortDescription"
+              value={business.shortDescription}
+              onChange={handleInputChange}
               required
             />
           </div>
 
           <div className="space-y-2">
-            <label htmlFor="daysLeft">Days Left</label>
+            <label htmlFor="summary">Pitch Summary</label>
+            <textarea
+              id="summary"
+              name="summary"
+              value={business.pitch.summary}
+              onChange={handlePitchChange}
+              rows={3}
+              required
+            ></textarea>
+          </div>
+
+          {/* Add similar Textarea fields for other pitch sections */}
+
+          <div className="space-y-2">
+            <label htmlFor="location">Location</label>
             <input
-              type="number"
-              id="daysLeft"
-              name="daysLeft"
-              value={business.daysLeft}
-              onChange={handleNumberChange}
+              id="location"
+              name="location"
+              value={business.location}
+              onChange={handleInputChange}
               required
             />
           </div>
-        </div>
 
-        <button type="submit" className="w-full">
-          Submit
-        </button>
-      </form>
+          <div className="space-y-2">
+            <label htmlFor="category">Category</label>
+            <input
+              id="category"
+              name="category"
+              value={business.category}
+              onChange={handleInputChange}
+              required
+            />
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+            <div className="space-y-2">
+              <label htmlFor="amountRaised">Amount Raised</label>
+              <input
+                type="number"
+                id="amountRaised"
+                name="amountRaised"
+                value={business.amountRaised}
+                onChange={handleNumberChange}
+                required
+              />
+            </div>
+
+            <div className="space-y-2">
+              <label htmlFor="investors">Number of Investors</label>
+              <input
+                type="number"
+                id="investors"
+                name="investors"
+                value={business.investors}
+                onChange={handleNumberChange}
+                required
+              />
+            </div>
+
+            <div className="space-y-2">
+              <label htmlFor="valuation">Valuation</label>
+              <input
+                id="valuation"
+                name="valuation"
+                value={business.valuation}
+                onChange={handleInputChange}
+                required
+              />
+            </div>
+
+            <div className="space-y-2">
+              <label htmlFor="minimumInvestment">Minimum Investment</label>
+              <input
+                type="number"
+                id="minimumInvestment"
+                name="minimumInvestment"
+                value={business.minimumInvestment}
+                onChange={handleNumberChange}
+                required
+              />
+            </div>
+
+            <div className="space-y-2">
+              <label htmlFor="daysLeft">Days Left</label>
+              <input
+                type="number"
+                id="daysLeft"
+                name="daysLeft"
+                value={business.daysLeft}
+                onChange={handleNumberChange}
+                required
+              />
+            </div>
+          </div>
+
+          <button type="submit" className="w-full">
+            Submit
+          </button>
+        </form>
+      </div>
     </div>
   )
 }
