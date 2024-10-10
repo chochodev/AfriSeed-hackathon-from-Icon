@@ -106,7 +106,7 @@ export default function BusinessForm() {
 
   return (
     <MainLayout>
-    <div className='size-full py-[4rem] px-[1rem] lg:px-[2rem]'>
+    <div className='size-full py-[4rem] px-[1rem] lg:px-[2rem] bg-neutral-50'>
       <div className="max-w-[72rem] mx-auto">
         <h1 className="text-3xl font-bold mb-6">Pitch Your Business Ideas</h1>
         <p className='text-[1rem] font-[600] text-neutral-600'>Instructions</p>
