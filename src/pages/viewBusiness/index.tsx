@@ -159,7 +159,7 @@ export default function BusinessPage() {
               <div className="bg-white rounded-lg border border-neutral-200 p-6 mb-8">
                 <div className="flex items-center justify-between mb-4">
                   <h3 className="text-xl font-bold">Funding Progress</h3>
-                  <div className="flex items-center text-primary-600">
+                  <div className="flex items-center text-neutral-500">
                     <FaRegClock className="mr-1" />
                     <span>{business.daysLeft} days left</span>
                   </div>
@@ -167,7 +167,7 @@ export default function BusinessPage() {
                 
                 <div className="mb-4">
                   <div className="h-2 bg-neutral-200 rounded-full">
-                    <div className="h-2 bg-primary-600 rounded-full" style={{ width: '40%' }}></div>
+                    <div className="h-2 bg-neutral-800 rounded-full" style={{ width: '40%' }}></div>
                   </div>
                 </div>
 
