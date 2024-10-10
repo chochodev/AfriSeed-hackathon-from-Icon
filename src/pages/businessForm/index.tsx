@@ -60,7 +60,7 @@ export default function BusinessForm() {
     setBusiness(prev => ({ ...prev, [name]: value }))
   }
 
-  const handlePitchChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+  const handlePitchChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target
     setBusiness(prev => ({
       ...prev,
@@ -108,14 +108,14 @@ export default function BusinessForm() {
       <div className="max-w-[72rem] mx-auto">
         <h1 className="text-3xl font-bold mb-6">Pitch Your Business Ideas</h1>
         <p className='text-[1rem] font-[600] text-neutral-600'>Instructions</p>
-        <p className='text-[0.875rem] text-neutral-500 font-[600] pl-[1rem]'>
-        1. Fill out the form truthfully.<br/>
-        2. Submit your application for review.<br/>
-        3. Once approved, your business will be visible to all investors.
+        <p className='text-[0.875rem] text-neutral-500 font-[600] pl-[1rem] mt-[1rem] '>
+          1. Fill out the form truthfully.<br/>
+          2. Submit your application for review.<br/>
+          3. Once approved, your business will be visible to all investors.
         </p> 
 
         {/* ::::::::::::::::::::::::::::::: form */}
-        <form onSubmit={handleSubmit} className="space-y-[2rem]">
+        <form onSubmit={handleSubmit} className="space-y-[2rem] mt-[2rem] ">
           <div className="space-y-2">
             <label className='text-[0.875rem] font-[600] text-neutral-500 uppercase' htmlFor="name">Business Name</label>
             <Input
@@ -177,15 +177,15 @@ export default function BusinessForm() {
 
           <div className="space-y-2">
             <label className='text-[0.875rem] font-[600] text-neutral-500 uppercase' htmlFor="summary">Pitch Summary</label>
-            <textarea
+            <Input
               id="summary"
               name="summary"
+              type='textarea'
               value={business.pitch.summary}
               onChange={handlePitchChange}
-              rows={3}
               placeholder=''
               required
-            ></textarea>
+            />
           </div>
 
           <div className="space-y-2">
