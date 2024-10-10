@@ -19,7 +19,6 @@ interface Business {
     problem: string
     solution: string
     marketOpportunity: string
-    competitive: string
     businessModel: string
     traction: string
   }
@@ -43,7 +42,6 @@ const business: Business = {
     problem: 'Many businesses struggle to effectively utilize their data due to lack of expertise and resources in AI and machine learning.',
     solution: 'Our AI-powered platform democratizes access to advanced data analytics, making it easy for businesses of all sizes to gain valuable insights and automate decision-making processes.',
     marketOpportunity: 'The global AI market is projected to grow from $387.45 billion in 2022 to $1,394.30 billion in 2029, at a CAGR of 20.1%.',
-    competitive: "Unlike our competitors who offer one-size-fits-all solutions, TechInnovate provides customizable AI models that adapt to each business's unique needs and data structures.",
     businessModel: 'We operate on a SaaS model with tiered pricing based on data volume and complexity of AI models. We also offer consulting services for enterprise clients.',
     traction: "In our first year, we've onboarded 50+ clients across various industries, achieving a 95% retention rate and $2M in ARR."
   },
@@ -130,12 +128,6 @@ export default function BusinessPage() {
                     <AccordionTrigger>Market Opportunity</AccordionTrigger>
                     <AccordionContent>
                       {business.pitch.marketOpportunity}
-                    </AccordionContent>
-                  </AccordionItem>
-                  <AccordionItem value="competitive">
-                    <AccordionTrigger>Competitive Advantage</AccordionTrigger>
-                    <AccordionContent>
-                      {business.pitch.competitive}
                     </AccordionContent>
                   </AccordionItem>
                   <AccordionItem value="businessModel">
