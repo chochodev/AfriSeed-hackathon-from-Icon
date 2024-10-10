@@ -37,7 +37,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, business }) => {
         </button>
 
         <h2 className="text-xl font-bold mb-4">Invest in {business.name}</h2>
-        <form>
+        <form onSubmit={(e)=>e.preventDefault()} className='space-y-[2rem]'>
           <div className="mb-4 space-y-[1rem] ">
             <label htmlFor="amount" className="block text-sm font-medium text-gray-700">
               Amount
