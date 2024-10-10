@@ -1,7 +1,8 @@
 import MainLayout from '$/layout';
-import React, { useState, useCallback } from 'react'
+import React, { useState, useCallback } from 'react';
 import { useDropzone } from 'react-dropzone';
-import Input from "$/components/input"
+import Input from "$/components/input";
+import { RiImageAddLine } from "react-icons/ri";
 // import { Textarea } from "$/components/ui/textarea"
 // import { Label } from "$/components/ui/label"
 // import { Button } from "$/components/ui/button"
@@ -131,15 +132,13 @@ export default function BusinessForm() {
 
           <div className="space-y-2">
             <label className='text-[0.875rem] font-[600] text-neutral-600 uppercase'>Business Logo</label>
-            <div {...getLogoRootProps()} className="border-2 border-dashed border-gray-300 rounded-lg p-6 cursor-pointer hover:border-primary-500">
+            <div {...getLogoRootProps()} className="border-2 border-dashed border-gray-300 rounded-lg p-6 cursor-pointer hover:border-neutral-500">
               <input {...getLogoInputProps()} />
               <div className="flex flex-col items-center">
                 {business.logo ? (
-                  <img src={business.logo} alt="Logo" className="size-[6.25rem] object-cover mb-4" />
+                  <img src={business.logo} alt="Logo" className="size-[12.5rem] rounded-[4px] object-cover mb-4" />
                 ) : (
-                  <svg className="w-12 h-12 text-gray-400 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
-                  </svg>
+                  <RiImageAddLine className='text-[3.5rem] text-neutral-400' />
                 )}
                 <p className="text-sm text-gray-500">Drag and drop or click to upload logo</p>
               </div>
@@ -148,15 +147,13 @@ export default function BusinessForm() {
 
           <div className="space-y-2">
             <label className='text-[0.875rem] font-[600] text-neutral-600 uppercase'>Cover Image</label>
-            <div {...getCoverRootProps()} className="border-2 border-dashed border-gray-300 rounded-lg p-6 cursor-pointer hover:border-primary-500">
+            <div {...getCoverRootProps()} className="border-2 border-dashed border-gray-300 rounded-lg p-6 cursor-pointer hover:border-neutral-500">
               <input {...getCoverInputProps()} />
               <div className="flex flex-col items-center">
                 {business.coverImage ? (
-                  <img src={business.coverImage} alt="Cover" className="size-[12.5rem] mb-4 object-cover" />
+                  <img src={business.coverImage} alt="Cover" className="size-[12.5rem] rounded-[4px] mb-4 object-cover" />
                 ) : (
-                  <svg className="w-12 h-12 text-gray-400 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
-                  </svg>
+                  <RiImageAddLine className='text-[3.5rem] text-neutral-400' />
                 )}
                 <p className="text-sm text-gray-500">Drag and drop or click to upload cover image</p>
               </div>
@@ -184,6 +181,7 @@ export default function BusinessForm() {
               value={business.pitch.summary}
               onChange={handlePitchChange}
               placeholder='e.g In summary, this aims to not only empower users but improve the quality of ...'
+              className='min-h-[5rem]'
               required
             />
           </div>
