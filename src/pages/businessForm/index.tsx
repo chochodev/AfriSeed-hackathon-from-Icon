@@ -125,6 +125,7 @@ export default function BusinessForm() {
               name="name"
               value={business.name}
               onChange={handleInputChange}
+              className=''
               required
             />
           </div>
