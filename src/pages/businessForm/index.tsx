@@ -1,9 +1,9 @@
 import React, { useState, useCallback } from 'react'
 import { useDropzone } from 'react-dropzone';
-import { Input } from "$/components/ui/input"
-import { Textarea } from "$/components/ui/textarea"
-import { Label } from "$/components/ui/label"
-import { Button } from "$/components/ui/button"
+// import { Input } from "$/components/ui/input"
+// import { Textarea } from "$/components/ui/textarea"
+// import { Label } from "$/components/ui/label"
+// import { Button } from "$/components/ui/button"
 
 interface Business {
   id: string
@@ -105,11 +105,11 @@ export default function BusinessForm() {
 
   return (
     <div className="container mx-auto p-4">
-      <h1 className="text-3xl font-bold mb-6">Business Information Form</h1>
+      <h1 className="text-3xl font-bold mb-6">Business Information Form</h1>  
       <form onSubmit={handleSubmit} className="space-y-6">
         <div className="space-y-2">
-          <Label htmlFor="name">Business Name</Label>
-          <Input
+          <label htmlFor="name">Business Name</label>
+          <input
             id="name"
             name="name"
             value={business.name}
@@ -119,7 +119,7 @@ export default function BusinessForm() {
         </div>
 
         <div className="space-y-2">
-          <Label>Logo</Label>
+          <label>Logo</label>
           <div {...getLogoRootProps()} className="border-2 border-dashed border-gray-300 rounded-lg p-6 cursor-pointer hover:border-primary-500">
             <input {...getLogoInputProps()} />
             <div className="flex flex-col items-center">
@@ -136,7 +136,7 @@ export default function BusinessForm() {
         </div>
 
         <div className="space-y-2">
-          <Label>Cover Image</Label>
+          <label>Cover Image</label>
           <div {...getCoverRootProps()} className="border-2 border-dashed border-gray-300 rounded-lg p-6 cursor-pointer hover:border-primary-500">
             <input {...getCoverInputProps()} />
             <div className="flex flex-col items-center">
@@ -153,8 +153,8 @@ export default function BusinessForm() {
         </div>
 
         <div className="space-y-2">
-          <Label htmlFor="shortDescription">Short Description</Label>
-          <Input
+          <label htmlFor="shortDescription">Short Description</label>
+          <input
             id="shortDescription"
             name="shortDescription"
             value={business.shortDescription}
@@ -164,22 +164,22 @@ export default function BusinessForm() {
         </div>
 
         <div className="space-y-2">
-          <Label htmlFor="summary">Pitch Summary</Label>
-          <Textarea
+          <label htmlFor="summary">Pitch Summary</label>
+          <textarea
             id="summary"
             name="summary"
             value={business.pitch.summary}
             onChange={handlePitchChange}
             rows={3}
             required
-          />
+          ></textarea>
         </div>
 
         {/* Add similar Textarea fields for other pitch sections */}
 
         <div className="space-y-2">
-          <Label htmlFor="location">Location</Label>
-          <Input
+          <label htmlFor="location">Location</label>
+          <input
             id="location"
             name="location"
             value={business.location}
@@ -189,8 +189,8 @@ export default function BusinessForm() {
         </div>
 
         <div className="space-y-2">
-          <Label htmlFor="category">Category</Label>
-          <Input
+          <label htmlFor="category">Category</label>
+          <input
             id="category"
             name="category"
             value={business.category}
@@ -201,8 +201,8 @@ export default function BusinessForm() {
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
           <div className="space-y-2">
-            <Label htmlFor="amountRaised">Amount Raised</Label>
-            <Input
+            <label htmlFor="amountRaised">Amount Raised</label>
+            <input
               type="number"
               id="amountRaised"
               name="amountRaised"
@@ -213,8 +213,8 @@ export default function BusinessForm() {
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="investors">Number of Investors</Label>
-            <Input
+            <label htmlFor="investors">Number of Investors</label>
+            <input
               type="number"
               id="investors"
               name="investors"
@@ -225,8 +225,8 @@ export default function BusinessForm() {
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="valuation">Valuation</Label>
-            <Input
+            <label htmlFor="valuation">Valuation</label>
+            <input
               id="valuation"
               name="valuation"
               value={business.valuation}
@@ -236,8 +236,8 @@ export default function BusinessForm() {
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="minimumInvestment">Minimum Investment</Label>
-            <Input
+            <label htmlFor="minimumInvestment">Minimum Investment</label>
+            <input
               type="number"
               id="minimumInvestment"
               name="minimumInvestment"
@@ -248,8 +248,8 @@ export default function BusinessForm() {
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="daysLeft">Days Left</Label>
-            <Input
+            <label htmlFor="daysLeft">Days Left</label>
+            <input
               type="number"
               id="daysLeft"
               name="daysLeft"
@@ -260,9 +260,9 @@ export default function BusinessForm() {
           </div>
         </div>
 
-        <Button type="submit" className="w-full">
+        <button type="submit" className="w-full">
           Submit
-        </Button>
+        </button>
       </form>
     </div>
   )
