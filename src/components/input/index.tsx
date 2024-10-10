@@ -19,6 +19,7 @@ const Input: React.FC<InputProps> = ({ id, name, value, className, placeholder, 
           id={id}
           name={name}
           value={value as string}
+          placeholder={placeholder}
           onChange={onChange}
           required={required}
           className={`w-full py-[0.4rem] px-[0.875rem] ring-[1px] ring-neutral-300 text-neutral-500 font-[600] focus:ring-neutral-400 focus:shadow-[0_0_1px_5px_rgba(0,0,0,0.1)] rounded-[8px] resize-x-none ${className}`}

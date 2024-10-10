@@ -183,7 +183,7 @@ export default function BusinessForm() {
               type='textarea'
               value={business.pitch.summary}
               onChange={handlePitchChange}
-              placeholder=''
+              placeholder='e.g In summary, this aims to not only empower users but improve the quality of ...'
               required
             />
           </div>
