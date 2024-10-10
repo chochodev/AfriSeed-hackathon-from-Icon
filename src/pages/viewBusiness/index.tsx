@@ -61,9 +61,9 @@ export default function BusinessPage() {
 
   return (
     <MainLayout>
-      <div className="bg-white min-h-screen">
+      <div className="bg-neutral-50 min-h-screen">
         {/* ::::::::::::::::::::::::::: header */}
-        <header className="bg-white border-b border-neutral-200">
+        <header className="">
           <div className="container mx-auto px-4 py-4 flex justify-between items-center">
             <div className="flex items-center space-x-4">
               <img
