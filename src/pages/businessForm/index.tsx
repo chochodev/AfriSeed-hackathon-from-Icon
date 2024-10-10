@@ -115,7 +115,7 @@ export default function BusinessForm() {
         </p> 
 
         {/* ::::::::::::::::::::::::::::::: form */}
-        <form onSubmit={handleSubmit} className="space-y-[1rem]">
+        <form onSubmit={handleSubmit} className="space-y-[2rem]">
           <div className="space-y-2">
             <label className='text-[0.875rem] font-[600] text-neutral-500 uppercase' htmlFor="name">Business Name</label>
             <Input
@@ -262,7 +262,10 @@ export default function BusinessForm() {
             </div>
           </div>
 
-          <button type="submit" className="w-full">
+          <button 
+            type="submit" 
+            className="w-full bg-neutral-800 text-neutral-100 font-[600] text-[0.875rem] px-[2rem] py-[0.875rem] rounded-[8px] outline outline-1 outline-neutral-300 hover:bg-neutral-100 hover:text-neutral-800 active:bg-neutral-200 shadow-[0_0_20px_1px_rgba(0,0,0,0.1)] ease-250"
+          >
             Submit
           </button>
         </form>
