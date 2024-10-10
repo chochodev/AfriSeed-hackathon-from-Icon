@@ -1,4 +1,5 @@
-import { FaRegClock, FaCheckCircle, FaChevronDown } from 'react-icons/fa'
+import { useState } from 'react';
+import { FaRegClock, FaCheckCircle, FaChevronDown, FaChevronUp } from 'react-icons/fa';
 
 interface Business {
   id: string
@@ -7,6 +8,15 @@ interface Business {
   coverImage: string
   shortDescription: string
   fullDescription: string
+  pitch: {
+    summary: string
+    problem: string
+    solution: string
+    marketOpportunity: string
+    competitive: string
+    businessModel: string
+    traction: string
+  }
   location: string
   category: string
   amountRaised: number
@@ -23,6 +33,15 @@ const business: Business = {
   coverImage: '/images/hero5.jpg',
   shortDescription: 'AI-powered solutions for businesses',
   fullDescription: 'TechInnovate is revolutionizing the way businesses interact with data, providing scalable and efficient AI and machine learning solutions for companies of all sizes.',
+  pitch: {
+    summary: 'TechInnovate is revolutionizing the way businesses interact with data, providing scalable and efficient AI and machine learning solutions for companies of all sizes.',
+    problem: 'Many businesses struggle to effectively utilize their data due to lack of expertise and resources in AI and machine learning.',
+    solution: 'Our AI-powered platform democratizes access to advanced data analytics, making it easy for businesses of all sizes to gain valuable insights and automate decision-making processes.',
+    marketOpportunity: 'The global AI market is projected to grow from $387.45 billion in 2022 to $1,394.30 billion in 2029, at a CAGR of 20.1%.',
+    competitive: "Unlike our competitors who offer one-size-fits-all solutions, TechInnovate provides customizable AI models that adapt to each business's unique needs and data structures.",
+    businessModel: "We operate on a SaaS model with tiered pricing based on data volume and complexity of AI models. We also offer consulting services for enterprise clients.",
+    traction: "In our first year, we've onboarded 50+ clients across various industries, achieving a 95% retention rate and $2M in ARR."
+  },
   location: 'Nairobi, Kenya',
   category: 'Technology',
   amountRaised: 100000,
@@ -33,6 +52,16 @@ const business: Business = {
 }
 
 const BusinessPage = () => {
+  // const [isVideoModalOpen, setIsVideoModalOpen] = useState(false)
+  const [expandedSections, setExpandedSections] = useState<string[]>([])
+
+  const toggleSection = (section: string) => {
+    setExpandedSections(prev => 
+      prev.includes(section) 
+        ? prev.filter(s => s !== section)
+        : [...prev, section]
+    )
+  }
 
   return (
     <div className="bg-white min-h-screen">
@@ -76,9 +105,11 @@ const BusinessPage = () => {
                 </svg>
               </button>
             </div>
+
+            {/* :::::::::::::::::::::::: description */}
             <div className="bg-white rounded-lg border border-neutral-200 p-6 mb-8">
-              <h2 className="text-2xl font-bold mb-4">About {business.name}</h2>
-              <p className="text-neutral-600 mb-4">{business.fullDescription}</p>
+              <h2 className="text-2xl font-bold mb-4">Pitch</h2>
+              <p className="text-neutral-600 mb-4">{business.pitch.summary}</p>
               <div className="flex flex-wrap gap-2 mb-4">
                 <span className="bg-neutral-100 text-neutral-800 px-3 py-1 rounded-full text-sm">
                   {business.category}
@@ -87,9 +118,20 @@ const BusinessPage = () => {
                   {business.location}
                 </span>
               </div>
-              <button className="text-primary-600 font-semibold flex items-center">
-                Read more <FaChevronDown className="ml-1" />
-              </button>
+              {['problem', 'solution', 'marketOpportunity', 'competitive', 'businessModel', 'traction'].map((section) => (
+                <div key={section} className="mb-4">
+                  <button 
+                    onClick={() => toggleSection(section)}
+                    className="w-full text-left text-primary-600 font-semibold flex items-center justify-between"
+                  >
+                    <span>{section.charAt(0).toUpperCase() + section.slice(1).replace(/([A-Z])/g, ' $1')}</span>
+                    {expandedSections.includes(section) ? <FaChevronUp /> : <FaChevronDown />}
+                  </button>
+                  {expandedSections.includes(section) && (
+                    <p className="text-neutral-600 mt-2">{business.pitch[section as keyof typeof business.pitch]}</p>
+                  )}
+                </div>
+              ))}
             </div>
           </div>
 
