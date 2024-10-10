@@ -52,3 +52,6 @@ export default tseslint.config({
   },
 })
 ```
+## Contract details
+Contract Address: ```0x3d70b15cc197760a70d2264d8dfc0c1aaec45bd5```
+Etherscan Link: ```https://sepolia.basescan.org/address/0x3d70b15cc197760a70d2264d8dfc0c1aaec45bd5#code```
