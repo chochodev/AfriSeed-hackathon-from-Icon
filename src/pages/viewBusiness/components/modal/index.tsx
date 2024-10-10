@@ -1,4 +1,3 @@
-// components/Modal.tsx
 import Input from '$/components/input';
 import React, { useEffect, useState } from 'react';
 import { RiCloseLine } from 'react-icons/ri';
@@ -9,7 +8,7 @@ interface ModalProps {
   business: {
     name: string;
     minimumInvestment: number;
-  }
+  };
 }
 
 const Modal: React.FC<ModalProps> = ({ isOpen, onClose, business }) => {
@@ -21,13 +20,15 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, business }) => {
     }
   }, [isOpen]);
 
-  const [value, setValue] = useState<number>(business.minimumInvestment)
+  const [value, setValue] = useState<number>(business.minimumInvestment);
+  const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
 
   // :::::::::::::::::::: submit function
   const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    console.log('Form submitted:', business)
-  }
+    e.preventDefault();
+    console.log('Form submitted:', business);
+    setIsSubmitted(true);
+  };
 
   return (
     <div
@@ -40,34 +41,64 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, business }) => {
           isOpen ? 'translate-y-0' : 'translate-y-10'
         }`}
       >
-        <button className="text-neutral-600 hover:text-neutral-800 hover:bg-neutral-200 rounded-full p-[0.25rem] mb-4 ml-[calc(100%-2rem)]" onClick={onClose}>
-          <RiCloseLine className='text-[1.5rem]' />
+        <button
+          className="text-neutral-600 hover:text-neutral-800 hover:bg-neutral-200 rounded-full p-[0.25rem] mb-4 ml-[calc(100%-2rem)]"
+          onClick={() => {
+            setIsSubmitted(false);
+            onClose();
+          }}
+        >
+          <RiCloseLine className="text-[1.5rem]" />
         </button>
 
-        <h2 className="text-xl font-bold mb-4">Invest in {business.name}</h2>
-        <form onSubmit={handleSubmit} className='space-y-[2rem]'>
-          <div className="mb-4 space-y-[1rem] ">
-            <label htmlFor="amount" className="text-[0.875rem] font-[600] text-neutral-600 uppercase">
-              Amount ($)
-            </label>
-            <Input
-              type="number"
-              id="amount"
-              name="amount"
-              value={value}
-              onChange={(e) => {setValue(Number(e.target.value))}}
-              className=""
-              placeholder={`Minimum $${business.minimumInvestment}`}
-              required
-            />
+        {isSubmitted ? (
+          <div className="text-center">
+            <h2 className="text-2xl font-bold text-neutral-800 mb-4">Thank You!</h2>
+            <p className="text-neutral-600 mb-4">
+              Your investment in {business.name} has been successfully submitted.
+            </p>
+            <button
+              className="w-full bg-neutral-800 text-neutral-100 font-[600] py-[0.875rem] rounded-full outline outline-1 outline-neutral-300 hover:bg-neutral-100 hover:text-neutral-800"
+              onClick={() => {
+                setIsSubmitted(false);
+                onClose();
+              }}
+            >
+              Close
+            </button>
           </div>
-          <button
-            type="submit"
-            className="w-full bg-neutral-800 text-neutral-100 font-[600] py-[0.875rem] rounded-full outline outline-1 outline-neutral-300 hover:bg-neutral-100 hover:text-neutral-800"
-          >
-            Confirm Investment
-          </button>
-        </form>
+        ) : (
+          <>
+            <h2 className="text-xl font-bold mb-4">Invest in {business.name}</h2>
+            <form onSubmit={handleSubmit} className="space-y-[2rem]">
+              <div className="mb-4 space-y-[1rem]">
+                <label
+                  htmlFor="amount"
+                  className="text-[0.875rem] font-[600] text-neutral-600 uppercase"
+                >
+                  Amount ($)
+                </label>
+                <Input
+                  type="number"
+                  id="amount"
+                  name="amount"
+                  value={value}
+                  onChange={(e) => {
+                    setValue(Number(e.target.value));
+                  }}
+                  placeholder={`Minimum $${business.minimumInvestment}`}
+                  required
+                />
+              </div>
+              <button
+                type="submit"
+                className="w-full bg-neutral-800 text-neutral-100 font-[600] py-[0.875rem] rounded-full outline outline-1 outline-neutral-300 hover:bg-neutral-100 hover:text-neutral-800"
+              >
+                Confirm Investment
+              </button>
+            </form>
+          </>
+        )}
       </div>
     </div>
   );
