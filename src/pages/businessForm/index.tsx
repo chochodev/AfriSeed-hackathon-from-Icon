@@ -96,10 +96,10 @@ export default function BusinessForm() {
     multiple: false
   })
 
+  // :::::::::::::::::::: submit function
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     console.log('Form submitted:', business)
-    // Here you would typically send the data to your backend
   }
 
   return (
