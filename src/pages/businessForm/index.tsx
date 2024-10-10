@@ -186,8 +186,6 @@ export default function BusinessForm() {
             ></textarea>
           </div>
 
-          {/* Add similar Textarea fields for other pitch sections */}
-
           <div className="space-y-2">
             <label htmlFor="location">Location</label>
             <input

@@ -62,7 +62,7 @@ export default function BusinessPage() {
   return (
     <MainLayout>
       <div className="bg-white min-h-screen">
-        {/* Header */}
+        {/* ::::::::::::::::::::::::::: header */}
         <header className="bg-white border-b border-neutral-200">
           <div className="container mx-auto px-4 py-4 flex justify-between items-center">
             <div className="flex items-center space-x-4">
@@ -82,10 +82,10 @@ export default function BusinessPage() {
           </div>
         </header>
 
-        {/* Main Content */}
+        {/* :::::::::::::::::::::::::::::::: Main Content */}
         <main className="container mx-auto px-4 py-8">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            {/* Left Column */}
+            {/* ::::::::::::::::::::::::::::::: Left Column */}
             <div className="lg:col-span-2">
               <div className="relative h-[400px] rounded-lg overflow-hidden mb-8">
                 <img
@@ -154,7 +154,7 @@ export default function BusinessPage() {
               </div>
             </div>
 
-            {/* Right Column */}
+            {/* :::::::::::::::::::::::::::::::: Right Column */}
             <div>
               <div className="bg-white rounded-lg border border-neutral-200 p-6 mb-8">
                 <div className="flex items-center justify-between mb-4">
@@ -191,7 +191,7 @@ export default function BusinessPage() {
                 >
                   Invest Now
                 </button>
-                <p className="text-center text-neutral-600">
+                <p className="text-center text-neutral-600 mt-[1rem] ">
                   ${business.minimumInvestment} minimum investment
                 </p>
               </div>
