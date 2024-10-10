@@ -1,5 +1,6 @@
 // components/Modal.tsx
 import React, { useEffect } from 'react';
+import { RiCloseLine } from 'react-icons/ri';
 
 interface ModalProps {
   isOpen: boolean;
@@ -26,14 +27,12 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, business }) => {
       }`}
     >
       <div
-        className={`bg-white p-6 rounded-lg max-w-lg w-full transform transition-transform ${
+        className={`bg-white px-[2rem] py-[1.5rem] rounded-lg max-w-lg w-full transform transition-transform ${
           isOpen ? 'translate-y-0' : 'translate-y-10'
         }`}
       >
-        <button className="text-neutral-600 hover:text-neutral-800 mb-4" onClick={onClose}>
-          <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-          </svg>
+        <button className="text-neutral-600 hover:text-neutral-800 hover:bg-neutral-200 rounded-full p-[0.25rem] mb-4 ml-[calc(100%-2rem)]" onClick={onClose}>
+          <RiCloseLine className='text-[1.5rem]' />
         </button>
 
         <h2 className="text-xl font-bold mb-4">Invest in {business.name}</h2>

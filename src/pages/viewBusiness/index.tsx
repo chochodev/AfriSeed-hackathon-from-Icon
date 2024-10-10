@@ -1,4 +1,4 @@
-// import { useState } from 'react';
+import { useState } from 'react';
 import { FaRegClock, FaCheckCircle } from 'react-icons/fa';
 import {
   Accordion,
@@ -7,6 +7,7 @@ import {
   AccordionTrigger,
 } from "$/components/ui/accordion";
 import MainLayout from '$/layout';
+import Modal from './components/modal';
 
 interface Business {
   id: string
@@ -57,6 +58,15 @@ const business: Business = {
 export default function BusinessPage() {
   // const [isVideoModalOpen, setIsVideoModalOpen] = useState(false)
 
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const openModal = () => setIsModalOpen(true);
+  const closeModal = () => setIsModalOpen(false);
+  const modalData = {
+    name: business.name,
+    minimumInvestment: business.minimumInvestment
+  }
+
   return (
     <MainLayout>
       <div className="bg-neutral-50 min-h-screen">
@@ -74,7 +84,10 @@ export default function BusinessPage() {
                 <p className="text-sm text-neutral-500">{business.shortDescription}</p>
               </div>
             </div>
-            <button className="bg-neutral-800 text-neutral-100 font-[600] text-[0.875rem] px-[2rem] py-[0.5rem] rounded-full outline outline-1 outline-neutral-300 hover:bg-neutral-100 hover:text-neutral-800 active:bg-neutral-200 shadow-[0_0_20px_1px_rgba(0,0,0,0.1)] ease-250">
+            <button 
+              className="bg-neutral-800 text-neutral-100 font-[600] text-[0.875rem] px-[2rem] py-[0.5rem] rounded-full outline outline-1 outline-neutral-300 hover:bg-neutral-100 hover:text-neutral-800 active:bg-neutral-200 shadow-[0_0_20px_1px_rgba(0,0,0,0.1)] ease-250"
+              onClick={openModal}
+            >
               Invest Now
             </button>
           </div>
@@ -180,6 +193,7 @@ export default function BusinessPage() {
                 {/* ::::::::::::::::::::: invest now button */}
                 <button 
                   className="w-full bg-neutral-800 text-neutral-100 font-[600] py-[0.875rem] rounded-full outline outline-1 outline-neutral-300 hover:bg-neutral-100 hover:text-neutral-800 active:bg-neutral-200 shadow-[0_0_10px_5px_rgba(0,0,0,0.1)] ease-250"
+                  onClick={openModal}
                 >
                   Invest Now
                 </button>
@@ -223,6 +237,15 @@ export default function BusinessPage() {
             </div>
           </div>
         )} */}
+        
+        
+        {/* :::::::::::::::::::: investment modal */}
+        <Modal 
+          isOpen={isModalOpen} 
+          onClose={closeModal} 
+          business={modalData} 
+        />
+
       </div>
     </MainLayout>
   )
