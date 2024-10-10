@@ -1,7 +1,7 @@
 import MainLayout from '$/layout';
 import React, { useState, useCallback } from 'react'
 import { useDropzone } from 'react-dropzone';
-// import { Input } from "$/components/ui/input"
+import Input from "$/components/input"
 // import { Textarea } from "$/components/ui/textarea"
 // import { Label } from "$/components/ui/label"
 // import { Button } from "$/components/ui/button"
@@ -70,7 +70,7 @@ export default function BusinessForm() {
     }))
   }
 
-  const handleNumberChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleNumberChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target
     setBusiness(prev => ({ ...prev, [name]: parseFloat(value) || 0 }))
   }
@@ -119,8 +119,8 @@ export default function BusinessForm() {
         {/* ::::::::::::::::::::::::::::::: form */}
         <form onSubmit={handleSubmit} className="space-y-[1rem]">
           <div className="space-y-2">
-            <label htmlFor="name">Business Name</label>
-            <input
+            <label className='text-[0.875rem] font-[600] text-neutral-500 uppercase' htmlFor="name">Business Name</label>
+            <Input
               id="name"
               name="name"
               value={business.name}
@@ -131,7 +131,7 @@ export default function BusinessForm() {
           </div>
 
           <div className="space-y-2">
-            <label>Logo</label>
+            <label className='text-[0.875rem] font-[600] text-neutral-500 uppercase'>Logo</label>
             <div {...getLogoRootProps()} className="border-2 border-dashed border-gray-300 rounded-lg p-6 cursor-pointer hover:border-primary-500">
               <input {...getLogoInputProps()} />
               <div className="flex flex-col items-center">
@@ -148,7 +148,7 @@ export default function BusinessForm() {
           </div>
 
           <div className="space-y-2">
-            <label>Cover Image</label>
+            <label className='text-[0.875rem] font-[600] text-neutral-500 uppercase'>Cover Image</label>
             <div {...getCoverRootProps()} className="border-2 border-dashed border-gray-300 rounded-lg p-6 cursor-pointer hover:border-primary-500">
               <input {...getCoverInputProps()} />
               <div className="flex flex-col items-center">
@@ -165,8 +165,8 @@ export default function BusinessForm() {
           </div>
 
           <div className="space-y-2">
-            <label htmlFor="shortDescription">Short Description</label>
-            <input
+            <label className='text-[0.875rem] font-[600] text-neutral-500 uppercase' htmlFor="shortDescription">Short Description</label>
+            <Input
               id="shortDescription"
               name="shortDescription"
               value={business.shortDescription}
@@ -176,7 +176,7 @@ export default function BusinessForm() {
           </div>
 
           <div className="space-y-2">
-            <label htmlFor="summary">Pitch Summary</label>
+            <label className='text-[0.875rem] font-[600] text-neutral-500 uppercase' htmlFor="summary">Pitch Summary</label>
             <textarea
               id="summary"
               name="summary"
@@ -188,8 +188,8 @@ export default function BusinessForm() {
           </div>
 
           <div className="space-y-2">
-            <label htmlFor="location">Location</label>
-            <input
+            <label className='text-[0.875rem] font-[600] text-neutral-500 uppercase' htmlFor="location">Location</label>
+            <Input
               id="location"
               name="location"
               value={business.location}
@@ -199,8 +199,8 @@ export default function BusinessForm() {
           </div>
 
           <div className="space-y-2">
-            <label htmlFor="category">Category</label>
-            <input
+            <label className='text-[0.875rem] font-[600] text-neutral-500 uppercase' htmlFor="category">Category</label>
+            <Input
               id="category"
               name="category"
               value={business.category}
@@ -210,9 +210,9 @@ export default function BusinessForm() {
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-            <div className="space-y-2">
-              <label htmlFor="amountRaised">Amount Raised</label>
-              <input
+            <div className="flex flex-col space-y-2">
+              <label className='text-[0.875rem] font-[600] text-neutral-500 uppercase' htmlFor="amountRaised">Amount Raised</label>
+              <Input
                 type="number"
                 id="amountRaised"
                 name="amountRaised"
@@ -222,9 +222,9 @@ export default function BusinessForm() {
               />
             </div>
 
-            <div className="space-y-2">
-              <label htmlFor="investors">Number of Investors</label>
-              <input
+            <div className="flex flex-col space-y-2">
+              <label className='text-[0.875rem] font-[600] text-neutral-500 uppercase' htmlFor="investors">Number of Investors</label>
+              <Input
                 type="number"
                 id="investors"
                 name="investors"
@@ -234,9 +234,9 @@ export default function BusinessForm() {
               />
             </div>
 
-            <div className="space-y-2">
-              <label htmlFor="valuation">Valuation</label>
-              <input
+            <div className="flex flex-col space-y-2">
+              <label className='text-[0.875rem] font-[600] text-neutral-500 uppercase' htmlFor="valuation">Valuation</label>
+              <Input
                 id="valuation"
                 name="valuation"
                 value={business.valuation}
@@ -245,9 +245,9 @@ export default function BusinessForm() {
               />
             </div>
 
-            <div className="space-y-2">
-              <label htmlFor="minimumInvestment">Minimum Investment</label>
-              <input
+            <div className="flex flex-col space-y-2">
+              <label className='text-[0.875rem] font-[600] text-neutral-500 uppercase' htmlFor="minimumInvestment">Minimum Investment</label>
+              <Input
                 type="number"
                 id="minimumInvestment"
                 name="minimumInvestment"
@@ -257,9 +257,9 @@ export default function BusinessForm() {
               />
             </div>
 
-            <div className="space-y-2">
-              <label htmlFor="daysLeft">Days Left</label>
-              <input
+            <div className="flex flex-col space-y-2">
+              <label className='text-[0.875rem] font-[600] text-neutral-500 uppercase' htmlFor="daysLeft">Days Left</label>
+              <Input
                 type="number"
                 id="daysLeft"
                 name="daysLeft"
