@@ -1,5 +1,11 @@
-import { useState } from 'react';
-import { FaRegClock, FaCheckCircle, FaChevronDown, FaChevronUp } from 'react-icons/fa';
+// import { useState } from 'react';
+import { FaRegClock, FaCheckCircle } from 'react-icons/fa';
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "$components/ui/accordion";
 
 interface Business {
   id: string
@@ -7,7 +13,6 @@ interface Business {
   logo: string
   coverImage: string
   shortDescription: string
-  fullDescription: string
   pitch: {
     summary: string
     problem: string
@@ -29,17 +34,16 @@ interface Business {
 const business: Business = {
   id: '1',
   name: 'TechInnovate',
-  logo: '/images/hero4.jpg',
-  coverImage: '/images/hero5.jpg',
+  logo: '/placeholder.svg?height=80&width=80',
+  coverImage: '/placeholder.svg?height=400&width=1200',
   shortDescription: 'AI-powered solutions for businesses',
-  fullDescription: 'TechInnovate is revolutionizing the way businesses interact with data, providing scalable and efficient AI and machine learning solutions for companies of all sizes.',
   pitch: {
     summary: 'TechInnovate is revolutionizing the way businesses interact with data, providing scalable and efficient AI and machine learning solutions for companies of all sizes.',
     problem: 'Many businesses struggle to effectively utilize their data due to lack of expertise and resources in AI and machine learning.',
     solution: 'Our AI-powered platform democratizes access to advanced data analytics, making it easy for businesses of all sizes to gain valuable insights and automate decision-making processes.',
     marketOpportunity: 'The global AI market is projected to grow from $387.45 billion in 2022 to $1,394.30 billion in 2029, at a CAGR of 20.1%.',
     competitive: "Unlike our competitors who offer one-size-fits-all solutions, TechInnovate provides customizable AI models that adapt to each business's unique needs and data structures.",
-    businessModel: "We operate on a SaaS model with tiered pricing based on data volume and complexity of AI models. We also offer consulting services for enterprise clients.",
+    businessModel: 'We operate on a SaaS model with tiered pricing based on data volume and complexity of AI models. We also offer consulting services for enterprise clients.',
     traction: "In our first year, we've onboarded 50+ clients across various industries, achieving a 95% retention rate and $2M in ARR."
   },
   location: 'Nairobi, Kenya',
@@ -51,17 +55,8 @@ const business: Business = {
   daysLeft: 15,
 }
 
-const BusinessPage = () => {
+export default function BusinessPage() {
   // const [isVideoModalOpen, setIsVideoModalOpen] = useState(false)
-  const [expandedSections, setExpandedSections] = useState<string[]>([])
-
-  const toggleSection = (section: string) => {
-    setExpandedSections(prev => 
-      prev.includes(section) 
-        ? prev.filter(s => s !== section)
-        : [...prev, section]
-    )
-  }
 
   return (
     <div className="bg-white min-h-screen">
@@ -94,19 +89,17 @@ const BusinessPage = () => {
               <img
                 src={business.coverImage}
                 alt={`${business.name} cover`}
-                className='object-cover'
+                className='object-cover '
               />
               <button 
                 className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 text-white"
-                onClick={() => {}}
+                // onClick={() => setIsVideoModalOpen(true)}
               >
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-20 w-20" viewBox="0 0 20 20" fill="currentColor">
                   <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clipRule="evenodd" />
                 </svg>
               </button>
             </div>
-
-            {/* :::::::::::::::::::::::: description */}
             <div className="bg-white rounded-lg border border-neutral-200 p-6 mb-8">
               <h2 className="text-2xl font-bold mb-4">Pitch</h2>
               <p className="text-neutral-600 mb-4">{business.pitch.summary}</p>
@@ -118,20 +111,44 @@ const BusinessPage = () => {
                   {business.location}
                 </span>
               </div>
-              {['problem', 'solution', 'marketOpportunity', 'competitive', 'businessModel', 'traction'].map((section) => (
-                <div key={section} className="mb-4">
-                  <button 
-                    onClick={() => toggleSection(section)}
-                    className="w-full text-left text-primary-600 font-semibold flex items-center justify-between"
-                  >
-                    <span>{section.charAt(0).toUpperCase() + section.slice(1).replace(/([A-Z])/g, ' $1')}</span>
-                    {expandedSections.includes(section) ? <FaChevronUp /> : <FaChevronDown />}
-                  </button>
-                  {expandedSections.includes(section) && (
-                    <p className="text-neutral-600 mt-2">{business.pitch[section as keyof typeof business.pitch]}</p>
-                  )}
-                </div>
-              ))}
+              <Accordion type="single" collapsible className="w-full">
+                <AccordionItem value="problem">
+                  <AccordionTrigger>Problem</AccordionTrigger>
+                  <AccordionContent>
+                    {business.pitch.problem}
+                  </AccordionContent>
+                </AccordionItem>
+                <AccordionItem value="solution">
+                  <AccordionTrigger>Solution</AccordionTrigger>
+                  <AccordionContent>
+                    {business.pitch.solution}
+                  </AccordionContent>
+                </AccordionItem>
+                <AccordionItem value="marketOpportunity">
+                  <AccordionTrigger>Market Opportunity</AccordionTrigger>
+                  <AccordionContent>
+                    {business.pitch.marketOpportunity}
+                  </AccordionContent>
+                </AccordionItem>
+                <AccordionItem value="competitive">
+                  <AccordionTrigger>Competitive Advantage</AccordionTrigger>
+                  <AccordionContent>
+                    {business.pitch.competitive}
+                  </AccordionContent>
+                </AccordionItem>
+                <AccordionItem value="businessModel">
+                  <AccordionTrigger>Business Model</AccordionTrigger>
+                  <AccordionContent>
+                    {business.pitch.businessModel}
+                  </AccordionContent>
+                </AccordionItem>
+                <AccordionItem value="traction">
+                  <AccordionTrigger>Traction</AccordionTrigger>
+                  <AccordionContent>
+                    {business.pitch.traction}
+                  </AccordionContent>
+                </AccordionItem>
+              </Accordion>
             </div>
           </div>
 
@@ -181,8 +198,30 @@ const BusinessPage = () => {
           </div>
         </div>
       </main>
+
+      {/* Video Modal */}
+      {/* {isVideoModalOpen && (
+        <div className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50">
+          <div className="bg-white p-4 rounded-lg max-w-3xl w-full">
+            <div className="flex justify-end mb-2">
+              <button onClick={() => setIsVideoModalOpen(false)} className="text-neutral-600 hover:text-neutral-800">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
+            <div className="aspect-w-16 aspect-h-9">
+              <iframe 
+                src="https://www.youtube.com/embed/dQw4w9WgXcQ" 
+                frameBorder="0" 
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                allowFullScreen
+                className="w-full h-full"
+              ></iframe>
+            </div>
+          </div>
+        </div>
+      )} */}
     </div>
   )
 }
-
-export default BusinessPage;
