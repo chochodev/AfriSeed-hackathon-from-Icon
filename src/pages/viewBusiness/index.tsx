@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { FaRegClock, FaCheckCircle, FaChevronDown } from 'react-icons/fa'
 
 interface Business {
