@@ -25,17 +25,16 @@ interface Business {
   category: string
   amountRaised: number
   investors: number
-  valuation: string
   minimumInvestment: number
   daysLeft: number
 }
 
 const initialBusiness: Business = {
   id: '1',
-  name: 'TechInnovate',
-  logo: '/images/hero3.jpg',
-  coverImage: '/images/hero1.jpg',
-  shortDescription: 'AI-powered solutions for businesses',
+  name: '',
+  logo: '',
+  coverImage: '',
+  shortDescription: '',
   pitch: {
     summary: '',
     problem: '',
@@ -49,7 +48,6 @@ const initialBusiness: Business = {
   category: '',
   amountRaised: 0,
   investors: 0,
-  valuation: '',
   minimumInvestment: 0,
   daysLeft: 0,
 }
@@ -126,12 +124,13 @@ export default function BusinessForm() {
               value={business.name}
               onChange={handleInputChange}
               className=''
+              placeholder='e.g AfriSeed'
               required
             />
           </div>
 
           <div className="space-y-2">
-            <label className='text-[0.875rem] font-[600] text-neutral-500 uppercase'>Logo</label>
+            <label className='text-[0.875rem] font-[600] text-neutral-500 uppercase'>Business Logo</label>
             <div {...getLogoRootProps()} className="border-2 border-dashed border-gray-300 rounded-lg p-6 cursor-pointer hover:border-primary-500">
               <input {...getLogoInputProps()} />
               <div className="flex flex-col items-center">
@@ -171,6 +170,7 @@ export default function BusinessForm() {
               name="shortDescription"
               value={business.shortDescription}
               onChange={handleInputChange}
+              placeholder='e.g AI-powered software as a service aimed at ...'
               required
             />
           </div>
@@ -183,6 +183,7 @@ export default function BusinessForm() {
               value={business.pitch.summary}
               onChange={handlePitchChange}
               rows={3}
+              placeholder=''
               required
             ></textarea>
           </div>
@@ -194,6 +195,7 @@ export default function BusinessForm() {
               name="location"
               value={business.location}
               onChange={handleInputChange}
+              placeholder='e.g Lagos, Nigeria'
               required
             />
           </div>
@@ -205,13 +207,14 @@ export default function BusinessForm() {
               name="category"
               value={business.category}
               onChange={handleInputChange}
+              placeholder='e.g IT & Programming'
               required
             />
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
             <div className="flex flex-col space-y-2">
-              <label className='text-[0.875rem] font-[600] text-neutral-500 uppercase' htmlFor="amountRaised">Amount Raised</label>
+              <label className='text-[0.875rem] font-[600] text-neutral-500 uppercase' htmlFor="amountRaised">Amount Raised ($)</label>
               <Input
                 type="number"
                 id="amountRaised"
@@ -235,18 +238,7 @@ export default function BusinessForm() {
             </div>
 
             <div className="flex flex-col space-y-2">
-              <label className='text-[0.875rem] font-[600] text-neutral-500 uppercase' htmlFor="valuation">Valuation</label>
-              <Input
-                id="valuation"
-                name="valuation"
-                value={business.valuation}
-                onChange={handleInputChange}
-                required
-              />
-            </div>
-
-            <div className="flex flex-col space-y-2">
-              <label className='text-[0.875rem] font-[600] text-neutral-500 uppercase' htmlFor="minimumInvestment">Minimum Investment</label>
+              <label className='text-[0.875rem] font-[600] text-neutral-500 uppercase' htmlFor="minimumInvestment">Minimum Investment ($)</label>
               <Input
                 type="number"
                 id="minimumInvestment"
