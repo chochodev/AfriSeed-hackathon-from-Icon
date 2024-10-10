@@ -20,8 +20,8 @@ interface Business {
 const business: Business = {
   id: '1',
   name: 'TechInnovate',
-  logo: '/placeholder.svg?height=80&width=80',
-  coverImage: '/placeholder.svg?height=400&width=1200',
+  logo: '/images/hero4.jpg',
+  coverImage: '/images/hero5.jpg',
   shortDescription: 'AI-powered solutions for businesses',
   fullDescription: 'TechInnovate is revolutionizing the way businesses interact with data, providing scalable and efficient AI and machine learning solutions for companies of all sizes.',
   location: 'Nairobi, Kenya',
@@ -34,7 +34,6 @@ const business: Business = {
 }
 
 const BusinessPage = () => {
-  const [isVideoModalOpen, setIsVideoModalOpen] = useState(false)
 
   return (
     <div className="bg-white min-h-screen">
@@ -71,7 +70,7 @@ const BusinessPage = () => {
               />
               <button 
                 className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 text-white"
-                onClick={() => setIsVideoModalOpen(true)}
+                onClick={() => {}}
               >
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-20 w-20" viewBox="0 0 20 20" fill="currentColor">
                   <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clipRule="evenodd" />
@@ -141,30 +140,6 @@ const BusinessPage = () => {
           </div>
         </div>
       </main>
-
-      {/* Video Modal */}
-      {isVideoModalOpen && (
-        <div className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50">
-          <div className="bg-white p-4 rounded-lg max-w-3xl w-full">
-            <div className="flex justify-end mb-2">
-              <button onClick={() => setIsVideoModalOpen(false)} className="text-neutral-600 hover:text-neutral-800">
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                </svg>
-              </button>
-            </div>
-            <div className="aspect-w-16 aspect-h-9">
-              <iframe 
-                src="https://www.youtube.com/embed/dQw4w9WgXcQ" 
-                frameBorder="0" 
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                allowFullScreen
-                className="w-full h-full"
-              ></iframe>
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   )
 }
