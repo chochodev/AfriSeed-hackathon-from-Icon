@@ -34,8 +34,8 @@ interface Business {
 const business: Business = {
   id: '1',
   name: 'TechInnovate',
-  logo: '/placeholder.svg?height=80&width=80',
-  coverImage: '/placeholder.svg?height=400&width=1200',
+  logo: '/images/hero3.jpg',
+  coverImage: '/images/hero1.jpg',
   shortDescription: 'AI-powered solutions for businesses',
   pitch: {
     summary: 'TechInnovate is revolutionizing the way businesses interact with data, providing scalable and efficient AI and machine learning solutions for companies of all sizes.',
