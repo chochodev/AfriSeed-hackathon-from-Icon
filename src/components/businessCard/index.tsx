@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 const BusinessCard = () => {
   return (
     <Link 
-      to='/'
+      to='/business/gg'
       className='group relative flex flex-col h-[22.5rem] lg:h-[31.25rem] w-full rounded-[16px] overflow-hidden shadow-[0_2px_5px_-2px_rgba(0,0,0,0.25)] '
     >
       <img 
