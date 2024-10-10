@@ -1,3 +1,4 @@
+import MainLayout from '$/layout';
 import React, { useState, useCallback } from 'react'
 import { useDropzone } from 'react-dropzone';
 // import { Input } from "$/components/ui/input"
@@ -104,6 +105,7 @@ export default function BusinessForm() {
   }
 
   return (
+    <MainLayout>
     <div className='size-full py-[4rem] px-[1rem] lg:px-[2rem]'>
       <div className="max-w-[72rem] mx-auto">
         <h1 className="text-3xl font-bold mb-6">Pitch Your Business Ideas</h1>
@@ -275,5 +277,6 @@ export default function BusinessForm() {
         </form>
       </div>
     </div>
+    </MainLayout>
   )
 }
