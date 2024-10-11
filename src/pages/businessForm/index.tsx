@@ -5,7 +5,6 @@ import Input from "$/components/input";
 import { RiImageAddLine } from "react-icons/ri";
 
 interface Business {
-  id: string
   name: string
   logo: string
   coverImage: string
@@ -14,9 +13,7 @@ interface Business {
     summary: string
     problem: string
     solution: string
-    marketOpportunity: string
-    competitive: string
-    businessModel: string
+    market_opportunity: string
     traction: string
   }
   location: string
@@ -28,7 +25,6 @@ interface Business {
 }
 
 const initialBusiness: Business = {
-  id: '1',
   name: '',
   logo: '',
   coverImage: '',
@@ -37,9 +33,7 @@ const initialBusiness: Business = {
     summary: '',
     problem: '',
     solution: '',
-    marketOpportunity: '',
-    competitive: '',
-    businessModel: '',
+    market_opportunity: '',
     traction: '',
   },
   location: '',
@@ -169,6 +163,7 @@ export default function BusinessForm() {
             />
           </div>
 
+          {/* :::::::::::::::: SUMMARY INFORMATION */}
           <div className="space-y-2">
             <label className='text-[0.875rem] font-[600] text-neutral-600 uppercase' htmlFor="summary">Pitch Summary</label>
             <Input
@@ -182,7 +177,64 @@ export default function BusinessForm() {
               required
             />
           </div>
+          
+          <div className="space-y-2">
+            <label className='text-[0.875rem] font-[600] text-neutral-600 uppercase' htmlFor="problem">Pitch Problem</label>
+            <Input
+              id="problem"
+              name="problem"
+              type='textarea'
+              value={business.pitch.problem}
+              onChange={handlePitchChange}
+              placeholder='e.g Many businesses struggle to effectively utilize their data due to lack of expertise ...'
+              className='min-h-[5rem]'
+              required
+            />
+          </div>
+          
+          <div className="space-y-2">
+            <label className='text-[0.875rem] font-[600] text-neutral-600 uppercase' htmlFor="solution">Pitch Solution</label>
+            <Input
+              id="solution"
+              name="solution"
+              type='textarea'
+              value={business.pitch.solution}
+              onChange={handlePitchChange}
+              placeholder='e.g Our AI-powered platform democratizes access to advanced data ...'
+              className='min-h-[5rem]'
+              required
+            />
+          </div>
+          
+          <div className="space-y-2">
+            <label className='text-[0.875rem] font-[600] text-neutral-600 uppercase' htmlFor="marketOpportunity">Pitch Market Opportunity</label>
+            <Input
+              id="marketOpportunity"
+              name="marketOpportunity"
+              type='textarea'
+              value={business.pitch.market_opportunity}
+              onChange={handlePitchChange}
+              placeholder='e.g The global AI market is projected to grow from $387.45 ...'
+              className='min-h-[5rem]'
+              required
+            />
+          </div>
+          
+          <div className="space-y-2">
+            <label className='text-[0.875rem] font-[600] text-neutral-600 uppercase' htmlFor="traction">Pitch Traction</label>
+            <Input
+              id="traction"
+              name="traction"
+              type='textarea'
+              value={business.pitch.traction}
+              onChange={handlePitchChange}
+              placeholder='e.g In our first year, we&apos;ve onboarded 50+ clients across ...'
+              className='min-h-[5rem]'
+              required
+            />
+          </div>
 
+          {/* ::::::::::::::::::: LOCATION */}
           <div className="space-y-2">
             <label className='text-[0.875rem] font-[600] text-neutral-600 uppercase' htmlFor="location">Location</label>
             <Input
@@ -195,6 +247,7 @@ export default function BusinessForm() {
             />
           </div>
 
+          {/* ::::::::::::::::::: CATEGORY */}
           <div className="space-y-2">
             <label className='text-[0.875rem] font-[600] text-neutral-600 uppercase' htmlFor="category">Category</label>
             <Input
@@ -207,6 +260,7 @@ export default function BusinessForm() {
             />
           </div>
 
+          {/* ::::::::::::::::::: MONEY */}
           <div className="grid grid-cols-1 smd:grid-cols-2 gap-4">
             <div className="flex flex-col space-y-2">
               <label className='text-[0.875rem] font-[600] text-neutral-600 uppercase' htmlFor="amountRaised">Amount Raised ($)</label>
@@ -257,6 +311,7 @@ export default function BusinessForm() {
             </div>
           </div>
 
+          {/* ::::::::::::::::::::: SUBMIT BUTTON */}
           <button 
             type="submit" 
             className="w-full bg-neutral-800 text-neutral-100 font-[600] text-[0.875rem] px-[2rem] py-[0.875rem] rounded-[8px] outline outline-1 outline-neutral-300 hover:bg-neutral-100 hover:text-neutral-800 active:bg-neutral-200 shadow-[0_0_20px_1px_rgba(0,0,0,0.1)] ease-250"

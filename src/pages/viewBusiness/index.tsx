@@ -10,7 +10,6 @@ import MainLayout from '$/layout';
 import Modal from './components/modal';
 
 interface Business {
-  id: string
   name: string
   logo: string
   coverImage: string
@@ -19,8 +18,7 @@ interface Business {
     summary: string
     problem: string
     solution: string
-    marketOpportunity: string
-    businessModel: string
+    market_opportunity: string
     traction: string
   }
   location: string
@@ -33,7 +31,6 @@ interface Business {
 }
 
 const business: Business = {
-  id: '1',
   name: 'TechInnovate',
   logo: '/images/hero3.jpg',
   coverImage: '/images/hero1.jpg',
@@ -42,8 +39,7 @@ const business: Business = {
     summary: 'TechInnovate is revolutionizing the way businesses interact with data, providing scalable and efficient AI and machine learning solutions for companies of all sizes.',
     problem: 'Many businesses struggle to effectively utilize their data due to lack of expertise and resources in AI and machine learning.',
     solution: 'Our AI-powered platform democratizes access to advanced data analytics, making it easy for businesses of all sizes to gain valuable insights and automate decision-making processes.',
-    marketOpportunity: 'The global AI market is projected to grow from $387.45 billion in 2022 to $1,394.30 billion in 2029, at a CAGR of 20.1%.',
-    businessModel: 'We operate on a SaaS model with tiered pricing based on data volume and complexity of AI models. We also offer consulting services for enterprise clients.',
+    market_opportunity: 'The global AI market is projected to grow from $387.45 billion in 2022 to $1,394.30 billion in 2029, at a CAGR of 20.1%.',
     traction: "In our first year, we've onboarded 50+ clients across various industries, achieving a 95% retention rate and $2M in ARR."
   },
   location: 'Nairobi, Kenya',
@@ -124,6 +120,12 @@ export default function BusinessPage() {
                 </div>
                 <Accordion type="single" collapsible className="w-full">
                   <AccordionItem value="problem">
+                    <AccordionTrigger>Summary</AccordionTrigger>
+                    <AccordionContent>
+                      {business.pitch.summary}
+                    </AccordionContent>
+                  </AccordionItem>
+                  <AccordionItem value="problem">
                     <AccordionTrigger>Problem</AccordionTrigger>
                     <AccordionContent>
                       {business.pitch.problem}
@@ -135,16 +137,10 @@ export default function BusinessPage() {
                       {business.pitch.solution}
                     </AccordionContent>
                   </AccordionItem>
-                  <AccordionItem value="marketOpportunity">
+                  <AccordionItem value="market_opportunity">
                     <AccordionTrigger>Market Opportunity</AccordionTrigger>
                     <AccordionContent>
-                      {business.pitch.marketOpportunity}
-                    </AccordionContent>
-                  </AccordionItem>
-                  <AccordionItem value="businessModel">
-                    <AccordionTrigger>Business Model</AccordionTrigger>
-                    <AccordionContent>
-                      {business.pitch.businessModel}
+                      {business.pitch.market_opportunity}
                     </AccordionContent>
                   </AccordionItem>
                   <AccordionItem value="traction">
