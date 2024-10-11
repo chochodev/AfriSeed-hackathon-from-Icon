@@ -1,5 +1,6 @@
 import MainLayout from '$/layout';
 import React, { useState, useCallback } from 'react';
+import axios from 'axios';
 import { useDropzone } from 'react-dropzone';
 import Input from "$/components/input";
 import { RiImageAddLine } from "react-icons/ri";
@@ -45,7 +46,9 @@ const initialBusiness: Business = {
 }
 
 export default function BusinessForm() {
-  const [business, setBusiness] = useState<Business>(initialBusiness)
+  const [business, setBusiness] = useState<Business>(initialBusiness);
+  const [logoFile, setLogoFile] = useState<File | null>(null);
+  const [coverImageFile, setCoverImageFile] = useState<File | null>(null);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target
@@ -65,15 +68,24 @@ export default function BusinessForm() {
     setBusiness(prev => ({ ...prev, [name]: parseFloat(value) || 0 }))
   }
 
+
+  // :::::::::::::::::::: image function
   const onDrop = useCallback((acceptedFiles: File[], type: 'logo' | 'cover_image') => {
-    const file = acceptedFiles[0]
-    if (file) {
-      const reader = new FileReader()
-      reader.onload = (e) => {
-        setBusiness(prev => ({ ...prev, [type]: e.target?.result as string }))
-      }
-      reader.readAsDataURL(file)
+    const file = acceptedFiles[0];
+
+    if (type === 'logo') {
+      setLogoFile(file);
+    } else if (type === 'cover_image') {
+      setCoverImageFile(file);
     }
+    
+    // if (file) {
+    //   const reader = new FileReader()
+    //   reader.onload = (e) => {
+    //     setBusiness(prev => ({ ...prev, [type]: e.target?.result as string }))
+    //   }
+    //   reader.readAsDataURL(file)
+    // }
   }, [])
 
   const { getRootProps: getLogoRootProps, getInputProps: getLogoInputProps } = useDropzone({
@@ -89,9 +101,49 @@ export default function BusinessForm() {
   })
 
   // :::::::::::::::::::: submit function
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    console.log('Form submitted:', business)
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    const formData = new FormData();
+
+    formData.append('name', business.name);
+    formData.append('short_description', business.short_description);
+    formData.append('location', business.location);
+    formData.append('category', business.category);
+    formData.append('amount_raised', business.amount_raised.toString());
+    formData.append('investors', business.investors.toString());
+    formData.append('minimum_investment', business.minimum_investment.toString());
+    formData.append('days_left', business.days_left.toString());
+
+    formData.append('pitch.summary', business.pitch.summary);
+    formData.append('pitch.problem', business.pitch.problem);
+    formData.append('pitch.solution', business.pitch.solution);
+    formData.append('pitch.market_opportunity', business.pitch.market_opportunity);
+    formData.append('pitch.traction', business.pitch.traction);
+
+    // Convert base64 image strings to files and append them as well
+    // formData.append('logo', dataURLtoFile(business.logo, 'logo.png'));
+    // formData.append('cover_image', dataURLtoFile(business.cover_image, 'cover_image.png'));
+
+    if (logoFile) {
+      formData.append('logo', logoFile);
+    }
+    if (coverImageFile) {
+      formData.append('cover_image', coverImageFile);
+    }
+
+    try {
+      // Make the POST request to the FastAPI backend
+      const response = await axios.post('http://localhost:8000/businesses/', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+
+      console.log('Business created:', response.data);
+    } catch (error) {
+      console.error('Error creating business:', error);
+    }
   }
 
   return (
