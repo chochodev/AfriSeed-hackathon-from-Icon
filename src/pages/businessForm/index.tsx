@@ -3,9 +3,6 @@ import React, { useState, useCallback } from 'react';
 import { useDropzone } from 'react-dropzone';
 import Input from "$/components/input";
 import { RiImageAddLine } from "react-icons/ri";
-// import { Textarea } from "$/components/ui/textarea"
-// import { Label } from "$/components/ui/label"
-// import { Button } from "$/components/ui/button"
 
 interface Business {
   id: string

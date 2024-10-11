@@ -56,8 +56,6 @@ const business: Business = {
 }
 
 export default function BusinessPage() {
-  // const [isVideoModalOpen, setIsVideoModalOpen] = useState(false)
-
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const openModal = () => setIsModalOpen(true);
