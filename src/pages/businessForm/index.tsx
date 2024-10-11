@@ -7,8 +7,8 @@ import { RiImageAddLine } from "react-icons/ri";
 interface Business {
   name: string
   logo: string
-  coverImage: string
-  shortDescription: string
+  cover_image: string
+  short_description: string
   pitch: {
     summary: string
     problem: string
@@ -18,17 +18,17 @@ interface Business {
   }
   location: string
   category: string
-  amountRaised: number
+  amount_raised: number
   investors: number
-  minimumInvestment: number
-  daysLeft: number
+  minimum_investment: number
+  days_left: number
 }
 
 const initialBusiness: Business = {
   name: '',
   logo: '',
-  coverImage: '',
-  shortDescription: '',
+  cover_image: '',
+  short_description: '',
   pitch: {
     summary: '',
     problem: '',
@@ -38,10 +38,10 @@ const initialBusiness: Business = {
   },
   location: '',
   category: '',
-  amountRaised: 0,
+  amount_raised: 0,
   investors: 0,
-  minimumInvestment: 0,
-  daysLeft: 0,
+  minimum_investment: 0,
+  days_left: 0,
 }
 
 export default function BusinessForm() {
@@ -65,7 +65,7 @@ export default function BusinessForm() {
     setBusiness(prev => ({ ...prev, [name]: parseFloat(value) || 0 }))
   }
 
-  const onDrop = useCallback((acceptedFiles: File[], type: 'logo' | 'coverImage') => {
+  const onDrop = useCallback((acceptedFiles: File[], type: 'logo' | 'cover_image') => {
     const file = acceptedFiles[0]
     if (file) {
       const reader = new FileReader()
@@ -83,7 +83,7 @@ export default function BusinessForm() {
   })
 
   const { getRootProps: getCoverRootProps, getInputProps: getCoverInputProps } = useDropzone({
-    onDrop: (files: File[]) => onDrop(files, 'coverImage'),
+    onDrop: (files: File[]) => onDrop(files, 'cover_image'),
     accept: { 'image/*': [] },
     multiple: false
   })
@@ -141,8 +141,8 @@ export default function BusinessForm() {
             <div {...getCoverRootProps()} className="border-2 border-dashed border-gray-300 rounded-lg p-6 cursor-pointer hover:border-neutral-500">
               <input {...getCoverInputProps()} />
               <div className="flex flex-col items-center">
-                {business.coverImage ? (
-                  <img src={business.coverImage} alt="Cover" className="size-[12.5rem] rounded-[4px] mb-4 object-cover" />
+                {business.cover_image ? (
+                  <img src={business.cover_image} alt="Cover" className="size-[12.5rem] rounded-[4px] mb-4 object-cover" />
                 ) : (
                   <RiImageAddLine className='text-[3.5rem] text-neutral-400' />
                 )}
@@ -152,11 +152,11 @@ export default function BusinessForm() {
           </div>
 
           <div className="space-y-2">
-            <label className='text-[0.875rem] font-[600] text-neutral-600 uppercase' htmlFor="shortDescription">Short Description</label>
+            <label className='text-[0.875rem] font-[600] text-neutral-600 uppercase' htmlFor="short_description">Short Description</label>
             <Input
-              id="shortDescription"
-              name="shortDescription"
-              value={business.shortDescription}
+              id="short_description"
+              name="short_description"
+              value={business.short_description}
               onChange={handleInputChange}
               placeholder='e.g AI-powered software as a service aimed at ...'
               required
@@ -263,12 +263,12 @@ export default function BusinessForm() {
           {/* ::::::::::::::::::: MONEY */}
           <div className="grid grid-cols-1 smd:grid-cols-2 gap-4">
             <div className="flex flex-col space-y-2">
-              <label className='text-[0.875rem] font-[600] text-neutral-600 uppercase' htmlFor="amountRaised">Amount Raised ($)</label>
+              <label className='text-[0.875rem] font-[600] text-neutral-600 uppercase' htmlFor="amount_raised">Amount Raised ($)</label>
               <Input
                 type="number"
-                id="amountRaised"
-                name="amountRaised"
-                value={business.amountRaised}
+                id="amount_raised"
+                name="amount_raised"
+                value={business.amount_raised}
                 onChange={handleNumberChange}
                 required
               />
@@ -287,24 +287,24 @@ export default function BusinessForm() {
             </div>
 
             <div className="flex flex-col space-y-2">
-              <label className='text-[0.875rem] font-[600] text-neutral-600 uppercase' htmlFor="minimumInvestment">Minimum Investment ($)</label>
+              <label className='text-[0.875rem] font-[600] text-neutral-600 uppercase' htmlFor="minimum_investment">Minimum Investment ($)</label>
               <Input
                 type="number"
-                id="minimumInvestment"
-                name="minimumInvestment"
-                value={business.minimumInvestment}
+                id="minimum_investment"
+                name="minimum_investment"
+                value={business.minimum_investment}
                 onChange={handleNumberChange}
                 required
               />
             </div>
 
             <div className="flex flex-col space-y-2">
-              <label className='text-[0.875rem] font-[600] text-neutral-600 uppercase' htmlFor="daysLeft">Days Left</label>
+              <label className='text-[0.875rem] font-[600] text-neutral-600 uppercase' htmlFor="days_left">Days Left</label>
               <Input
                 type="number"
-                id="daysLeft"
-                name="daysLeft"
-                value={business.daysLeft}
+                id="days_left"
+                name="days_left"
+                value={business.days_left}
                 onChange={handleNumberChange}
                 required
               />
