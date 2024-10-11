@@ -7,7 +7,7 @@ interface ModalProps {
   onClose: () => void;
   business: {
     name: string;
-    minimumInvestment: number;
+    minimum_investment: number;
   };
 }
 
@@ -20,7 +20,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, business }) => {
     }
   }, [isOpen]);
 
-  const [value, setValue] = useState<number>(business.minimumInvestment);
+  const [value, setValue] = useState<number>(business.minimum_investment);
   const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
 
   // :::::::::::::::::::: submit function
@@ -86,7 +86,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, business }) => {
                   onChange={(e) => {
                     setValue(Number(e.target.value));
                   }}
-                  placeholder={`Minimum $${business.minimumInvestment}`}
+                  placeholder={`Minimum $${business.minimum_investment}`}
                   required
                 />
               </div>

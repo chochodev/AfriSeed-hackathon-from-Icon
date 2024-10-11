@@ -12,8 +12,8 @@ import Modal from './components/modal';
 interface Business {
   name: string
   logo: string
-  coverImage: string
-  shortDescription: string
+  cover_image: string
+  short_description: string
   pitch: {
     summary: string
     problem: string
@@ -23,18 +23,18 @@ interface Business {
   }
   location: string
   category: string
-  amountRaised: number
+  amount_raised: number
   investors: number
   valuation: string
-  minimumInvestment: number
+  minimum_investment: number
   daysLeft: number
 }
 
 const business: Business = {
   name: 'TechInnovate',
   logo: '/images/hero3.jpg',
-  coverImage: '/images/hero1.jpg',
-  shortDescription: 'AI-powered solutions for businesses',
+  cover_image: '/images/hero1.jpg',
+  short_description: 'AI-powered solutions for businesses',
   pitch: {
     summary: 'TechInnovate is revolutionizing the way businesses interact with data, providing scalable and efficient AI and machine learning solutions for companies of all sizes.',
     problem: 'Many businesses struggle to effectively utilize their data due to lack of expertise and resources in AI and machine learning.',
@@ -44,10 +44,10 @@ const business: Business = {
   },
   location: 'Nairobi, Kenya',
   category: 'Technology',
-  amountRaised: 100000,
+  amount_raised: 100000,
   investors: 122,
   valuation: '$5M',
-  minimumInvestment: 100,
+  minimum_investment: 100,
   daysLeft: 15,
 }
 
@@ -58,7 +58,7 @@ export default function BusinessPage() {
   const closeModal = () => setIsModalOpen(false);
   const modalData = {
     name: business.name,
-    minimumInvestment: business.minimumInvestment
+    minimum_investment: business.minimum_investment
   }
 
   return (
@@ -75,7 +75,7 @@ export default function BusinessPage() {
               />
               <div>
                 <h1 className="text-xl font-bold">{business.name}</h1>
-                <p className="text-sm text-neutral-500">{business.shortDescription}</p>
+                <p className="text-sm text-neutral-500">{business.short_description}</p>
               </div>
             </div>
             <button 
@@ -94,7 +94,7 @@ export default function BusinessPage() {
             <div className="lg:col-span-2">
               <div className="relative h-[400px] rounded-lg overflow-hidden mb-8">
                 <img
-                  src={business.coverImage}
+                  src={business.cover_image}
                   alt={`${business.name} cover`}
                   className='object-cover '
                 />
@@ -170,7 +170,7 @@ export default function BusinessPage() {
                   </div>
                 </div>
 
-                <p className="text-3xl font-bold mb-2">${business.amountRaised.toLocaleString()}</p>
+                <p className="text-3xl font-bold mb-2">${business.amount_raised.toLocaleString()}</p>
                 
                 <p className="text-neutral-600 mb-6">raised of $250,000 goal</p>
                 <div className="grid grid-cols-2 gap-4 mb-6">
@@ -192,7 +192,7 @@ export default function BusinessPage() {
                   Invest Now
                 </button>
                 <p className="text-center text-neutral-600 mt-[1rem] ">
-                  ${business.minimumInvestment} minimum investment
+                  ${business.minimum_investment} minimum investment
                 </p>
               </div>
               <div className="bg-white rounded-lg border border-neutral-200 p-6">
@@ -237,7 +237,7 @@ export default function BusinessPage() {
         <Modal 
           isOpen={isModalOpen} 
           onClose={closeModal} 
-          business={modalData} 
+          business={modalData}
         />
 
       </div>
