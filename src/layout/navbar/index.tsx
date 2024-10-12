@@ -2,17 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { RiSearch2Line, RiMenu5Fill, RiCloseFill } from "react-icons/ri";
 import { BsArrowRight } from "react-icons/bs";
-import { ConnectButton } from "thirdweb/react";
-import { createWallet, inAppWallet } from "thirdweb/wallets";
 import { ConnectWallet } from '@thirdweb-dev/react';
-
-// ::::::::::::::::::::: list of wallet variable
-const wallets = [
-  inAppWallet(),
-  createWallet("io.metamask"),
-  createWallet("com.coinbase.wallet"),
-  createWallet("me.rainbow"),
-];
 
 const Navbar = () => {
   const [smallScreen, setSmallScreen] = useState<boolean>(false);
@@ -79,10 +69,6 @@ const Navbar = () => {
           </div>
           
           <div className='flex justify-end'>
-            {/* <Link 
-              to='/'
-              className='bg-primary-600 hover:bg-primary-800 active:bg-primary-500 ease-250 text-white text-[0.875rem] lg:text-[1rem] py-[0.5rem] px-[1.25rem] lg:px-[1.5rem] rounded-[8px] '
-            >Connect Wallet</Link> */}
             <ConnectWallet/>
           </div>
         </div>
