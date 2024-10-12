@@ -83,10 +83,6 @@ const Home = () => {
     fetchBusinesses();
   }, []);
   
-  // :::::::::::::::::::::: IMAGE 
-  const cloud_name = import.meta.env.VITE_APP_CLOUDINARY_CLOUD_NAME;
-  const imageUrl = `https://res.cloudinary.com/${cloud_name}`;
-
   return (
     <MainLayout>
       <div className='flex size-full flex-col space-y-[4rem] items-center justify-center py-[4rem] md:py-[6rem] px-[1rem] bg-neutral-100 '>
@@ -177,7 +173,7 @@ const Home = () => {
 
                   <div className='px-[1.5rem] w-full '>
                     <h2 className='font-[700] text-[1.25rem] lg:text-[1.5rem]'>{business.name}</h2>
-                    <p className='min-h-[3rem] text-neutral-500 text-[0.75rem] sm:max-md:text-[0.875rem] lg:text-[0.875rem] '>{business.pitch_summary.slice(0,30)}...</p>
+                    <p className='min-h-[3rem] text-neutral-500 text-[0.75rem] sm:max-md:text-[0.875rem] lg:text-[0.875rem] '>{business.pitch_summary.slice(0,40)}...</p>
                   </div>
 
                   {/* :::::::::::::::::::: hidden content on hover */}
