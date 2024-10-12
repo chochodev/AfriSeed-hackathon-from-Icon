@@ -7,10 +7,12 @@ const Business = lazy(() => import ('./business'));
 const BusinessForm = lazy(() => import ('./businessForm'));
 const BusinessPage = lazy(() => import ('./viewBusiness'));
 
+import Loader from '$/components/loader';
+
 const Pages = () => {
   return (
     <Router>
-      <Suspense fallback={<div>Loading...</div>}>
+      <Suspense fallback={<Loader />}> {/* {<>Loading...</>}> */}
         <Routes>
           <Route path='/' element={<Home />} />
           <Route path='/investors' element={<Investor />} />
