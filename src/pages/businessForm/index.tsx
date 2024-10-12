@@ -1,5 +1,5 @@
 import MainLayout from '$/layout';
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import axios from 'axios';
 import { useDropzone } from 'react-dropzone';
 import Input from "$/components/input";
@@ -71,6 +71,14 @@ export default function BusinessForm() {
       setCoverImageFile(file);
     }
   }, [])
+
+  // ::::::::::::::::::::: clean up when component unmounts
+  useEffect(() => {
+    return () => {
+      if (logoFile) URL.revokeObjectURL(URL.createObjectURL(logoFile));
+      if (coverImageFile) URL.revokeObjectURL(URL.createObjectURL(coverImageFile));
+    };
+  }, [logoFile, coverImageFile]);
 
   const { getRootProps: getLogoRootProps, getInputProps: getLogoInputProps } = useDropzone({
     onDrop: (files: File[]) => onDrop(files, 'logo'),
@@ -159,11 +167,11 @@ export default function BusinessForm() {
             <div {...getLogoRootProps()} className="border-2 border-dashed border-gray-300 rounded-lg p-6 cursor-pointer hover:border-neutral-500">
               <input {...getLogoInputProps()} />
               <div className="flex flex-col items-center">
-                {/* {logoFile ? (
-                  <img src={logoFile} alt="Logo" className="size-[12.5rem] rounded-[4px] object-cover mb-4" />
-                ) : ( */}
+                {logoFile ? (
+                  <img src={URL.createObjectURL(logoFile)} alt="Logo" className="size-[12.5rem] rounded-[4px] object-cover mb-4" />
+                ) : (
                   <RiImageAddLine className='text-[3.5rem] text-neutral-400' />
-                {/* )} */}
+                )}
                 <p className="text-sm text-gray-500">Drag and drop or click to upload logo</p>
               </div>
             </div>
@@ -174,11 +182,11 @@ export default function BusinessForm() {
             <div {...getCoverRootProps()} className="border-2 border-dashed border-gray-300 rounded-lg p-6 cursor-pointer hover:border-neutral-500">
               <input {...getCoverInputProps()} />
               <div className="flex flex-col items-center">
-                {/* {coverImageFile ? (
-                  <img src={coverImageFile} alt="Cover" className="size-[12.5rem] rounded-[4px] mb-4 object-cover" />
-                ) : ( */}
+                {coverImageFile ? (
+                  <img src={URL.createObjectURL(coverImageFile)} alt="Cover" className="size-[12.5rem] rounded-[4px] mb-4 object-cover" />
+                ) : (
                   <RiImageAddLine className='text-[3.5rem] text-neutral-400' />
-                {/* )} */}
+                )}
                 <p className="text-sm text-gray-500">Drag and drop or click to upload cover image</p>
               </div>
             </div>

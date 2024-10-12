@@ -1,26 +1,21 @@
-import { Terminal } from "lucide-react"
-
-import {
-  Alert as AlertComponent,
-  AlertDescription,
-  AlertTitle,
-} from "$/components/ui/alert"
+import React from 'react';
+import { Terminal } from 'lucide-react';
 
 interface AlertProps {
   title: string;
   text: string;
 }
 
-function Alert({ title, text }: AlertProps) {
+const Alert: React.FC<AlertProps> = ({ title, text }) => {
   return (
-    <AlertComponent>
-      <Terminal className="h-4 w-4" />
-      <AlertTitle>{title}</AlertTitle>
-      <AlertDescription>
-        {text}
-      </AlertDescription>
-    </AlertComponent>
-  )
-}
+    <div className="fixed top-4 right-4 z-50 bg-white border border-gray-300 rounded-lg shadow-lg p-4 flex items-start">
+      <Terminal className="h-5 w-5 text-gray-500 mr-2" />
+      <div>
+        <h4 className="font-bold text-lg">{title}</h4>
+        <p className="text-sm text-gray-700">{text}</p>
+      </div>
+    </div>
+  );
+};
 
 export default Alert;
