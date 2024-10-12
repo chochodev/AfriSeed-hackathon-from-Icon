@@ -100,7 +100,7 @@ const Business = () => {
           <p className='text-[1rem] text-neutral-500'>Browse current investment opportunities on Republic.<br/>
           All companies are vetted & pass due diligence.</p>
 
-          <nav className='flex items-center space-x-[2rem] w-full py-[2rem] '>
+          <nav className='flex flex-wrap items-center space-y-[1rem] space-x-[2rem] w-full py-[2rem] '>
             {/* :::::::::::::::::::::::::: search */}
             <div className='relative size-max flex place-items-center '>
               <RiSearch2Line className='absolute left-[1rem] text-[1.25rem] text-neutral-500 ' />
@@ -142,7 +142,9 @@ const Business = () => {
             <Link
               to='/business/add'
               className='bg-neutral-800 text-neutral-100 font-[600] text-[0.875rem] px-[2rem] py-[0.375rem] rounded-[1rem] outline outline-1 outline-neutral-200 hover:bg-neutral-100 hover:text-neutral-800 active:bg-neutral-200 shadow-[0_0_20px_-1px_rgba(0,0,0,0.1)] ease-250 '
-            >Add <span className='text-[1rem]'>+</span></Link>
+            >
+              Add <span className='text-[1rem]'>+</span>
+            </Link>
           </nav>
 
           {/* ::::::::::::::::::::::: title */}
