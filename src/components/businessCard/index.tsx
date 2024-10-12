@@ -56,7 +56,7 @@ const BusinessCard = ({ business }: BusinessCardProps) => {
 
         <div className='px-[1.5rem] w-full '>
           <h2 className='font-[700] text-[1.25rem] lg:text-[1.5rem]'>{business.name}</h2>
-          <p className='min-h-[3rem] text-neutral-500 text-[0.75rem] sm:max-md:text-[0.875rem] lg:text-[0.875rem] '>{business.pitch_summary.slice(0,40)}...</p>
+          <p className='min-h-[3rem] text-neutral-500 text-[0.75rem] sm:max-md:text-[0.875rem] lg:text-[0.875rem] '>{business.pitch_summary.slice(0,70)}...</p>
         </div>
 
         {/* :::::::::::::::::::: hidden content on hover */}
