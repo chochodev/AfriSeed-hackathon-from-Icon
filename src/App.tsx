@@ -1,9 +1,12 @@
 import Pages from './pages';
 import './index.css';
+import { ThirdwebProvider } from "@thirdweb-dev/react";
 
 function App() {
   return (
-    <Pages />
+    <ThirdwebProvider activeChain="ethereum">
+      <Pages />
+    </ThirdwebProvider>
   )
 }
 
