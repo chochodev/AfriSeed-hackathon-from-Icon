@@ -206,32 +206,7 @@ export default function BusinessPage() {
               </div>
             </div>
           </div>
-        </main>
-
-        {/* Video Modal */}
-        {/* {isVideoModalOpen && (
-          <div className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50">
-            <div className="bg-white p-4 rounded-lg max-w-3xl w-full">
-              <div className="flex justify-end mb-2">
-                <button onClick={() => setIsVideoModalOpen(false)} className="text-neutral-600 hover:text-neutral-800">
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                  </svg>
-                </button>
-              </div>
-              <div className="aspect-w-16 aspect-h-9">
-                <iframe 
-                  src="https://www.youtube.com/embed/dQw4w9WgXcQ" 
-                  frameBorder="0" 
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                  allowFullScreen
-                  className="w-full h-full"
-                ></iframe>
-              </div>
-            </div>
-          </div>
-        )} */}
-        
+        </main>        
         
         {/* :::::::::::::::::::: investment modal */}
         <Modal 
