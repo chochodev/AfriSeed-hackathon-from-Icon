@@ -9,7 +9,7 @@ interface Business {
   short_description: string
 }
 
-export default function DeleteBusinessPage() {
+export default function DeleteBusiness() {
   const [businesses, setBusinesses] = useState<Business[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
@@ -37,6 +37,7 @@ export default function DeleteBusinessPage() {
     try {
       await axios.delete(`${backend_url}/businesses/${id}`)
       setBusinesses(businesses.filter(business => business.id !== id))
+      
     } catch (err) {
       setError('Failed to delete business');
       console.log('Error: ', err);
