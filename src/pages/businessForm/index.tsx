@@ -7,42 +7,38 @@ import { RiImageAddLine } from "react-icons/ri";
 
 interface Business {
   name: string
-  logo: string
-  cover_image: string
   short_description: string
-  pitch: {
-    summary: string
-    problem: string
-    solution: string
-    market_opportunity: string
-    traction: string
-  }
   location: string
   category: string
   amount_raised: number
   investors: number
   minimum_investment: number
   days_left: number
+
+  // ::::::::::::::: pitch
+  pitch_summary: string
+  pitch_problem: string
+  pitch_solution: string
+  pitch_market_opportunity: string
+  pitch_traction: string
 }
 
 const initialBusiness: Business = {
   name: '',
-  logo: '',
-  cover_image: '',
   short_description: '',
-  pitch: {
-    summary: '',
-    problem: '',
-    solution: '',
-    market_opportunity: '',
-    traction: '',
-  },
   location: '',
   category: '',
   amount_raised: 0,
   investors: 0,
   minimum_investment: 0,
   days_left: 0,
+
+  // :::::::::::::::::: pitch
+  pitch_summary: '',
+  pitch_problem: '',
+  pitch_solution: '',
+  pitch_market_opportunity: '',
+  pitch_traction: '',
 }
 
 export default function BusinessForm() {
@@ -53,14 +49,6 @@ export default function BusinessForm() {
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target
     setBusiness(prev => ({ ...prev, [name]: value }))
-  }
-
-  const handlePitchChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target
-    setBusiness(prev => ({
-      ...prev,
-      pitch: { ...prev.pitch, [name]: value }
-    }))
   }
 
   const handleNumberChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -78,14 +66,6 @@ export default function BusinessForm() {
     } else if (type === 'cover_image') {
       setCoverImageFile(file);
     }
-    
-    // if (file) {
-    //   const reader = new FileReader()
-    //   reader.onload = (e) => {
-    //     setBusiness(prev => ({ ...prev, [type]: e.target?.result as string }))
-    //   }
-    //   reader.readAsDataURL(file)
-    // }
   }, [])
 
   const { getRootProps: getLogoRootProps, getInputProps: getLogoInputProps } = useDropzone({
@@ -100,30 +80,22 @@ export default function BusinessForm() {
     multiple: false
   })
 
-  // :::::::::::::::::::: submit function
+  // :::::::::::::::::::: SUBMIT FUNCTION
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     const formData = new FormData();
 
-    formData.append('name', business.name);
-    formData.append('short_description', business.short_description);
-    formData.append('location', business.location);
-    formData.append('category', business.category);
-    formData.append('amount_raised', business.amount_raised.toString());
-    formData.append('investors', business.investors.toString());
-    formData.append('minimum_investment', business.minimum_investment.toString());
-    formData.append('days_left', business.days_left.toString());
-
-    formData.append('pitch.summary', business.pitch.summary);
-    formData.append('pitch.problem', business.pitch.problem);
-    formData.append('pitch.solution', business.pitch.solution);
-    formData.append('pitch.market_opportunity', business.pitch.market_opportunity);
-    formData.append('pitch.traction', business.pitch.traction);
-
-    // Convert base64 image strings to files and append them as well
-    // formData.append('logo', dataURLtoFile(business.logo, 'logo.png'));
-    // formData.append('cover_image', dataURLtoFile(business.cover_image, 'cover_image.png'));
+    Object.entries(business).forEach(([key, value]) => {
+      // if (typeof value === 'object' && value !== null) {
+      //   // Handle nested objects (like pitch)
+      //   Object.entries(value).forEach(([nestedKey, nestedValue]) => {
+      //     formData.append(`${key}.${nestedKey}`, String(nestedValue));
+      //   });
+      // } else {
+        formData.append(key, value);
+      // }
+    });
 
     if (logoFile) {
       formData.append('logo', logoFile);
@@ -133,11 +105,14 @@ export default function BusinessForm() {
     }
 
     try {
-      // Make the POST request to the FastAPI backend
-      const response = await axios.post('http://localhost:8000/businesses/', formData, {
+      const jsonData = Object.fromEntries(formData);
+      console.log(jsonData);
+      const response = await axios.post('http://localhost:8000/businesses/', jsonData, {
         headers: {
-          'Content-Type': 'multipart/form-data',
+          'Content-Type': 'application/json',
+          // 'Accept': 'application/json',
         },
+        withCredentials: true,
       });
 
       console.log('Business created:', response.data);
@@ -178,11 +153,11 @@ export default function BusinessForm() {
             <div {...getLogoRootProps()} className="border-2 border-dashed border-gray-300 rounded-lg p-6 cursor-pointer hover:border-neutral-500">
               <input {...getLogoInputProps()} />
               <div className="flex flex-col items-center">
-                {business.logo ? (
-                  <img src={business.logo} alt="Logo" className="size-[12.5rem] rounded-[4px] object-cover mb-4" />
-                ) : (
+                {/* {logoFile ? (
+                  <img src={logoFile} alt="Logo" className="size-[12.5rem] rounded-[4px] object-cover mb-4" />
+                ) : ( */}
                   <RiImageAddLine className='text-[3.5rem] text-neutral-400' />
-                )}
+                {/* )} */}
                 <p className="text-sm text-gray-500">Drag and drop or click to upload logo</p>
               </div>
             </div>
@@ -193,11 +168,11 @@ export default function BusinessForm() {
             <div {...getCoverRootProps()} className="border-2 border-dashed border-gray-300 rounded-lg p-6 cursor-pointer hover:border-neutral-500">
               <input {...getCoverInputProps()} />
               <div className="flex flex-col items-center">
-                {business.cover_image ? (
-                  <img src={business.cover_image} alt="Cover" className="size-[12.5rem] rounded-[4px] mb-4 object-cover" />
-                ) : (
+                {/* {coverImageFile ? (
+                  <img src={coverImageFile} alt="Cover" className="size-[12.5rem] rounded-[4px] mb-4 object-cover" />
+                ) : ( */}
                   <RiImageAddLine className='text-[3.5rem] text-neutral-400' />
-                )}
+                {/* )} */}
                 <p className="text-sm text-gray-500">Drag and drop or click to upload cover image</p>
               </div>
             </div>
@@ -217,13 +192,13 @@ export default function BusinessForm() {
 
           {/* :::::::::::::::: SUMMARY INFORMATION */}
           <div className="space-y-2">
-            <label className='text-[0.875rem] font-[600] text-neutral-600 uppercase' htmlFor="summary">Pitch Summary</label>
+            <label className='text-[0.875rem] font-[600] text-neutral-600 uppercase' htmlFor="pitch_summary">Pitch Summary</label>
             <Input
-              id="summary"
-              name="summary"
+              id="pitch_summary"
+              name="pitch_summary"
               type='textarea'
-              value={business.pitch.summary}
-              onChange={handlePitchChange}
+              value={business.pitch_summary}
+              onChange={handleInputChange}
               placeholder='e.g In summary, this aims to not only empower users but improve the quality of ...'
               className='min-h-[5rem]'
               required
@@ -231,13 +206,13 @@ export default function BusinessForm() {
           </div>
           
           <div className="space-y-2">
-            <label className='text-[0.875rem] font-[600] text-neutral-600 uppercase' htmlFor="problem">Pitch Problem</label>
+            <label className='text-[0.875rem] font-[600] text-neutral-600 uppercase' htmlFor="pitch_problem">Pitch Problem</label>
             <Input
-              id="problem"
-              name="problem"
+              id="pitch_problem"
+              name="pitch_problem"
               type='textarea'
-              value={business.pitch.problem}
-              onChange={handlePitchChange}
+              value={business.pitch_problem}
+              onChange={handleInputChange}
               placeholder='e.g Many businesses struggle to effectively utilize their data due to lack of expertise ...'
               className='min-h-[5rem]'
               required
@@ -245,13 +220,13 @@ export default function BusinessForm() {
           </div>
           
           <div className="space-y-2">
-            <label className='text-[0.875rem] font-[600] text-neutral-600 uppercase' htmlFor="solution">Pitch Solution</label>
+            <label className='text-[0.875rem] font-[600] text-neutral-600 uppercase' htmlFor="pitch_solution">Pitch Solution</label>
             <Input
-              id="solution"
-              name="solution"
+              id="pitch_solution"
+              name="pitch_solution"
               type='textarea'
-              value={business.pitch.solution}
-              onChange={handlePitchChange}
+              value={business.pitch_solution}
+              onChange={handleInputChange}
               placeholder='e.g Our AI-powered platform democratizes access to advanced data ...'
               className='min-h-[5rem]'
               required
@@ -259,13 +234,13 @@ export default function BusinessForm() {
           </div>
           
           <div className="space-y-2">
-            <label className='text-[0.875rem] font-[600] text-neutral-600 uppercase' htmlFor="marketOpportunity">Pitch Market Opportunity</label>
+            <label className='text-[0.875rem] font-[600] text-neutral-600 uppercase' htmlFor="pitch_market_opportunity">Pitch Market Opportunity</label>
             <Input
-              id="marketOpportunity"
-              name="marketOpportunity"
+              id="pitch_market_opportunity"
+              name="pitch_market_opportunity"
               type='textarea'
-              value={business.pitch.market_opportunity}
-              onChange={handlePitchChange}
+              value={business.pitch_market_opportunity}
+              onChange={handleInputChange}
               placeholder='e.g The global AI market is projected to grow from $387.45 ...'
               className='min-h-[5rem]'
               required
@@ -273,13 +248,13 @@ export default function BusinessForm() {
           </div>
           
           <div className="space-y-2">
-            <label className='text-[0.875rem] font-[600] text-neutral-600 uppercase' htmlFor="traction">Pitch Traction</label>
+            <label className='text-[0.875rem] font-[600] text-neutral-600 uppercase' htmlFor="pitch_traction">Pitch Traction</label>
             <Input
-              id="traction"
-              name="traction"
+              id="pitch_traction"
+              name="pitch_traction"
               type='textarea'
-              value={business.pitch.traction}
-              onChange={handlePitchChange}
+              value={business.pitch_traction}
+              onChange={handleInputChange}
               placeholder='e.g In our first year, we&apos;ve onboarded 50+ clients across ...'
               className='min-h-[5rem]'
               required
