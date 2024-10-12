@@ -18,7 +18,7 @@ const Pages = () => {
           <Route path='/investors' element={<Investor />} />
           <Route path='/business' element={<Business />} />
           <Route path='/business/add' element={<BusinessForm />} />
-          <Route path='/business/*' element={<BusinessPage />} />
+          <Route path='/business/:id' element={<BusinessPage />} />
         </Routes>
       </Suspense>
     </Router>
