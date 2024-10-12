@@ -103,7 +103,11 @@ export default function BusinessForm() {
         }
       );
 
-      console.log('Business created:', response.data);
+      // ::::::::::::::: resets the business form data
+      setBusiness(initialBusiness);
+
+      console.log(`Business ${response.data.name} created successfully`);
+      
     } catch (error) {
       console.error('Error creating business:', error);
     }
