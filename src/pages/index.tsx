@@ -19,6 +19,8 @@ const Pages = () => {
           <Route path='/business' element={<Business />} />
           <Route path='/business/add' element={<BusinessForm />} />
           <Route path='/business/:id' element={<BusinessPage />} />
+          <Route path='/business/delete' element={<BusinessPage />} />
+
         </Routes>
       </Suspense>
     </Router>
