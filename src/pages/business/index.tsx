@@ -150,9 +150,9 @@ const Business = () => {
           <div 
             className='grid grid-cols-1 md:grid-cols-3 gap-[0.5rem] gap-y-[2rem] lg:gap-y-[4rem] lg:gap-[2rem] py-[2rem] '
           >
-            {(businesses.length > 0 )?
+          {(businesses.length > 0 )?
             <>
-            {businesses.slice(0,3)?.map((business, i) => (
+            {businesses?.map((business, i) => (
               <BusinessCard business={business} key={i} />
             ))}
             </> :
