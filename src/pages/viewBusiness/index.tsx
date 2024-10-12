@@ -69,23 +69,23 @@ export default function BusinessPage() {
 
   return (
     <MainLayout>
-      <div className="bg-neutral-50 min-h-screen">
+      <div className="bg-neutral-50 min-h-screen py-[2rem] ">
         {/* ::::::::::::::::::::::::::: header */}
-        <header className="">
-          <div className="container mx-auto px-4 py-4 flex justify-between items-center">
-            <div className="flex items-center space-x-4">
+        <header className="w-full max-w-[72rem] mx-auto ">
+          <div className="mx-auto px-4 py-4 flex justify-between items-center">
+            <div className="flex items-center space-x-4 ">
               <img
                 src={business.logo}
                 alt={`${business.name} logo`}
-                className="size-[2.5rem] object-cover rounded-full"
+                className="size-[2.5rem] lg:size-[3.5rem] object-cover rounded-full"
               />
               <div>
-                <h1 className="text-xl font-bold">{business.name}</h1>
-                <p className="text-sm text-neutral-500">{business.short_description}</p>
+                <h1 className="text-[1rem] sm:text-xl font-bold">{business.name}</h1>
+                <p className="text-[0.75rem] sm:text-sm text-neutral-500 line-clamp-2">{business.short_description}...</p>
               </div>
             </div>
             <button 
-              className="bg-neutral-800 text-neutral-100 font-[600] text-[0.875rem] px-[2rem] py-[0.5rem] rounded-full outline outline-1 outline-neutral-300 hover:bg-neutral-100 hover:text-neutral-800 active:bg-neutral-200 shadow-[0_0_20px_1px_rgba(0,0,0,0.1)] ease-250"
+              className="min-w-max bg-neutral-800 text-neutral-100 font-[600] text-[0.75rem] sm:text-[0.875rem] px-[1rem] sm:px-[1.5rem] py-[0.5rem] rounded-full outline outline-1 outline-neutral-300 hover:bg-neutral-100 hover:text-neutral-800 active:bg-neutral-200 shadow-[0_0_20px_1px_rgba(0,0,0,0.1)] ease-250"
               onClick={openModal}
             >
               Invest Now
@@ -94,7 +94,7 @@ export default function BusinessPage() {
         </header>
 
         {/* :::::::::::::::::::::::::::::::: Main Content */}
-        <main className="container mx-auto px-4 py-8">
+        <main className="mx-auto px-4 py-8">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             {/* ::::::::::::::::::::::::::::::: Left Column */}
             <div className="lg:col-span-2">
@@ -102,7 +102,7 @@ export default function BusinessPage() {
                 <img
                   src={business.cover_image}
                   alt={`${business.name} cover`}
-                  className="object-cover"
+                  className="size-full object-cover"
                 />
               </div>
               <div className="bg-white rounded-lg border border-neutral-200 p-6 mb-8">
