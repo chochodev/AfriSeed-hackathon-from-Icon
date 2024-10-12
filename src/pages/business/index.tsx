@@ -3,7 +3,32 @@ import BusinessCard from '$/components/businessCard';
 import MainLayout from '$/layout';
 import { RiSearch2Line, RiArrowDownSLine } from "react-icons/ri";
 import { Link } from 'react-router-dom';
+import axios from 'axios';
+import { Skeleton } from '$/components/ui/skeleton';
 
+
+interface Business {
+  id: string
+  logo: string
+  cover_image: string
+
+  name: string
+  short_description: string
+  location: string
+  category: string
+  minimum_investment: number
+  days_left: number
+
+  amount_raised: number
+  investors: number
+
+  // ::::::::::::::: pitch
+  pitch_summary: string
+  pitch_problem: string
+  pitch_solution: string
+  pitch_market_opportunity: string
+  pitch_traction: string
+}
 // interface Item {
 //   name: string
 //   verified: boolean
@@ -45,6 +70,27 @@ const Business = () => {
       }
     };
   }, [isOpen]);
+
+  
+  // ::::::::::::::::::::: fetching all businesses
+  const [businesses, setBusinesses] = useState<Business[]>([]); 
+
+  const backend_url = import.meta.env.VITE_APP_BACKEND_URL;
+  
+  useEffect(() => {
+    const fetchBusinesses = async () => {
+      try {
+        const response = await axios.get(`${backend_url}/businesses/`);
+        setBusinesses(response.data);
+        console.log('businesses: ', response.data);
+      } catch (error) {
+        console.error('Error fetching businesses:', error);
+      }
+    };
+
+    fetchBusinesses();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <MainLayout>
@@ -105,9 +151,26 @@ const Business = () => {
           <div 
             className='grid grid-cols-1 md:grid-cols-3 gap-[0.5rem] gap-y-[2rem] lg:gap-y-[4rem] lg:gap-[2rem] py-[2rem] '
           >
-            {Array.from({length: 9}).map((_, i) => (
-              <BusinessCard key={i} />
+          {(businesses.length > 0 )?
+            <>
+            {businesses?.map((business, i) => (
+              <BusinessCard business={business} key={i} />
             ))}
+            </> :
+            (<>
+              {[1,2,3].map((_, i) => (
+                <div
+                  key={i}
+                  className='group relative flex flex-col space-y-[1rem] h-[22.5rem] lg:h-[31.25rem] w-full rounded-[16px] overflow-hidden shadow-[0_2px_5px_-2px_rgba(0,0,0,0.25)] '
+                >
+                  <Skeleton className='w-full h-[13rem] lg:h-[15.625rem] rounded-t-[16px]' />
+                  <Skeleton className='w-full h-[3rem] lg:h-[1.625rem]' />
+                  <Skeleton className='w-full h-[1rem] lg:h-[1.625rem]' />
+                  <Skeleton className='w-full h-[1rem] lg:h-[1.625rem]' />
+                </div>
+              ))}
+            </>)
+          }
           </div>
         </div>
       </div>
