@@ -105,7 +105,7 @@ export default function BusinessForm() {
     };
     // console.log("Submitting business data:", jsonData);
     
-    const backend_url = import.meta.env.REACT_APP_BACKEND_URL;
+    const backend_url = import.meta.env.VITE_APP_BACKEND_URL;
     try {
       const response = await axios.post(
         `${backend_url}/businesses/`, 

@@ -2,6 +2,7 @@ import { useEffect, useState, useRef } from 'react';
 import MainLayout from '$/layout';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import { Skeleton } from '$/components/ui/skeleton';
 
 interface Business {
   id: string
@@ -66,12 +67,14 @@ const Home = () => {
   // ::::::::::::::::::::: fetching all businesses
   const [businesses, setBusinesses] = useState<Business[]>([]); 
 
-  const backend_url = import.meta.env.REACT_APP_BACKEND_URL;
+  const backend_url = import.meta.env.VITE_APP_BACKEND_URL;
+  
   useEffect(() => {
     const fetchBusinesses = async () => {
       try {
         const response = await axios.get(`${backend_url}/businesses/`);
         setBusinesses(response.data);
+        console.log('businesses: ', response.data);
       } catch (error) {
         console.error('Error fetching businesses:', error);
       }
@@ -81,7 +84,7 @@ const Home = () => {
   }, []);
   
   // :::::::::::::::::::::: IMAGE 
-  const cloud_name = import.meta.env.REACT_APP_CLOUDINARY_CLOUD_NAME;
+  const cloud_name = import.meta.env.VITE_APP_CLOUDINARY_CLOUD_NAME;
   const imageUrl = `https://res.cloudinary.com/${cloud_name}`;
 
   return (
@@ -143,70 +146,87 @@ const Home = () => {
           <p className='text-[0.75rem] text-neutral-500 mb-[1rem] '>Only public open business are shown. Log in to see all businesses you’re eligible to invest in</p>
 
           <div className='grid grid-cols-1 md:grid-cols-3 gap-[0.5rem] gap-y-[2rem] lg:gap-[2rem]'>
-          {businesses.map((business, i) => (
-            <Link 
-              to={`/business/${business.id}`}
-              key={i}
-              className='group relative flex flex-col h-[22.5rem] lg:h-[31.25rem] w-full rounded-[16px] overflow-hidden shadow-[0_2px_5px_-2px_rgba(0,0,0,0.25)] '
-            >
-              <img 
-                src={`${imageUrl}/${business.cover_image}`}
-                alt="company" 
-                className='w-full h-[13rem] lg:h-[15.625rem] rounded-t-[16px] object-cover '
-              />
-
-              {/* :::::::::::::::::::::: text content */}
-              <div 
-                className='absolute bottom-0 left-0 z-1 flex flex-1 flex-col h-max w-full space-y-[1rem] bg-white ease-400 delay-100 '
+          {(businesses.length > 0 )?
+            <>
+            {businesses?.map((business, i) => (
+              <Link 
+                to={`/business/${business.id}`}
+                key={i}
+                className='group relative flex flex-col h-[22.5rem] lg:h-[31.25rem] w-full rounded-[16px] overflow-hidden shadow-[0_2px_5px_-2px_rgba(0,0,0,0.25)] '
               >
-                {/* :::::::::::::::::::::: logo */}
-                <div
-                  className='relative left-[1.5rem] top-[-1.875rem] mb-[-2rem] z-[2] size-[3rem] lg:size-[3.5rem] bg-white p-[5px] rounded-[4px] shadow-[0_1px_5px_-1px_rgba(0,0,0,0.25)] '
-                >
-                  <img
-                    src={`${imageUrl}/${business.logo}`}
-                    alt='logo'
-                    className='size-full object-cover rounded-[4px]'
-                  />
-                </div>
+                <img 
+                  src={`${business.cover_image}`}
+                  alt="company" 
+                  className='w-full h-[13rem] lg:h-[15.625rem] rounded-t-[16px] object-cover '
+                />
 
-                <div className='px-[1.5rem] w-full '>
-                  <h2 className='font-[700] text-[1.25rem] lg:text-[1.5rem]'>{business.name}</h2>
-                  <p className='min-h-[3rem] text-neutral-500 text-[0.75rem] sm:max-md:text-[0.875rem] lg:text-[0.875rem] '>Lorem ipsum dolor sit amet consectetur adipisicing elit. Cum aspernatur delectus optio tempore nostrum.</p>
-                </div>
-
-                {/* :::::::::::::::::::: hidden content on hover */}
+                {/* :::::::::::::::::::::: text content */}
                 <div 
-                  className='max-lg:hidden w-full space-y-[0.5rem] px-[1.5rem] translate-y-0 group-hover:translate-y-[15rem] h-[4rem] group-hover:h-0 ease-400 '
+                  className='absolute bottom-0 left-0 z-1 flex flex-1 flex-col h-max w-full space-y-[1rem] bg-white ease-400 delay-100 '
                 >
-                  <p className='text-neutral-400 text-[1rem]'>Lagos, Nigeria</p>
-                  <div className='space-x-[0.5rem]'>
-                    <p className='text-neutral-600 bg-neutral-200 text-[0.625rem] w-max rounded-[2px] py-[2px] px-[0.375rem] '>TECH & FINANCE</p>
+                  {/* :::::::::::::::::::::: logo */}
+                  <div
+                    className='relative left-[1.5rem] top-[-1.875rem] mb-[-2rem] z-[2] size-[3rem] lg:size-[3.5rem] bg-white p-[5px] rounded-[4px] shadow-[0_1px_5px_-1px_rgba(0,0,0,0.25)] '
+                  >
+                    <img
+                      src={`${business.logo}`}
+                      alt='logo'
+                      className='size-full object-cover rounded-[4px]'
+                    />
                   </div>
-                  <small className='text-neutral-400 text-[0.625rem] '>Verified by AfriSeed plc.</small>
-                </div>
 
-                {/* :::::::::::::::::::: on hover content */}
-                <div 
-                  className='h-0 opacity-0 overflow-hidden text-[0.875rem] lg:text-[1rem] pb-[1.5rem] group-hover:h-[5rem] lg:group-hover:h-[10.5rem] group-hover:opacity-100 ease-400 '
-                >
-                  <p className='max-lg:flex pb-2 px-[1.5rem] '>
-                    <b className='max-lg:flex-1'>$100,000</b> raised
-                  </p>
-                  <p className='max-lg:flex border-solid border-0 lg:border-t-[1px] border-neutral-300 py-2 px-[1.5rem] '>
-                    <b className='max-lg:flex-1'>122</b> investors
-                  </p>
-                  <p className='max-lg:hidden border-solid border-0 border-t-[1px] border-neutral-300 py-2 px-[1.5rem] '>
-                    <b>$10</b> price per share
-                  </p>
-                  <p className='max-lg:hidden border-solid border-0 border-t-[1px] border-neutral-300 py-2 px-[1.5rem] '>
-                    <b>$30</b> minimum investment
-                  </p>
+                  <div className='px-[1.5rem] w-full '>
+                    <h2 className='font-[700] text-[1.25rem] lg:text-[1.5rem]'>{business.name}</h2>
+                    <p className='min-h-[3rem] text-neutral-500 text-[0.75rem] sm:max-md:text-[0.875rem] lg:text-[0.875rem] '>Lorem ipsum dolor sit amet consectetur adipisicing elit. Cum aspernatur delectus optio tempore nostrum.</p>
+                  </div>
+
+                  {/* :::::::::::::::::::: hidden content on hover */}
+                  <div 
+                    className='max-lg:hidden w-full space-y-[0.5rem] px-[1.5rem] translate-y-0 group-hover:translate-y-[15rem] h-[4rem] group-hover:h-0 ease-400 '
+                  >
+                    <p className='text-neutral-400 text-[1rem]'>Lagos, Nigeria</p>
+                    <div className='space-x-[0.5rem]'>
+                      <p className='text-neutral-600 bg-neutral-200 text-[0.625rem] w-max rounded-[2px] py-[2px] px-[0.375rem] '>TECH & FINANCE</p>
+                    </div>
+                    <small className='text-neutral-400 text-[0.625rem] '>Verified by AfriSeed plc.</small>
+                  </div>
+
+                  {/* :::::::::::::::::::: on hover content */}
+                  <div 
+                    className='h-0 opacity-0 overflow-hidden text-[0.875rem] lg:text-[1rem] pb-[1.5rem] group-hover:h-[5rem] lg:group-hover:h-[10.5rem] group-hover:opacity-100 ease-400 '
+                  >
+                    <p className='max-lg:flex pb-2 px-[1.5rem] '>
+                      <b className='max-lg:flex-1'>$100,000</b> raised
+                    </p>
+                    <p className='max-lg:flex border-solid border-0 lg:border-t-[1px] border-neutral-300 py-2 px-[1.5rem] '>
+                      <b className='max-lg:flex-1'>122</b> investors
+                    </p>
+                    <p className='max-lg:hidden border-solid border-0 border-t-[1px] border-neutral-300 py-2 px-[1.5rem] '>
+                      <b>$10</b> price per share
+                    </p>
+                    <p className='max-lg:hidden border-solid border-0 border-t-[1px] border-neutral-300 py-2 px-[1.5rem] '>
+                      <b>$30</b> minimum investment
+                    </p>
+                  </div>
                 </div>
-              </div>
-            </Link>
-          ))}
-          </div>
+              </Link>
+            ))}
+            </> :
+            (<>
+              {[1,2,3].map((_, i) => (
+                <div
+                  key={i}
+                  className='group relative flex flex-col space-y-[1rem] h-[22.5rem] lg:h-[31.25rem] w-full rounded-[16px] overflow-hidden shadow-[0_2px_5px_-2px_rgba(0,0,0,0.25)] '
+                >
+                  <Skeleton className='w-full h-[13rem] lg:h-[15.625rem] rounded-t-[16px]' />
+                  <Skeleton className='w-full h-[3rem] lg:h-[1.625rem]' />
+                  <Skeleton className='w-full h-[1rem] lg:h-[1.625rem]' />
+                  <Skeleton className='w-full h-[1rem] lg:h-[1.625rem]' />
+                </div>
+              ))}
+            </>)
+          }
+        </div>
         </div>
           <Link 
             className='w-full max-w-[15rem] py-[0.5rem] font-[600] text-[0.875rem] mx-auto text-center rounded-[8px] outline outline-[1px] outline-neutral-300 hover:bg-neutral-200/50 active:outline-primary-500 active:text-primary-600 ease-250'
