@@ -84,47 +84,15 @@ export default function BusinessForm() {
   // :::::::::::::::::::: SUBMIT FUNCTION
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
-    const formData = new FormData();
-
-    Object.entries(business).forEach(([key, value]) => {
-      formData.append(`business[${key}]`, value);
-    });
-
-    if (logoFile) {
-      formData.append('logo', logoFile);
-    }
-    if (coverImageFile) {
-      formData.append('cover_image', coverImageFile);
-    }
-
-    // const businessData = {
-    //   name: business.name,
-    //   short_description: business.short_description,
-    //   location: business.location,
-    //   category: business.category,
-    //   minimum_investment: business.minimum_investment,
-    //   days_left: business.days_left,
-    //   pitch_summary: business.pitch_summary,
-    //   pitch_problem: business.pitch_problem,
-    //   pitch_solution: business.pitch_solution,
-    //   pitch_market_opportunity: business.pitch_market_opportunity,
-    //   pitch_traction: business.pitch_traction,
-    //   amount_raised: business.amount_raised,
-    //   investors: business.investors,
-    // };
   
     const jsonData = { 
       ...business,
-      logo: logoFile,  // Ensure this is properly set
-      cover_image: coverImageFile // Ensure this is properly set
+      logo: logoFile,
+      cover_image: coverImageFile
     };
-    console.log("Submitting business data:", jsonData);
+    // console.log("Submitting business data:", jsonData);
     
     try {
-      // for (const pair of formData.entries()) {
-      //   console.log(`${pair[0]}: ${pair[1]}`);
-      // }
       const response = await axios.post(
         'http://localhost:8000/businesses/', 
         jsonData, {
