@@ -148,7 +148,7 @@ const Home = () => {
           <div className='grid grid-cols-1 md:grid-cols-3 gap-[0.5rem] gap-y-[2rem] lg:gap-[2rem]'>
           {(businesses.length > 0 )?
             <>
-            {businesses?.map((business, i) => (
+            {businesses.slice(0,3)?.map((business, i) => (
               <Link 
                 to={`/business/${business.id}`}
                 key={i}
@@ -177,7 +177,7 @@ const Home = () => {
 
                   <div className='px-[1.5rem] w-full '>
                     <h2 className='font-[700] text-[1.25rem] lg:text-[1.5rem]'>{business.name}</h2>
-                    <p className='min-h-[3rem] text-neutral-500 text-[0.75rem] sm:max-md:text-[0.875rem] lg:text-[0.875rem] '>Lorem ipsum dolor sit amet consectetur adipisicing elit. Cum aspernatur delectus optio tempore nostrum.</p>
+                    <p className='min-h-[3rem] text-neutral-500 text-[0.75rem] sm:max-md:text-[0.875rem] lg:text-[0.875rem] '>{business.pitch_summary.slice(0,30)}...</p>
                   </div>
 
                   {/* :::::::::::::::::::: hidden content on hover */}
