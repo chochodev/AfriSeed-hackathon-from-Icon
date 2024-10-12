@@ -5,6 +5,7 @@ import { useDropzone } from 'react-dropzone';
 import Input from "$/components/input";
 import { RiImageAddLine } from "react-icons/ri";
 import Alert from '$/components/alert';
+import { useNavigate } from 'react-router-dom'; 
 
 interface Business {
   name: string
@@ -48,6 +49,7 @@ export default function BusinessForm() {
   const [logoFile, setLogoFile] = useState<File | null>(null);
   const [coverImageFile, setCoverImageFile] = useState<File | null>(null);
   const [alert, setAlert] = useState<{ text: string; title: string;} | null>(null);
+  const navigate = useNavigate();
 
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -120,8 +122,13 @@ export default function BusinessForm() {
       setCoverImageFile(null);
       setAlert({ text: `Business ${response.data.name} created successfully`, title: 'Success'});
 
+      // ::::::::::::: redirects after 4s 
+      const timeout = setTimeout(()=>navigate('/business'), 4000);
 
-      console.log(`Business ${response.data.name} created successfully`);
+      // console.log(`Business ${response.data.name} created successfully`);
+      
+      // ::::::::::::: clean up after unmount
+      return () => clearTimeout(timeout);
 
     } catch (error) {
       console.error('Error creating business:', error);
