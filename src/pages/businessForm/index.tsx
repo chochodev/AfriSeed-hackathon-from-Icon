@@ -105,9 +105,10 @@ export default function BusinessForm() {
     };
     // console.log("Submitting business data:", jsonData);
     
+    const backend_url = import.meta.env.REACT_APP_BACKEND_URL;
     try {
       const response = await axios.post(
-        'http://localhost:8000/businesses/', 
+        `${backend_url}/businesses/`, 
         jsonData, {
           headers: {
             'Content-Type': 'multipart/form-data',

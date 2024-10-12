@@ -1,6 +1,30 @@
 import { useEffect, useState, useRef } from 'react';
 import MainLayout from '$/layout';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
+
+interface Business {
+  id: string
+  logo: string
+  cover_image: string
+
+  name: string
+  short_description: string
+  location: string
+  category: string
+  minimum_investment: number
+  days_left: number
+
+  amount_raised: number
+  investors: number
+
+  // ::::::::::::::: pitch
+  pitch_summary: string
+  pitch_problem: string
+  pitch_solution: string
+  pitch_market_opportunity: string
+  pitch_traction: string
+}
 
 const data = [
   {
@@ -38,6 +62,27 @@ const Home = () => {
       }
     }
   }, []);
+
+  // ::::::::::::::::::::: fetching all businesses
+  const [businesses, setBusinesses] = useState<Business[]>([]); 
+
+  const backend_url = import.meta.env.REACT_APP_BACKEND_URL;
+  useEffect(() => {
+    const fetchBusinesses = async () => {
+      try {
+        const response = await axios.get(`${backend_url}/businesses/`);
+        setBusinesses(response.data);
+      } catch (error) {
+        console.error('Error fetching businesses:', error);
+      }
+    };
+
+    fetchBusinesses();
+  }, []);
+  
+  // :::::::::::::::::::::: IMAGE 
+  const cloud_name = import.meta.env.REACT_APP_CLOUDINARY_CLOUD_NAME;
+  const imageUrl = `https://res.cloudinary.com/${cloud_name}`;
 
   return (
     <MainLayout>
@@ -98,14 +143,14 @@ const Home = () => {
           <p className='text-[0.75rem] text-neutral-500 mb-[1rem] '>Only public open business are shown. Log in to see all businesses you’re eligible to invest in</p>
 
           <div className='grid grid-cols-1 md:grid-cols-3 gap-[0.5rem] gap-y-[2rem] lg:gap-[2rem]'>
-          {[1,2,3].map((_, i) => (
+          {businesses.map((business, i) => (
             <Link 
-              to='/'
+              to={`/business/${business.id}`}
               key={i}
               className='group relative flex flex-col h-[22.5rem] lg:h-[31.25rem] w-full rounded-[16px] overflow-hidden shadow-[0_2px_5px_-2px_rgba(0,0,0,0.25)] '
             >
               <img 
-                src="/images/hero1.jpg" 
+                src={`${imageUrl}/${business.cover_image}`}
                 alt="company" 
                 className='w-full h-[13rem] lg:h-[15.625rem] rounded-t-[16px] object-cover '
               />
@@ -119,14 +164,14 @@ const Home = () => {
                   className='relative left-[1.5rem] top-[-1.875rem] mb-[-2rem] z-[2] size-[3rem] lg:size-[3.5rem] bg-white p-[5px] rounded-[4px] shadow-[0_1px_5px_-1px_rgba(0,0,0,0.25)] '
                 >
                   <img
-                    src='/images/hero3.jpg'
+                    src={`${imageUrl}/${business.logo}`}
                     alt='logo'
                     className='size-full object-cover rounded-[4px]'
                   />
                 </div>
 
                 <div className='px-[1.5rem] w-full '>
-                  <h2 className='font-[700] text-[1.25rem] lg:text-[1.5rem]'>Business 1</h2>
+                  <h2 className='font-[700] text-[1.25rem] lg:text-[1.5rem]'>{business.name}</h2>
                   <p className='min-h-[3rem] text-neutral-500 text-[0.75rem] sm:max-md:text-[0.875rem] lg:text-[0.875rem] '>Lorem ipsum dolor sit amet consectetur adipisicing elit. Cum aspernatur delectus optio tempore nostrum.</p>
                 </div>
 
