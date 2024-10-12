@@ -4,6 +4,7 @@ import axios from 'axios';
 import { useDropzone } from 'react-dropzone';
 import Input from "$/components/input";
 import { RiImageAddLine } from "react-icons/ri";
+import Alert from '$/components/alert';
 
 interface Business {
   name: string
@@ -46,6 +47,8 @@ export default function BusinessForm() {
   const [business, setBusiness] = useState<Business>(initialBusiness);
   const [logoFile, setLogoFile] = useState<File | null>(null);
   const [coverImageFile, setCoverImageFile] = useState<File | null>(null);
+  const [alert, setAlert] = useState<{ text: string; title: string;} | null>(null);
+
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target
@@ -103,11 +106,15 @@ export default function BusinessForm() {
         }
       );
 
-      // ::::::::::::::: resets the business form data
+      // ::::::::::::::: resets the business form data and shows alert
       setBusiness(initialBusiness);
+      setLogoFile(null);
+      setCoverImageFile(null);
+      setAlert({ text: `Business ${response.data.name} created successfully`, title: 'Success'});
+
 
       console.log(`Business ${response.data.name} created successfully`);
-      
+
     } catch (error) {
       console.error('Error creating business:', error);
     }
@@ -115,6 +122,13 @@ export default function BusinessForm() {
 
   return (
     <MainLayout>
+    {/* :::::::::::::::::: alert component */}
+    {alert && (
+      <Alert
+        text={alert.text}
+        title={alert.title}
+      />
+    )}
     <div className='size-full py-[4rem] px-[1rem] lg:px-[2rem] bg-neutral-50'>
       <div className="max-w-[72rem] mx-auto">
         <h1 className="text-3xl font-bold mb-6">Pitch Your Business Ideas</h1>
