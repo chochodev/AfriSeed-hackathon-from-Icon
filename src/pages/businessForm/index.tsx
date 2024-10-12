@@ -10,10 +10,11 @@ interface Business {
   short_description: string
   location: string
   category: string
-  amount_raised: number
-  investors: number
   minimum_investment: number
   days_left: number
+
+  amount_raised: number
+  investors: number
 
   // ::::::::::::::: pitch
   pitch_summary: string
@@ -87,14 +88,7 @@ export default function BusinessForm() {
     const formData = new FormData();
 
     Object.entries(business).forEach(([key, value]) => {
-      // if (typeof value === 'object' && value !== null) {
-      //   // Handle nested objects (like pitch)
-      //   Object.entries(value).forEach(([nestedKey, nestedValue]) => {
-      //     formData.append(`${key}.${nestedKey}`, String(nestedValue));
-      //   });
-      // } else {
-        formData.append(key, value);
-      // }
+      formData.append(key, value);
     });
 
     if (logoFile) {
@@ -104,16 +98,22 @@ export default function BusinessForm() {
       formData.append('cover_image', coverImageFile);
     }
 
+
+    const jsonData = { ...business };
+
     try {
-      const jsonData = Object.fromEntries(formData);
+      // const jsonData = Object.fromEntries(formData);
       console.log(jsonData);
-      const response = await axios.post('http://localhost:8000/businesses/', jsonData, {
-        headers: {
-          'Content-Type': 'application/json',
-          // 'Accept': 'application/json',
-        },
-        withCredentials: true,
-      });
+      const response = await axios.post(
+        'http://localhost:8000/businesses/', 
+        JSON.stringify(jsonData), {
+          headers: {
+            'Content-Type': 'application/json',
+            // 'Accept': 'application/json',
+          },
+          withCredentials: true,
+        }
+      );
 
       console.log('Business created:', response.data);
     } catch (error) {
