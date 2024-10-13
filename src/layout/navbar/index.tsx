@@ -69,7 +69,9 @@ const Navbar = () => {
           </div>
           
           <div className='flex justify-end'>
-            <ConnectWallet />
+            <ConnectWallet 
+              theme={'light'}
+            />
           </div>
         </div>
       </nav>
@@ -101,7 +103,12 @@ const Navbar = () => {
         </div>
         
         <div className='flex justify-center'>
-          {/* <ConnectWallet /> */}
+          <ConnectWallet 
+            style={{
+              width: "100%",
+            }}
+            theme={'light'}
+          />
         </div>
       </div>}
     </header>
