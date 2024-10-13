@@ -13,7 +13,7 @@ import Loader from '$/components/loader';
 const Pages = () => {
   return (
     <Router>
-      <Suspense fallback={<Loader />}> {/* {<>Loading...</>}> */}
+      <Suspense fallback={<Loader />}>
         <Routes>
           <Route path='/' element={<Home />} />
           <Route path='/investors' element={<Investor />} />
