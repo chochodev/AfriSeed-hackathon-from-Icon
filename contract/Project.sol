@@ -1,5 +1,5 @@
 //SPDX-License-Identifier: Unlicense
-pragma solidity ^0.8.19;
+pragma solidity ^0.8.18;
 
 // [X] Anyone can contribute
 // [X] End project if targeted contribution amount reached
@@ -129,16 +129,17 @@ contract Project {
     // @dev Anyone can contribute
     // @return null
 
-    function contribute(address _contributor) public payable validateExpiry(State.Fundraising) {
+   
+    function contribute() public payable validateExpiry(State.Fundraising) {
         if (msg.value < minimumContribution) {
             revert Project__ContributionIsTooLow();
         }
-        if (contributiors[_contributor] == 0) {
+        if (contributiors[msg.sender] == 0) {
             noOfContributers++;
         }
-        contributiors[_contributor] += msg.value;
+        contributiors[msg.sender] += msg.value;
         raisedAmount += msg.value;
-        emit FundingReceived(_contributor, msg.value, raisedAmount);
+        emit FundingReceived(msg.sender, msg.value, raisedAmount);
         checkFundingCompleteOrExpire();
     }
 

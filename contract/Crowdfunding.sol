@@ -93,4 +93,17 @@ contract Crowdfunding {
         // Trigger event
         emit ContributionReceived(_projectAddress, msg.value, msg.sender);
     }
+
+    function contribute() public payable validateExpiry(State.Fundraising) {
+        if (msg.value < minimumContribution) {
+            revert Project__ContributionIsTooLow();
+        }
+        if (contributiors[msg.sender] == 0) {
+            noOfContributers++;
+        }
+        contributiors[msg.sender] += msg.value;
+        raisedAmount += msg.value;
+        emit FundingReceived(msg.sender, msg.value, raisedAmount);
+        checkFundingCompleteOrExpire();
+}
 }
