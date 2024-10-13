@@ -69,7 +69,7 @@ const Navbar = () => {
           </div>
           
           <div className='flex justify-end'>
-            <ConnectWallet/>
+            <ConnectWallet />
           </div>
         </div>
       </nav>
@@ -101,7 +101,7 @@ const Navbar = () => {
         </div>
         
         <div className='flex justify-center'>
-          <ConnectWallet/>
+          {/* <ConnectWallet /> */}
         </div>
       </div>}
     </header>
