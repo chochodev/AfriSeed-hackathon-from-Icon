@@ -70,6 +70,10 @@ const Navbar = () => {
           
           <div className='flex justify-end'>
             <ConnectWallet 
+              style={{
+                fontSize: '0.875rem',
+                padding: '0.75rem 1rem'
+              }}
               theme={'light'}
             />
           </div>
