@@ -7,6 +7,7 @@ const Business = lazy(() => import ('./business'));
 const BusinessForm = lazy(() => import ('./businessForm'));
 const BusinessPage = lazy(() => import ('./viewBusiness'));
 const DeleteBusiness = lazy(() => import ('./delete'));
+const ProfilePage = lazy(() => import ('./profile'));
 
 import Loader from '$/components/loader';
 
@@ -21,6 +22,7 @@ const Pages = () => {
           <Route path='/business/add' element={<BusinessForm />} />
           <Route path='/business/:id' element={<BusinessPage />} />
           <Route path='/business/delete' element={<DeleteBusiness />} />
+          <Route path='/profile' element={<ProfilePage />} />
 
         </Routes>
       </Suspense>
