@@ -52,7 +52,7 @@ const Navbar = () => {
             <Link 
               to='/investors'
               className='flex items-center h-full text-center hover:text-primary-600 border-solid border-0 border-b-2 border-transparent hover:border-primary-600 ease-250'
-            >Investors</Link>
+            >Profile</Link>
             <Link 
               to='/business'
               className='flex items-center h-full text-center hover:text-primary-600 border-solid border-0 border-b-2 border-transparent hover:border-primary-600 ease-250'
