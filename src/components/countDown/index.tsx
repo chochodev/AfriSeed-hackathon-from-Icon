@@ -15,7 +15,7 @@ export default function Countdown({ seconds, onComplete }: CountdownProps) {
     }
 
     const timer = setTimeout(() => {
-      setTimeLeft(timeLeft - 1)
+      setTimeLeft(timeLeft - 1);
     }, 1000);
 
     return () => clearTimeout(timer);
