@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import { AlertTriangle } from 'lucide-react';
 import Countdown from '$/components/countDown';
 
-export default function NotFound() {
+export default function PageNotFound() {
   const navigate = useNavigate()
 
   return (

@@ -9,6 +9,7 @@ const BusinessPage = lazy(() => import ('./business/view'));
 const DeleteBusiness = lazy(() => import ('./business/delete'));
 const ProfilePage = lazy(() => import ('./profile'));
 const ProtectedRoute = lazy(() => import('./protectedRoute'));
+const PageNotFound = lazy(() => import('./error/404'));
 
 import Loader from '$/components/loader';
 
@@ -26,6 +27,8 @@ const Pages = () => {
           <Route element={<ProtectedRoute />}>
             <Route path='/business/add' element={<BusinessForm />} />
           </Route>
+
+          <Route path='/*' element={<PageNotFound />} />
 
           <Route path='/profile' element={<ProfilePage />} />
         </Routes>
