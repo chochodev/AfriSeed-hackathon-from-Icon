@@ -21,13 +21,13 @@ const Pages = () => {
           <Route path='/investors' element={<Investor />} />
           <Route path='/business' element={<Business />} />
 
+          <Route path='/business/:id' element={<BusinessPage />} />
+          <Route path='/business/delete' element={<DeleteBusiness />} />
           <Route element={<ProtectedRoute />}>
             <Route path='/business/add' element={<BusinessForm />} />
           </Route>
-          <Route path='/business/:id' element={<BusinessPage />} />
-          <Route path='/business/delete' element={<DeleteBusiness />} />
-          <Route path='/profile' element={<ProfilePage />} />
 
+          <Route path='/profile' element={<ProfilePage />} />
         </Routes>
       </Suspense>
     </Router>
