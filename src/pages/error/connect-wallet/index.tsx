@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Wallet2 } from 'lucide-react';
-import Countdown from './Countdown';
+import Countdown from '$/components/countDown';
 
 export default function ConnectWallet() {
   const [isConnecting, setIsConnecting] = useState(false)

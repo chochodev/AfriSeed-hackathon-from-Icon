@@ -10,20 +10,20 @@ export default function Countdown({ seconds, onComplete }: CountdownProps) {
 
   useEffect(() => {
     if (timeLeft <= 0) {
-      onComplete()
-      return
+      onComplete();
+      return;
     }
 
     const timer = setTimeout(() => {
       setTimeLeft(timeLeft - 1)
-    }, 1000)
+    }, 1000);
 
-    return () => clearTimeout(timer)
-  }, [timeLeft, onComplete])
+    return () => clearTimeout(timer);
+  }, [timeLeft, onComplete]);
 
   return (
     <div className="mt-4 text-gray-500">
       Redirecting to home page in {timeLeft} seconds...
     </div>
   )
-}
+};
