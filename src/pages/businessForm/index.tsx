@@ -6,9 +6,9 @@ import Input from "$/components/input";
 import { RiImageAddLine } from "react-icons/ri";
 import Alert from '$/components/alert';
 import { useNavigate } from 'react-router-dom'; 
-// import { prepareContractCall} from "thirdweb"
-// import { useSendTransaction} from "thirdweb/react";  
-// import { createThirdwebClient, getContract} from "thirdweb";
+// import { prepareContractCall } from "thirdweb"
+// import { useSendTransaction } from "thirdweb/react";  
+// import { createThirdwebClient, getContract } from "thirdweb";
 // import { defineChain } from "thirdweb/chains";
 
 
