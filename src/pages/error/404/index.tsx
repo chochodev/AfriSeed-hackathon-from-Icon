@@ -15,7 +15,7 @@ export default function PageNotFound() {
         </p>
         <button
           onClick={() => navigate('/')}
-          className="w-full bg-primary-600 text-white py-2 px-4 rounded-md hover:bg-primary-700 transition duration-300"
+          className="w-full bg-neutral-800 text-white text-[0.875rem] sm:text-[1rem] py-2 px-4 rounded-md hover:bg-neutral-900 ease-250"
         >
           Go to Home Page
         </button>
