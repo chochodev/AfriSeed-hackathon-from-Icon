@@ -6,11 +6,30 @@ import Input from "$/components/input";
 import { RiImageAddLine } from "react-icons/ri";
 import Alert from '$/components/alert';
 import { useNavigate } from 'react-router-dom'; 
-// import { prepareContractCall } from "thirdweb"
-// import { useSendTransaction } from "thirdweb/react";  
-// import { createThirdwebClient, getContract } from "thirdweb";
-// import { defineChain } from "thirdweb/chains";
+import { prepareContractCall } from "thirdweb"
+import { useSendTransaction } from "thirdweb/react";  
+import { createThirdwebClient, getContract } from "thirdweb";
+import { defineChain } from "thirdweb/chains";
+import { CLIENT_ID, CONTRACT_ADDRESS } from '$/lib/constants.ts';
 
+
+/* 
+import { prepareContractCall } from "thirdweb"
+import { useSendTransaction } from "thirdweb/react";
+
+export default function Component() {
+  const { mutate: sendTransaction } = useSendTransaction();
+
+  const onClick = () => {
+    const transaction = prepareContractCall({
+      contract,
+      method: "function createProject(uint256 minimumContribution, uint256 deadline, uint256 targetContribution, string projectTitle, string projectDesc)",
+      params: [minimumContribution, deadline, targetContribution, projectTitle, projectDesc]
+    });
+    sendTransaction(transaction);
+  }
+}
+*/
 
 
 interface Business {
@@ -58,16 +77,16 @@ export default function BusinessForm() {
   const navigate = useNavigate();
 
   // ::::::::::::::::::::: web3 states
-  // const client = createThirdwebClient({
-  //   clientId: "e4a28af25dab6b700d1362db66298cf8"
-  // });
+  const client = createThirdwebClient({
+    clientId: `${CLIENT_ID}`
+  });
 
-  // const { mutate: sendTransaction } = useSendTransaction();
-  // const contract = getContract({
-  //   client,
-  //   chain: defineChain(84532),
-  //   address: "0xfB107980714fcAf1EE5DB03a6Bd3d79A281B0b56",
-  // });
+  const { mutate: sendTransaction } = useSendTransaction();
+  const contract = getContract({
+    client,
+    chain: defineChain(84532),
+    address: `${CONTRACT_ADDRESS}`,
+  });
 
   // ::::::::::::::::::::::::::: handle input functions
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -136,19 +155,19 @@ export default function BusinessForm() {
       );
 
       // :::::::::::::::::::: web3 section
-      // const transaction = prepareContractCall({
-      //   contract,
-      //   method: "function createProject(uint256 minimumContribution, uint256 deadline, uint256 targetContribution, string projectTitle, string projectDesc)",
-      //   params: [
-      //     BigInt(business.minimum_investment),
-      //     BigInt(Math.floor(Date.now() / 1000) + business.days_left * 86400), // Convert days to UNIX timestamp
-      //     BigInt(business.amount_raised),
-      //     business.name,
-      //     business.short_description
-      //   ]
-      // });
+      const transaction = prepareContractCall({
+        contract,
+        method: "function createProject(uint256 minimumContribution, uint256 deadline, uint256 targetContribution, string projectTitle, string projectDesc)",
+        params: [
+          BigInt(business.minimum_investment),
+          BigInt(Math.floor(Date.now() / 1000) + business.days_left * 86400), // Convert days to UNIX timestamp
+          BigInt(business.amount_raised),
+          business.name,
+          business.short_description
+        ]
+      });
 
-      // await sendTransaction(transaction);
+      sendTransaction(transaction);
 
       // ::::::::::::::: resets the business form data and shows alert
       setBusiness(initialBusiness);
