@@ -1,8 +1,8 @@
 import Pages from './pages';
 import './index.css';
 import { CLIENT_ID } from '$/lib/constants';
-import { ThirdwebProvider, ThirdwebSDKProvider } from "@thirdweb-dev/react";
-import { ThirdwebProvider as ThirdwebProviderV5 } from "thirdweb/react";
+import { ThirdwebProvider } from "@thirdweb-dev/react";
+import { Base } from "@thirdweb-dev/chains"
 // import { ethers } from "ethers";
 
 function App() {
@@ -12,12 +12,10 @@ function App() {
 
   return (
       <ThirdwebProvider
-        activeChain={"ethereum"}
+        activeChain={Base}
         clientId={CLIENT_ID}
       >
-        <ThirdwebProviderV5>
             <Pages />
-        </ThirdwebProviderV5>
       </ThirdwebProvider>
   )
 }

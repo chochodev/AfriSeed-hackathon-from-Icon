@@ -11,7 +11,11 @@
   },
   "dependencies": {
     "@radix-ui/react-accordion": "^1.2.1",
+    "@tanstack/react-query": "^4.36.1",
+    "@thirdweb-dev/react": "^4.9.4",
+    "@thirdweb-dev/sdk": "^4.0.99",
     "clsx": "^2.1.1",
+    "ethers": "^5.7.2",
     "lit-html": "^3.2.1",
     "lucide-react": "^0.451.0",
     "react": "^18.3.1",
@@ -21,10 +25,7 @@
     "react-router-dom": "^6.26.2",
     "tailwind-merge": "^2.5.3",
     "tailwindcss-animate": "^1.0.7",
-    "@tanstack/react-query": "^4.36.1",
-    "@thirdweb-dev/react": "^4.9.4",
-    "@thirdweb-dev/sdk": "^4.0.99",
-    "ethers": "^5.7.2"
+    "thirdweb": "^5.63.1"
   },
   "devDependencies": {
     "@eslint/js": "^9.11.1",
