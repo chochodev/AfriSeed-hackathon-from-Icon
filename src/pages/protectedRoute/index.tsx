@@ -5,7 +5,6 @@ import ConnectWalletPage from '../error/connect-wallet';
 
 const ProtectedRoute = () => {
   const activeWallet = useActiveWallet();
-  console.log(info)
   const connectionStatus = useActiveWalletConnectionStatus();
   return connectionStatus === 'connected' ? <Outlet /> : <ConnectWalletPage />;
 };
