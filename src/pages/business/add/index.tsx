@@ -12,24 +12,6 @@ import { defineChain } from "thirdweb/chains";
 import { CLIENT_ID, CONTRACT_ADDRESS } from '$/lib/constants.ts';
 
 
-/* 
-import { prepareContractCall } from "thirdweb"
-import { useSendTransaction } from "thirdweb/react";
-
-export default function Component() {
-  const { mutate: sendTransaction } = useSendTransaction();
-
-  const onClick = () => {
-    const transaction = prepareContractCall({
-      contract,
-      method: "function createProject(uint256 minimumContribution, uint256 deadline, uint256 targetContribution, string projectTitle, string projectDesc)",
-      params: [minimumContribution, deadline, targetContribution, projectTitle, projectDesc]
-    });
-    sendTransaction(transaction);
-  }
-}
-*/
-
 
 interface Business {
   name: string
@@ -74,18 +56,17 @@ export default function BusinessForm() {
   const [coverImageFile, setCoverImageFile] = useState<File | null>(null);
   const [alert, setAlert] = useState<{ text: string; title: string;} | null>(null);
   const navigate = useNavigate();
-  console.log('working')
 
   // ::::::::::::::::::::: web3 states
   const client = createThirdwebClient({
-    clientId: `${CLIENT_ID}`
+    clientId: CLIENT_ID
   });
 
   const { mutate: sendTransaction } = useSendTransaction();
   const contract = getContract({
     client,
     chain: defineChain(84532),
-    address: `${CONTRACT_ADDRESS}`,
+    address: CONTRACT_ADDRESS,
   });
 
   // ::::::::::::::::::::::::::: handle input functions
@@ -98,7 +79,6 @@ export default function BusinessForm() {
     const { name, value } = e.target
     setBusiness(prev => ({ ...prev, [name]: parseFloat(value) || 0 }))
   }
-
 
   // :::::::::::::::::::: image function
   const onDrop = useCallback((acceptedFiles: File[], type: 'logo' | 'cover_image') => {

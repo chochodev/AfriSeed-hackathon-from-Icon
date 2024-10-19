@@ -2,8 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { RiSearch2Line, RiMenu5Fill, RiCloseFill } from "react-icons/ri";
 import { BsArrowRight } from "react-icons/bs";
-import { ConnectButton } from 'thirdweb/react';
-import { client } from '$/lib/utils';
+import { ConnectWallet } from '@thirdweb-dev/react';
 
 const Navbar = () => {
   const [smallScreen, setSmallScreen] = useState<boolean>(false);
@@ -18,7 +17,7 @@ const Navbar = () => {
       if (window.innerWidth > 768) {
         setSmallScreen(window.innerWidth <= 768);
       }
-    };
+    };  
 
     window.addEventListener('resize', handleResize);
 
@@ -70,12 +69,12 @@ const Navbar = () => {
           </div>
           
           <div className='flex justify-end'>
-            <ConnectButton
-              client={client} 
-              // style={{
-              //   fontSize: '0.875rem',
-              //   padding: '0.75rem 1rem'
-              // }}
+            <ConnectWallet
+              // client={client} 
+              style={{
+                fontSize: '0.875rem',
+                padding: '0.75rem 1rem'
+              }}
               theme={'light'}
             />
           </div>
@@ -109,11 +108,11 @@ const Navbar = () => {
         </div>
         
         <div className='flex justify-center'>
-          <ConnectButton
-            client={client} 
-            // style={{
-            //   width: "100%",
-            // }}
+          <ConnectWallet
+            // client={client} 
+            style={{
+              width: "100%",
+            }}
             theme={'light'}
           />
         </div>

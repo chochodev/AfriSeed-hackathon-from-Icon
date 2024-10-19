@@ -1,23 +1,10 @@
-// import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Wallet2 } from 'lucide-react';
 import Countdown from '$/components/countDown';
-import { ConnectButton } from 'thirdweb/react';
-import { client } from '$/lib/utils';
+import { ConnectWallet } from '@thirdweb-dev/react';
 
 export default function ConnectWalletPage() {
-  // const [isConnecting, setIsConnecting] = useState(false)
-  const navigate = useNavigate()
-
-  // const handleConnect = async () => {
-  //   setIsConnecting(true)
-  //   // Simulating wallet connection
-  //   await new Promise(resolve => setTimeout(resolve, 2000))
-  //   setIsConnecting(false)
-  //   // After successful connection, you would typically set some state or context
-  //   // For now, we'll just redirect to the profile page
-  //   navigate('/profile')
-  // }
+  const navigate = useNavigate();
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
@@ -27,7 +14,7 @@ export default function ConnectWalletPage() {
         <p className="mb-6 text-gray-600">
           Connect your wallet to access your profile and manage your businesses.
         </p>
-        <ConnectButton client={client} />
+        <ConnectWallet />
       </div>
       <Countdown seconds={30} onComplete={() => navigate('/')} />
     </div>

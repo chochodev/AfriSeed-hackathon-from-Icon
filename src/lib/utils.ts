@@ -11,12 +11,12 @@ export function cn(...inputs: ClassValue[]) {
 
 // create the client with your clientId, or secretKey if in a server environment
 export const client = createThirdwebClient({
-  clientId: `${CLIENT_ID}`
+  clientId: CLIENT_ID
 });
 
 // connect to your contract
 export const contract = getContract({
   client,
   chain: defineChain(84532),
-  address: `${CONTRACT_ADDRESS}`,
+  address: CONTRACT_ADDRESS
 });
