@@ -1,7 +1,8 @@
 import { useNavigate } from 'react-router-dom';
 import { Wallet2 } from 'lucide-react';
 import Countdown from '$/components/countDown';
-import { ConnectWallet } from '@thirdweb-dev/react';
+import { ConnectButton } from 'thirdweb/react';
+import { client } from '$/lib/utils';
 
 export default function ConnectWalletPage() {
   const navigate = useNavigate();
@@ -14,7 +15,7 @@ export default function ConnectWalletPage() {
         <p className="mb-6 text-gray-600">
           Connect your wallet to access your profile and manage your businesses.
         </p>
-        <ConnectWallet />
+        <ConnectButton client={client} />
       </div>
       <Countdown seconds={30} onComplete={() => navigate('/')} />
     </div>

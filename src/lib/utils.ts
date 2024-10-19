@@ -3,11 +3,14 @@ import { twMerge } from "tailwind-merge";
 
 import { createThirdwebClient, getContract } from "thirdweb";
 import { defineChain } from "thirdweb/chains";
-import { CLIENT_ID, CONTRACT_ADDRESS } from './constants';
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
+
+// :::::::::::: global env variable
+export const CONTRACT_ADDRESS = import.meta.env.VITE_APP_CONTRACT_ADDRESS;
+export const CLIENT_ID = import.meta.env.VITE_APP_PUBLIC_CLIENT_ID;
 
 // create the client with your clientId, or secretKey if in a server environment
 export const client = createThirdwebClient({

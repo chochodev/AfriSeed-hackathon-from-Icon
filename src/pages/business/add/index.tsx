@@ -6,10 +6,10 @@ import Input from "$/components/input";
 import { RiImageAddLine } from "react-icons/ri";
 import Alert from '$/components/alert';
 import { useNavigate } from 'react-router-dom';
-import { useSendTransaction } from "thirdweb/react";  
-import { prepareContractCall, createThirdwebClient, getContract } from "thirdweb";
+import { useSendTransaction, useActiveWalletConnectionStatus } from "thirdweb/react";
+import { prepareContractCall, getContract } from "thirdweb";
 import { defineChain } from "thirdweb/chains";
-import { CLIENT_ID, CONTRACT_ADDRESS } from '$/lib/constants.ts';
+import { CONTRACT_ADDRESS, client } from '$/lib/utils';
 
 
 
@@ -58,11 +58,10 @@ export default function BusinessForm() {
   const navigate = useNavigate();
 
   // ::::::::::::::::::::: web3 states
-  const client = createThirdwebClient({
-    clientId: CLIENT_ID
-  });
-
-  const { mutate: sendTransaction } = useSendTransaction();
+  const connectionStatus = useActiveWalletConnectionStatus();
+  const { mutate: sendTransaction, status } = useSendTransaction();
+  const [statusMessage, setStatusMessage] = useState("");
+  
   const contract = getContract({
     client,
     chain: defineChain(84532),
@@ -135,19 +134,32 @@ export default function BusinessForm() {
       );
 
       // :::::::::::::::::::: web3 section
-      const transaction = prepareContractCall({
-        contract,
-        method: "function createProject(uint256 minimumContribution, uint256 deadline, uint256 targetContribution, string projectTitle, string projectDesc)",
-        params: [
-          BigInt(business.minimum_investment),
-          BigInt(Math.floor(Date.now() / 1000) + business.days_left * 86400), // Convert days to UNIX timestamp
-          BigInt(business.amount_raised),
-          business.name,
-          business.short_description
-        ]
-      });
+      try {  
+        const transaction = prepareContractCall({
+          contract,
+          method: "function createProject(uint256 minimumContribution, uint256 deadline, uint256 targetContribution, string projectTitle, string projectDesc)",
+          params: [
+            BigInt(business.minimum_investment),
+            BigInt(Math.floor(Date.now() / 1000) + business.days_left * 86400), // Convert days to UNIX timestamp
+            BigInt(business.amount_raised),
+            business.name,
+            business.short_description
+          ]
+        });
 
-      sendTransaction(transaction);
+        // sendTransaction(transaction);
+        sendTransaction(transaction, {
+          onSuccess: () => {
+            setStatusMessage("Transaction successful!");
+          },
+          onError: () => {
+            setStatusMessage("Transaction failed. Please try again.");
+          }
+        });
+      } catch (error) {
+        console.error(error);
+        setStatusMessage("An error occurred while preparing the transaction.");
+      }
 
       // ::::::::::::::: resets the business form data and shows alert
       setBusiness(initialBusiness);
@@ -168,6 +180,12 @@ export default function BusinessForm() {
       console.error('Error creating business:', error);
     }
   }
+
+  const isLoading = status === 'pending';
+  const isSuccess = status === 'success';
+  const isError = status === 'error';
+
+  console.log(statusMessage, isSuccess, isError);
 
   return (
     <MainLayout>
@@ -398,7 +416,7 @@ export default function BusinessForm() {
             type="submit" 
             className="w-full bg-neutral-800 text-neutral-100 font-[600] text-[0.875rem] px-[2rem] py-[0.875rem] rounded-[8px] outline outline-1 outline-neutral-300 hover:bg-neutral-100 hover:text-neutral-800 active:bg-neutral-200 shadow-[0_0_20px_1px_rgba(0,0,0,0.1)] ease-250"
           >
-            Submit
+            {isLoading ? 'Submitting...' : 'Submit'}
           </button>
         </form>
       </div>

@@ -1,11 +1,11 @@
 import { Outlet } from "react-router-dom";
-import { useAddress } from '@thirdweb-dev/react';
+import { useActiveWalletConnectionStatus } from 'thirdweb/react';
 import ConnectWalletPage from '../error/connect-wallet';
 
 
 const ProtectedRoute = () => {
-  const address = useAddress();
-  return address ? <Outlet /> : <ConnectWalletPage />;
+  const connectionStatus = useActiveWalletConnectionStatus();
+  return connectionStatus === 'connected' ? <Outlet /> : <ConnectWalletPage />;
 };
 
 export default ProtectedRoute;
