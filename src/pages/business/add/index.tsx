@@ -5,10 +5,9 @@ import { useDropzone } from 'react-dropzone';
 import Input from "$/components/input";
 import { RiImageAddLine } from "react-icons/ri";
 import Alert from '$/components/alert';
-import { useNavigate } from 'react-router-dom'; 
-import { prepareContractCall } from "thirdweb"
+import { useNavigate } from 'react-router-dom';
 import { useSendTransaction } from "thirdweb/react";  
-import { createThirdwebClient, getContract } from "thirdweb";
+import { prepareContractCall, createThirdwebClient, getContract } from "thirdweb";
 import { defineChain } from "thirdweb/chains";
 import { CLIENT_ID, CONTRACT_ADDRESS } from '$/lib/constants.ts';
 
@@ -75,6 +74,7 @@ export default function BusinessForm() {
   const [coverImageFile, setCoverImageFile] = useState<File | null>(null);
   const [alert, setAlert] = useState<{ text: string; title: string;} | null>(null);
   const navigate = useNavigate();
+  console.log('working')
 
   // ::::::::::::::::::::: web3 states
   const client = createThirdwebClient({

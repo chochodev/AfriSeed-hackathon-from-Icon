@@ -1,22 +1,12 @@
 import Pages from './pages';
 import './index.css';
-import { ThirdwebProvider } from "@thirdweb-dev/react";
-import { CLIENT_ID } from './lib/constants';
-import { QueryClient, QueryClientProvider } from 'react-query';
-
-// ::::::::::::::::: Create a client
-const queryClient = new QueryClient();
+import { ThirdwebProvider } from "thirdweb/react";
 
 function App() {
   return (
-    <QueryClientProvider client={queryClient}>
-      <ThirdwebProvider 
-        clientId={CLIENT_ID}
-        activeChain="ethereum"
-      >
+      <ThirdwebProvider>
         <Pages />
       </ThirdwebProvider>
-    </QueryClientProvider>
   )
 }
 
