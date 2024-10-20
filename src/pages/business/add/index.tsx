@@ -199,18 +199,16 @@ export default function BusinessForm() {
         ]
       });
       
-      // onLoading: () => {
       setTransactionMessage("Transaction is processing.");
       setTransactionStatus("loading");
-      // },
   
-      // Execute the transaction
+      // ::::::::::::::::::: Execute the transaction
       sendTransaction(transaction, {
         onSuccess: async () => {
           setTransactionMessage("Transaction successful!");
           setTransactionStatus("success");
   
-          // Make the backend API call after successful transaction
+          // :::::::::::::::::::::: Make the backend API call after successful transaction
           const jsonData = { 
             ...business,
             logo: logoFile,
@@ -224,7 +222,7 @@ export default function BusinessForm() {
             withCredentials: true,
           });
   
-          // Reset the business form data and show alert
+          // :::::::::::::::::: Reset the business form data and show alert
           setBusiness(initialBusiness);
           setLogoFile(null);
           setCoverImageFile(null);
@@ -234,21 +232,24 @@ export default function BusinessForm() {
             title: 'Success',
           });
   
-          // Redirect after 4s
+          // :::::::::::::: Redirect after 4s
           const timeout = setTimeout(() => {
-            setIsLoading(false);
-            const timeout2 = setTimeout(() => {
-              navigate('/business');
-            }, 4000);
-
-            return () => clearTimeout(timeout2);
-          }, 2000);
+            navigate('/business');
+          }, 5000);
           return () => clearTimeout(timeout);
         },
         onError: (error) => {
           setTransactionMessage("Transaction failed!");
           setTransactionStatus("error");
+
           console.error("Transaction error: ", error);
+          
+          // :::::::::::: remove the multi step loader
+          const timeout = setTimeout(() => {
+            setIsLoading(false);
+          }, 5000);
+
+          return () => clearTimeout(timeout);
         }
       });
   
