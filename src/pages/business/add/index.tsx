@@ -208,8 +208,6 @@ export default function BusinessForm() {
     setTransactionMessage("Transaction is initiating");
     setTransactionStatus("loading");
     setIsLoading(true);
-    
-    console.log('first status: ', status);
   
     try {
       // :::::::::::::::::::: web3 section - transaction first
