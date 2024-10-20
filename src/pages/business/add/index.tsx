@@ -15,7 +15,6 @@ import { prepareContractCall, getContract } from "thirdweb";
 import { defineChain } from "thirdweb/chains";
 import { CONTRACT_ADDRESS, client } from '$/lib/utils';
 import MultiStepLoader from '$/components/multiStepLoader';
-import DeadlineDatePicker from '$/components/datePicker';
 
 
 interface Business {
