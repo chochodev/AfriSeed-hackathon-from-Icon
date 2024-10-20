@@ -10,7 +10,7 @@ interface Business {
   location: string
   category: string
   minimum_investment: number
-  deadline: number
+  deadline: Date
 
   total_amount: number
   investors: number
@@ -28,6 +28,29 @@ interface BusinessCardProps {
 }
 
 const BusinessCard = ({ business }: BusinessCardProps) => {
+  // Calculate days left until the deadline
+  const calculateDaysLeft = (deadline: Date) => {
+    const deadlineDate = new Date(deadline);
+    const today = new Date();
+    
+    // Reset time to avoid issues with hours, minutes, and seconds
+    today.setHours(0, 0, 0, 0);
+
+    // Calculate the difference in milliseconds
+    const timeDifference = deadlineDate.getTime() - today.getTime();
+
+    // Convert milliseconds to days
+    return Math.ceil(timeDifference / (1000 * 3600 * 24));
+  };
+
+  const actualDaysLeft = calculateDaysLeft(business.deadline);
+  let daysLeft;
+  if (actualDaysLeft < 1){
+    daysLeft = 0;
+  } else {
+    daysLeft = actualDaysLeft;
+  }
+
   return (
     <Link 
       to={`/business/${business.id}`}
@@ -75,13 +98,13 @@ const BusinessCard = ({ business }: BusinessCardProps) => {
           className='h-0 opacity-0 overflow-hidden text-[0.875rem] lg:text-[1rem] pb-[1.5rem] group-hover:h-[5rem] lg:group-hover:h-[10.5rem] group-hover:opacity-100 ease-400 '
         >
           <p className='max-lg:flex pb-2 px-[1.5rem] '>
-            <b className='max-lg:flex-1'>${business.total_amount}</b> raised
+            <b className='max-lg:flex-1'>${business.total_amount}</b> total expected
           </p>
           <p className='max-lg:flex border-solid border-0 lg:border-t-[1px] border-neutral-300 py-2 px-[1.5rem] '>
             <b className='max-lg:flex-1'>{business.investors}</b> investors
           </p>
           <p className='max-lg:hidden border-solid border-0 border-t-[1px] border-neutral-300 py-2 px-[1.5rem] '>
-            <b>{business.deadline}</b> days left
+            <b>{daysLeft}</b> days left
           </p>
           <p className='max-lg:hidden border-solid border-0 border-t-[1px] border-neutral-300 py-2 px-[1.5rem] '>
             <b>${business.minimum_investment}</b> minimum investment
