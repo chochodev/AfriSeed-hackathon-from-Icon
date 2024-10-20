@@ -7,7 +7,6 @@ import { RiImageAddLine } from "react-icons/ri";
 import Alert from '$/components/alert';
 import { useNavigate } from 'react-router-dom';
 import { useContract, useContractWrite } from "@thirdweb-dev/react";
-import { CONTRACT_ADDRESS } from '$/lib/constants.ts';
 
 interface Business {
   name: string
