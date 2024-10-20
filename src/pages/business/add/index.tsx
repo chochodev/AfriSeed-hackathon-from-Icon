@@ -211,7 +211,6 @@ export default function BusinessForm() {
   
     try {
       // :::::::::::::::::::: web3 section - transaction first
-      console.log('date unix: ', Math.floor(business?.deadline?.getTime() / 1000)); // cannot be today, the transaction is reading it after it's past
       const transaction = prepareContractCall({
         contract,
         method: "function createProject(uint256 minimumContribution, uint256 deadline, uint256 targetContribution, string projectTitle, string projectDesc)",
@@ -247,6 +246,8 @@ export default function BusinessForm() {
               headers: { 'Content-Type': 'multipart/form-data' },
               withCredentials: true,
             });
+
+            console.log(response)
           
             // :::::::::::::::::: Reset the business form data and show alert
             setBusiness(initialBusiness);
