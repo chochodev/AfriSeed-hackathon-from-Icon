@@ -154,12 +154,14 @@ const Home = () => {
               {[1,2,3].map((_, i) => (
                 <div
                   key={i}
-                  className='group relative flex flex-col space-y-[1rem] h-[22.5rem] lg:h-[31.25rem] w-full rounded-[16px] overflow-hidden shadow-[0_2px_5px_-2px_rgba(0,0,0,0.25)] '
+                  className='group relative flex flex-col space-y-[1rem] h-[22.5rem] lg:h-[31.25rem] w-full rounded-[16px] overflow-hidden '
                 >
                   <Skeleton className='w-full h-[13rem] lg:h-[15.625rem] rounded-t-[16px]' />
                   <Skeleton className='w-full h-[3rem] lg:h-[1.625rem]' />
+                  <Skeleton className='w-full h-[0.5rem] lg:h-[0.875rem]' />
                   <Skeleton className='w-full h-[1rem] lg:h-[1.625rem]' />
-                  <Skeleton className='w-full h-[1rem] lg:h-[1.625rem]' />
+                  <Skeleton className='w-[80%] h-[0.5rem] lg:h-[0.875rem]' />
+                  <Skeleton className='w-[90%] h-[1rem] lg:h-[1.625rem]' />
                 </div>
               ))}
             </>)

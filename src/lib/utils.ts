@@ -3,6 +3,7 @@ import { twMerge } from "tailwind-merge";
 
 import { createThirdwebClient, getContract } from "thirdweb";
 import { defineChain } from "thirdweb/chains";
+import { CLIENT_ID, CONTRACT_ADDRESS } from './constants';
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -10,12 +11,12 @@ export function cn(...inputs: ClassValue[]) {
 
 // create the client with your clientId, or secretKey if in a server environment
 export const client = createThirdwebClient({
-  clientId: "e4a28af25dab6b700d1362db66298cf8"
+  clientId: CLIENT_ID
 });
 
 // connect to your contract
 export const contract = getContract({
   client,
   chain: defineChain(84532),
-  address: "0xfB107980714fcAf1EE5DB03a6Bd3d79A281B0b56",
+  address: CONTRACT_ADDRESS
 });
