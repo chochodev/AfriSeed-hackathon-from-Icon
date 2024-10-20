@@ -48,7 +48,7 @@ export default function BusinessForm() {
   const navigate = useNavigate();
 
   // Web3 states
-  const { contract } = useContract("INPUT YOUR SMART CONTACT HERE");
+  const { contract } = useContract("0xfB107980714fcAf1EE5DB03a6Bd3d79A281B0b56");
   const { mutateAsync: createProject } = useContractWrite(contract, "createProject");
 
   // Handle input functions
