@@ -228,16 +228,26 @@ export default function BusinessForm() {
   
       // ::::::::::::::::::: Execute the transaction
       sendTransaction(transaction, {
-        onSuccess: async () => {
+        onSuccess: async (tx) => {
+          console.log(tx);
+
           setTransactionMessage("Transaction successful!");
           setTransactionStatus("success");
+
+          // Wait for the transaction to be confirmed
+          const receipt = tx.transactionHash; // Wait for the transaction to be mined
+          const projectAddress = receipt;
+
+          // Log the project address
+          console.log("Project Address:", projectAddress);
   
           // :::::::::::::::::::::: Make the backend API call after successful transaction
           const jsonData = { 
             ...business,
             logo: logoFile,
             cover_image: coverImageFile,
-            client_address: activeWallet?.getAccount()?.address
+            client_address: activeWallet?.getAccount()?.address,
+            project_address: projectAddress
           };
   
           const backend_url = import.meta.env.VITE_APP_BACKEND_URL;
@@ -262,11 +272,6 @@ export default function BusinessForm() {
           } catch (error) {
             console.error('Error creating business:', error);
           
-            // Show an error alert or message to the user
-            // setAlert({
-            //   text: 'Failed to create the business. Please try again later.',
-            //   title: 'Error',
-            // });
           } finally {
             const timeout = setTimeout(() => {
               navigate('/business');

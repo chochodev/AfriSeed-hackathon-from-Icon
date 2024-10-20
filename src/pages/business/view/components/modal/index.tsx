@@ -1,6 +1,10 @@
 import Input from '$/components/input';
 import React, { useEffect, useState } from 'react';
 import { RiCloseLine } from 'react-icons/ri';
+import { prepareContractCall } from "thirdweb";
+import { useSendTransaction } from "thirdweb/react";
+import axios from 'axios';
+import { contract } from '$/lib/utils';
 
 interface ModalProps {
   isOpen: boolean;
@@ -8,6 +12,8 @@ interface ModalProps {
   business: {
     name: string;
     minimum_investment: number;
+    project_address: string;
+    id: string;
   };
 }
 
@@ -22,12 +28,45 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, business }) => {
 
   const [value, setValue] = useState<number>(business.minimum_investment);
   const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
+  const { mutate: sendTransaction } = useSendTransaction();
 
   // :::::::::::::::::::: submit function
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Form submitted:', business);
-    setIsSubmitted(true);
+    
+    // Prepare the transaction
+    const transaction = prepareContractCall({
+      contract,
+      method: "function contribute(address _projectAddress) payable",
+      params: [business.project_address],
+      value: BigInt(value * 1e18)
+    });
+
+    try {
+      // Send the transaction to the smart contract
+      sendTransaction(transaction, {
+        onSuccess: async () => {
+          try {
+            // Update backend with the number of investors and amount raised
+            const response = await axios.put(`${import.meta.env.VITE_APP_BACKEND_URL}/businesses/invest/${business.id}`, {
+              amount: value,
+            });
+
+            setIsSubmitted(true);
+            console.log(response)
+          }
+          catch (error) {
+            console.error('Error creating business:', error);
+          }
+        },
+        onError: (error) => {
+          console.error("Transaction error: ", error);
+        }
+      })
+
+    } catch (error) {
+      console.error('Transaction failed or backend update failed:', error);
+    }
   };
 
   return (
@@ -92,7 +131,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, business }) => {
               </div>
               <button
                 type="submit"
-                className="w-full bg-neutral-800 text-neutral-100 font-[600] py-[0.875rem] rounded-full outline outline-1 outline-neutral-300 hover:bg-neutral-100 hover:text-neutral-800"
+                className="w-full bg-neutral-800 text-neutral-100 font-[600] py-[0.875rem] rounded-full outline outline-1 outline-neutral-300 hover:bg-neutral-950 active:bg-neutral-500 active:text-neutral-800 ease-250"
               >
                 Confirm Investment
               </button>

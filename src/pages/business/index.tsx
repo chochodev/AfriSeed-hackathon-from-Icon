@@ -17,7 +17,7 @@ interface Business {
   location: string
   category: string
   minimum_investment: number
-  deadline: number
+  deadline: Date
 
   total_amount: number
   investors: number
@@ -47,13 +47,6 @@ const Business = () => {
   const handleSelect = (currentValue: string) => {
     setValue(currentValue)
     setIsOpen(false)
-    // if (currentValue === "all") {
-    //   setFilteredItems(items)
-    // } else if (currentValue === "verified") {
-    //   setFilteredItems(items.filter(item => item.verified))
-    // } else {
-    //   setFilteredItems(items.filter(item => !item.verified))
-    // }
   }
 
   useEffect(() => {

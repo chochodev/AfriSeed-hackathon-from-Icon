@@ -13,6 +13,8 @@ import axios from 'axios';
 import Loader from '$/components/loader';
 
 interface Business {
+  client_address: string;
+  project_address: string;
   id: string;
   logo: string;
   cover_image: string;
@@ -21,7 +23,7 @@ interface Business {
   location: string;
   category: string;
   minimum_investment: number;
-  deadline: number;
+  deadline: Date;
   total_amount: number;
   investors: number;
   pitch_summary: string;
@@ -64,8 +66,33 @@ export default function BusinessPage() {
 
   const modalData = {
     name: business.name,
+    id: business.id,
+    project_address: business.client_address,
     minimum_investment: business.minimum_investment,
   };
+
+  // Calculate days left until the deadline
+  const calculateDaysLeft = (deadline: Date) => {
+    const deadlineDate = new Date(deadline);
+    const today = new Date();
+    
+    // Reset time to avoid issues with hours, minutes, and seconds
+    today.setHours(0, 0, 0, 0);
+
+    // Calculate the difference in milliseconds
+    const timeDifference = deadlineDate.getTime() - today.getTime();
+
+    // Convert milliseconds to days
+    return Math.ceil(timeDifference / (1000 * 3600 * 24));
+  };
+
+  const actualDaysLeft = calculateDaysLeft(business.deadline);
+  let daysLeft;
+  if (actualDaysLeft < 1){
+    daysLeft = 0;
+  } else {
+    daysLeft = actualDaysLeft;
+  }
 
   return (
     <MainLayout>
@@ -148,7 +175,7 @@ export default function BusinessPage() {
                   <h3 className="text-xl font-bold">Funding Progress</h3>
                   <div className="flex items-center text-neutral-500">
                     <FaRegClock className="mr-1" />
-                    <span>{business.deadline} days left</span>
+                    <span>{daysLeft} days left</span>
                   </div>
                 </div>
 
@@ -159,14 +186,10 @@ export default function BusinessPage() {
                 </div>
 
                 <p className="text-3xl font-bold mb-2">${business.total_amount.toLocaleString()}</p>
-                <p className="text-neutral-600 mb-6">raised of $250,000 goal</p>
+                <p className="text-neutral-600 mb-6">raised of ${business.total_amount.toLocaleString()} goal</p>
                 <div className="grid grid-cols-2 gap-4 mb-6">
                   <div>
                     <p className="text-neutral-600 text-sm">Investors</p>
-                    <p className="font-bold text-lg">{business.investors}</p>
-                  </div>
-                  <div>
-                    <p className="text-neutral-600 text-sm">Valuation</p>
                     <p className="font-bold text-lg">{business.investors}</p>
                   </div>
                 </div>
