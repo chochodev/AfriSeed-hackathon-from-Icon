@@ -6,7 +6,11 @@ import Input from "$/components/input";
 import { RiImageAddLine } from "react-icons/ri";
 import Alert from '$/components/alert';
 import { useNavigate } from 'react-router-dom';
-import { useSendTransaction, useActiveWalletConnectionStatus } from "thirdweb/react";
+import { 
+  useSendTransaction, 
+  useActiveWalletConnectionStatus, 
+  useActiveWallet 
+} from "thirdweb/react";
 import { prepareContractCall, getContract } from "thirdweb";
 import { defineChain } from "thirdweb/chains";
 import { CONTRACT_ADDRESS, client } from '$/lib/utils';
@@ -31,24 +35,41 @@ interface Business {
   pitch_market_opportunity: string
   pitch_traction: string
 }
-
 const initialBusiness: Business = {
-  name: '',
-  short_description: '',
-  location: '',
-  category: '',
-  amount_raised: 0,
-  investors: 0,
-  minimum_investment: 0,
-  days_left: 0,
+  name: 'TEST-BIZ',
+  short_description: 'AfriCommerce is a digital platform designed to help small enterprises in Africa easily set up online stores, manage inventory, accept digital payments, and connect with a larger customer base.',
+  location: 'Lagos, Test',
+  category: 'E-Commerce',
+  amount_raised: 12000,
+  investors: 21,
+  minimum_investment: 100,
+  days_left: 10,
 
   // :::::::::::::::::: pitch
-  pitch_summary: '',
-  pitch_problem: '',
-  pitch_solution: '',
-  pitch_market_opportunity: '',
-  pitch_traction: '',
+  pitch_summary: 'AfriCommerce is a digital platform designed to help small enterprises in Africa easily set up online stores, manage inventory, accept digital payments, and connect with a larger customer base. It provides tailored solutions for African businesses, focusing on ease of use, local payment methods, and business growth through technology.',
+  pitch_problem: 'AfriCommerce is a digital platform designed to help small enterprises in Africa easily set up online stores, manage inventory, accept digital payments, and connect with a larger customer base. It provides tailored solutions for African businesses, focusing on ease of use, local payment methods, and business growth through technology.',
+  pitch_solution: 'AfriCommerce is a digital platform designed to help small enterprises in Africa easily set up online stores, manage inventory, accept digital payments, and connect with a larger customer base. It provides tailored solutions for African businesses, focusing on ease of use, local payment methods, and business growth through technology.',
+  pitch_market_opportunity: 'AfriCommerce is a digital platform designed to help small enterprises in Africa easily set up online stores, manage inventory, accept digital payments, and connect with a larger customer base. It provides tailored solutions for African businesses, focusing on ease of use, local payment methods, and business growth through technology.',
+  pitch_traction: 'AfriCommerce is a digital platform designed to help small enterprises in Africa easily set up online stores, manage inventory, accept digital payments, and connect with a larger customer base. It provides tailored solutions for African businesses, focusing on ease of use, local payment methods, and business growth through technology.',
 }
+
+// const initialBusiness: Business = {
+//   name: '',
+//   short_description: '',
+//   location: '',
+//   category: '',
+//   amount_raised: 0,
+//   investors: 0,
+//   minimum_investment: 0,
+//   days_left: 0,
+
+//   // :::::::::::::::::: pitch
+//   pitch_summary: '',
+//   pitch_problem: '',
+//   pitch_solution: '',
+//   pitch_market_opportunity: '',
+//   pitch_traction: '',
+// }
 
 export default function BusinessForm() {
   const [business, setBusiness] = useState<Business>(initialBusiness);
@@ -58,6 +79,7 @@ export default function BusinessForm() {
   const navigate = useNavigate();
 
   // ::::::::::::::::::::: web3 states
+  const activeWallet = useActiveWallet();
   const connectionStatus = useActiveWalletConnectionStatus();
   const { mutate: sendTransaction, status } = useSendTransaction();
   const [statusMessage, setStatusMessage] = useState("");
@@ -113,11 +135,18 @@ export default function BusinessForm() {
   // :::::::::::::::::::: SUBMIT FUNCTION
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    // :::::::::::::: return if wallet is not connected
+    if (connectionStatus !== 'connected' ) {
+      setAlert({ text: 'Please connect your wallet before submitting.', title: 'Wallet Not Connected' });
+      return;
+    }
   
     const jsonData = { 
       ...business,
       logo: logoFile,
-      cover_image: coverImageFile
+      cover_image: coverImageFile,
+      client_address: activeWallet?.getAccount()?.address
     };
     // console.log("Submitting business data:", jsonData);
     
@@ -169,12 +198,12 @@ export default function BusinessForm() {
 
 
       // ::::::::::::: redirects after 4s 
-      const timeout = setTimeout(()=>navigate('/business'), 4000);
+      // const timeout = setTimeout(()=>navigate('/business'), 4000);
 
       // console.log(`Business ${response.data.name} created successfully`);
       
       // ::::::::::::: clean up after unmount
-      return () => clearTimeout(timeout);
+      // return () => clearTimeout(timeout);
 
     } catch (error) {
       console.error('Error creating business:', error);
