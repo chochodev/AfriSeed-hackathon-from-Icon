@@ -19,6 +19,7 @@ import MultiStepLoader from '$/components/multiStepLoader';
 
 
 interface Business {
+  full_name: string
   name: string
   short_description: string
   location: string
@@ -36,41 +37,43 @@ interface Business {
   pitch_market_opportunity: string
   pitch_traction: string
 }
-const initialBusiness: Business = {
-  name: 'TEST-BIZ',
-  short_description: 'AfriCommerce is a digital platform designed to help small enterprises in Africa easily set up online stores, manage inventory, accept digital payments, and connect with a larger customer base.',
-  location: 'Lagos, Test',
-  category: 'E-Commerce',
-  amount_raised: 12000,
-  investors: 21,
-  minimum_investment: 100,
-  days_left: 10,
-
-  // :::::::::::::::::: pitch
-  pitch_summary: 'AfriCommerce is a digital platform designed to help small enterprises in Africa easily set up online stores, manage inventory, accept digital payments, and connect with a larger customer base. It provides tailored solutions for African businesses, focusing on ease of use, local payment methods, and business growth through technology.',
-  pitch_problem: 'AfriCommerce is a digital platform designed to help small enterprises in Africa easily set up online stores, manage inventory, accept digital payments, and connect with a larger customer base. It provides tailored solutions for African businesses, focusing on ease of use, local payment methods, and business growth through technology.',
-  pitch_solution: 'AfriCommerce is a digital platform designed to help small enterprises in Africa easily set up online stores, manage inventory, accept digital payments, and connect with a larger customer base. It provides tailored solutions for African businesses, focusing on ease of use, local payment methods, and business growth through technology.',
-  pitch_market_opportunity: 'AfriCommerce is a digital platform designed to help small enterprises in Africa easily set up online stores, manage inventory, accept digital payments, and connect with a larger customer base. It provides tailored solutions for African businesses, focusing on ease of use, local payment methods, and business growth through technology.',
-  pitch_traction: 'AfriCommerce is a digital platform designed to help small enterprises in Africa easily set up online stores, manage inventory, accept digital payments, and connect with a larger customer base. It provides tailored solutions for African businesses, focusing on ease of use, local payment methods, and business growth through technology.',
-}
-
 // const initialBusiness: Business = {
-//   name: '',
-//   short_description: '',
-//   location: '',
-//   category: '',
-//   amount_raised: 0,
-//   investors: 0,
-//   minimum_investment: 0,
-//   days_left: 0,
+//   full_name: 'John Doe',
+//   name: 'TEST-BIZ',
+//   short_description: 'AfriCommerce is a digital platform designed to help small enterprises in Africa easily set up online stores, manage inventory, accept digital payments, and connect with a larger customer base.',
+//   location: 'Lagos, Test',
+//   category: 'E-Commerce',
+//   amount_raised: 12000,
+//   investors: 21,
+//   minimum_investment: 100,
+//   days_left: 10,
 
 //   // :::::::::::::::::: pitch
-//   pitch_summary: '',
-//   pitch_problem: '',
-//   pitch_solution: '',
-//   pitch_market_opportunity: '',
-//   pitch_traction: '',
+//   pitch_summary: 'AfriCommerce is a digital platform designed to help small enterprises in Africa easily set up online stores, manage inventory, accept digital payments, and connect with a larger customer base. It provides tailored solutions for African businesses, focusing on ease of use, local payment methods, and business growth through technology.',
+//   pitch_problem: 'AfriCommerce is a digital platform designed to help small enterprises in Africa easily set up online stores, manage inventory, accept digital payments, and connect with a larger customer base. It provides tailored solutions for African businesses, focusing on ease of use, local payment methods, and business growth through technology.',
+//   pitch_solution: 'AfriCommerce is a digital platform designed to help small enterprises in Africa easily set up online stores, manage inventory, accept digital payments, and connect with a larger customer base. It provides tailored solutions for African businesses, focusing on ease of use, local payment methods, and business growth through technology.',
+//   pitch_market_opportunity: 'AfriCommerce is a digital platform designed to help small enterprises in Africa easily set up online stores, manage inventory, accept digital payments, and connect with a larger customer base. It provides tailored solutions for African businesses, focusing on ease of use, local payment methods, and business growth through technology.',
+//   pitch_traction: 'AfriCommerce is a digital platform designed to help small enterprises in Africa easily set up online stores, manage inventory, accept digital payments, and connect with a larger customer base. It provides tailored solutions for African businesses, focusing on ease of use, local payment methods, and business growth through technology.',
 // }
+
+const initialBusiness: Business = {
+  full_name: '',
+  name: '',
+  short_description: '',
+  location: '',
+  category: '',
+  amount_raised: 0,
+  investors: 0,
+  minimum_investment: 0,
+  days_left: 0,
+
+  // :::::::::::::::::: pitch
+  pitch_summary: '',
+  pitch_problem: '',
+  pitch_solution: '',
+  pitch_market_opportunity: '',
+  pitch_traction: '',
+}
 
 const textAreaField = [
   {name: 'short_description', title: 'Short Description', placeholder: 'e.g AI-powered software as a service aimed at ...'},
@@ -243,7 +246,7 @@ export default function BusinessForm() {
           setTransactionStatus("error");
 
           console.error("Transaction error: ", error);
-          
+
           // :::::::::::: remove the multi step loader
           const timeout = setTimeout(() => {
             setIsLoading(false);
@@ -299,6 +302,19 @@ export default function BusinessForm() {
 
           {/* ::::::::::::::::::::::::::::::: form */}
           <form onSubmit={handleSubmit} className="space-y-[2rem] mt-[2rem] ">
+            <div className="space-y-2">
+              <label className='text-[0.875rem] font-[600] text-neutral-600 uppercase' htmlFor="name">Full name</label>
+              <Input
+                id="full_name"
+                name="full_name"
+                value={business.full_name}
+                onChange={handleInputChange}
+                className=''
+                placeholder='e.g John Doe'
+                required
+              />
+            </div>
+
             <div className="space-y-2">
               <label className='text-[0.875rem] font-[600] text-neutral-600 uppercase' htmlFor="name">Business Name</label>
               <Input
