@@ -14,6 +14,7 @@ import {
 import { prepareContractCall, getContract } from "thirdweb";
 import { defineChain } from "thirdweb/chains";
 import { CONTRACT_ADDRESS, client } from '$/lib/utils';
+import MultiStepLoader from '$/components/multiStepLoader';
 
 
 
@@ -94,11 +95,16 @@ export default function BusinessForm() {
   const [alert, setAlert] = useState<{ text: string; title: string;} | null>(null);
   const navigate = useNavigate();
 
+  // :::::::::::::::::::: loader state
+  const [isLoading, setIsLoading] = useState(false);
+  const [transactionStatus, setTransactionStatus] = 
+    useState<'loading' | 'success' | 'error' | null>(null);
+  const [transactionMessage, setTransactionMessage] = useState('');
+
   // ::::::::::::::::::::: web3 states
   const activeWallet = useActiveWallet();
   const connectionStatus = useActiveWalletConnectionStatus();
   const { mutate: sendTransaction, status } = useSendTransaction();
-  const [statusMessage, setStatusMessage] = useState("");
   
   const contract = getContract({
     client,
@@ -151,6 +157,7 @@ export default function BusinessForm() {
   // :::::::::::::::::::: SUBMIT FUNCTION
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setIsLoading(true);
 
     // :::::::::::::: image fields requirement
     if (!logoFile || !coverImageFile) {
@@ -190,6 +197,10 @@ export default function BusinessForm() {
         }
       );
 
+      // :::::::::::::::::::: web3 transaction after successful backend call
+      setTransactionMessage("Processing transaction...");
+      setTransactionStatus("loading");
+
       // :::::::::::::::::::: web3 section
       try {  
         const transaction = prepareContractCall({
@@ -207,15 +218,20 @@ export default function BusinessForm() {
         // sendTransaction(transaction);
         sendTransaction(transaction, {
           onSuccess: () => {
-            setStatusMessage("Transaction successful!");
+            setTransactionMessage("Transaction successful!");
+            setTransactionStatus("success");
           },
           onError: () => {
-            setStatusMessage("Transaction failed. Please try again.");
+            setTransactionMessage("Transaction failed. Please try again.");
+            setTransactionStatus("error");
           }
         });
       } catch (error) {
         console.error(error);
-        setStatusMessage("An error occurred while preparing the transaction.");
+        setTransactionMessage("Error occurred during transaction preparation.");
+        setTransactionStatus("error");
+      } finally {
+        setIsLoading(false);
       }
 
       // ::::::::::::::: resets the business form data and shows alert
@@ -244,148 +260,153 @@ export default function BusinessForm() {
     }
   }
 
-  const isLoading = status === 'pending';
+  // const isLoading = status === 'pending';
   const isSuccess = status === 'success';
   const isError = status === 'error';
 
-  console.log(statusMessage, isSuccess, isError);
+  console.log(isSuccess, isError);
 
   return (
     <MainLayout>
-    {/* :::::::::::::::::: alert component */}
-    {alert && (
-      <Alert
-        text={alert.text}
-        title={alert.title}
-      />
-    )}
-    <div className='size-full py-[4rem] px-[1rem] lg:px-[2rem] bg-neutral-50'>
-      <div className="max-w-[72rem] mx-auto">
-        <h1 className="text-3xl font-bold mb-6">Pitch Your Business Ideas</h1>
-        <p className='text-[1rem] font-[600] text-neutral-600'>Instructions:</p>
-        <p className='text-[0.875rem] text-neutral-500 font-[600] pl-[1rem] mt-[1rem] '>
-          1. Fill out the form truthfully.<br/>
-          2. Submit your application for review.<br/>
-          3. Once approved, your business will be visible to all investors.
-        </p> 
+      {/* :::::::::::::::::: Show loader while transaction is being processed */}
+      {isLoading &&
+        <MultiStepLoader message={transactionMessage} status={transactionStatus || 'loading'} />
+      }
 
-        {/* ::::::::::::::::::::::::::::::: form */}
-        <form onSubmit={handleSubmit} className="space-y-[2rem] mt-[2rem] ">
-          <div className="space-y-2">
-            <label className='text-[0.875rem] font-[600] text-neutral-600 uppercase' htmlFor="name">Business Name</label>
-            <Input
-              id="name"
-              name="name"
-              value={business.name}
-              onChange={handleInputChange}
-              className=''
-              placeholder='e.g AfriSeed'
-              required
-            />
-          </div>
+      {/* :::::::::::::::::: alert component */}
+      {alert && (
+        <Alert
+          text={alert.text}
+          title={alert.title}
+        />
+      )}
+      <div className='size-full py-[4rem] px-[1rem] lg:px-[2rem] bg-neutral-50'>
+        <div className="max-w-[72rem] mx-auto">
+          <h1 className="text-3xl font-bold mb-6">Pitch Your Business Ideas</h1>
+          <p className='text-[1rem] font-[600] text-neutral-600'>Instructions:</p>
+          <p className='text-[0.875rem] text-neutral-500 font-[600] pl-[1rem] mt-[1rem] '>
+            1. Fill out the form truthfully.<br/>
+            2. Submit your application for review.<br/>
+            3. Once approved, your business will be visible to all investors.
+          </p> 
 
-          {/* ::::::::::::::::: business logo */}
-          <div className="space-y-2">
-            <label className='text-[0.875rem] font-[600] text-neutral-600 uppercase'>Business Logo</label>
-            <div {...getLogoRootProps()} className="border-2 border-dashed border-gray-300 rounded-lg p-6 cursor-pointer hover:border-neutral-500">
-              <input {...getLogoInputProps()} />
-              <div className="flex flex-col items-center">
-                {logoFile ? (
-                  <img src={URL.createObjectURL(logoFile)} alt="Logo" className="size-[12.5rem] rounded-[4px] object-cover mb-4" />
-                ) : (
-                  <RiImageAddLine className='text-[3.5rem] text-neutral-400' />
-                )}
-                <p className="text-sm text-gray-500">Drag and drop or click to upload logo</p>
-              </div>
-            </div>
-          </div>
-
-          {/* ::::::::::::::::: business cover image */}
-          <div className="space-y-2">
-            <label className='text-[0.875rem] font-[600] text-neutral-600 uppercase'>Cover Image</label>
-            <div {...getCoverRootProps()} className="border-2 border-dashed border-gray-300 rounded-lg p-6 cursor-pointer hover:border-neutral-500">
-              <input {...getCoverInputProps()} />
-              <div className="flex flex-col items-center">
-                {coverImageFile ? (
-                  <img src={URL.createObjectURL(coverImageFile)} alt="Cover" className="size-[12.5rem] rounded-[4px] mb-4 object-cover" />
-                ) : (
-                  <RiImageAddLine className='text-[3.5rem] text-neutral-400' />
-                )}
-                <p className="text-sm text-gray-500">Drag and drop or click to upload cover image</p>
-              </div>
-            </div>
-          </div>
-
-          {textAreaField.map((info, i) => (
-            <div key={i} className="space-y-2">
-              <label className='text-[0.875rem] font-[600] text-neutral-600 uppercase' htmlFor={info.name}>{info.title}</label>
+          {/* ::::::::::::::::::::::::::::::: form */}
+          <form onSubmit={handleSubmit} className="space-y-[2rem] mt-[2rem] ">
+            <div className="space-y-2">
+              <label className='text-[0.875rem] font-[600] text-neutral-600 uppercase' htmlFor="name">Business Name</label>
               <Input
-                id={info.name}
-                name={info.name}
-                value={business[info.name as keyof Business] || ''}
+                id="name"
+                name="name"
+                value={business.name}
                 onChange={handleInputChange}
-                placeholder={info.placeholder}
-                className={`${i > 0 && 'min-h-[5rem]'}`}
+                className=''
+                placeholder='e.g AfriSeed'
                 required
               />
             </div>
-          ))}
 
-          {/* ::::::::::::::::::: LOCATION */}
-          <div className="space-y-2">
-            <label className='text-[0.875rem] font-[600] text-neutral-600 uppercase' htmlFor="location">Location</label>
-            <Input
-              id="location"
-              name="location"
-              value={business.location}
-              onChange={handleInputChange}
-              placeholder='e.g Lagos, Nigeria'
-              required
-            />
-          </div>
+            {/* ::::::::::::::::: business logo */}
+            <div className="space-y-2">
+              <label className='text-[0.875rem] font-[600] text-neutral-600 uppercase'>Business Logo</label>
+              <div {...getLogoRootProps()} className="border-2 border-dashed border-gray-300 rounded-lg p-6 cursor-pointer hover:border-neutral-500">
+                <input {...getLogoInputProps()} />
+                <div className="flex flex-col items-center">
+                  {logoFile ? (
+                    <img src={URL.createObjectURL(logoFile)} alt="Logo" className="size-[12.5rem] rounded-[4px] object-cover mb-4" />
+                  ) : (
+                    <RiImageAddLine className='text-[3.5rem] text-neutral-400' />
+                  )}
+                  <p className="text-sm text-gray-500">Drag and drop or click to upload logo</p>
+                </div>
+              </div>
+            </div>
 
-          {/* ::::::::::::::::::: CATEGORY */}
-          <div className="space-y-2">
-            <label className='text-[0.875rem] font-[600] text-neutral-600 uppercase' htmlFor="category">Category</label>
-            <Input
-              id="category"
-              name="category"
-              value={business.category}
-              onChange={handleInputChange}
-              placeholder='e.g IT & Programming'
-              required
-            />
-          </div>
+            {/* ::::::::::::::::: business cover image */}
+            <div className="space-y-2">
+              <label className='text-[0.875rem] font-[600] text-neutral-600 uppercase'>Cover Image</label>
+              <div {...getCoverRootProps()} className="border-2 border-dashed border-gray-300 rounded-lg p-6 cursor-pointer hover:border-neutral-500">
+                <input {...getCoverInputProps()} />
+                <div className="flex flex-col items-center">
+                  {coverImageFile ? (
+                    <img src={URL.createObjectURL(coverImageFile)} alt="Cover" className="size-[12.5rem] rounded-[4px] mb-4 object-cover" />
+                  ) : (
+                    <RiImageAddLine className='text-[3.5rem] text-neutral-400' />
+                  )}
+                  <p className="text-sm text-gray-500">Drag and drop or click to upload cover image</p>
+                </div>
+              </div>
+            </div>
 
-          {/* ::::::::::::::::::: MONEY */}
-          <div className="grid grid-cols-1 smd:grid-cols-2 gap-4">
-            {numberField.map((field, i) => (
-              <div key={i} className="flex flex-col space-y-2">
-                <label className='text-[0.875rem] font-[600] text-neutral-600 uppercase' htmlFor={field.name}>
-                  {field.title}
-                </label>
+            {textAreaField.map((info, i) => (
+              <div key={i} className="space-y-2">
+                <label className='text-[0.875rem] font-[600] text-neutral-600 uppercase' htmlFor={info.name}>{info.title}</label>
                 <Input
-                  type="number"
-                  id={field.name}
-                  name={field.name}
-                  value={business[field.name as keyof Business] || 0}
-                  onChange={handleNumberChange}
+                  id={info.name}
+                  name={info.name}
+                  value={business[info.name as keyof Business] || ''}
+                  onChange={handleInputChange}
+                  placeholder={info.placeholder}
+                  className={`${i > 0 && 'min-h-[5rem]'}`}
                   required
                 />
               </div>
             ))}
-          </div>
 
-          {/* ::::::::::::::::::::: SUBMIT BUTTON */}
-          <button 
-            type="submit" 
-            className="w-full bg-neutral-800 text-neutral-100 font-[600] text-[0.875rem] px-[2rem] py-[0.875rem] rounded-[8px] outline outline-1 outline-neutral-300 hover:bg-neutral-100 hover:text-neutral-800 active:bg-neutral-200 shadow-[0_0_20px_1px_rgba(0,0,0,0.1)] ease-250"
-          >
-            {isLoading ? 'Submitting...' : 'Submit'}
-          </button>
-        </form>
+            {/* ::::::::::::::::::: LOCATION */}
+            <div className="space-y-2">
+              <label className='text-[0.875rem] font-[600] text-neutral-600 uppercase' htmlFor="location">Location</label>
+              <Input
+                id="location"
+                name="location"
+                value={business.location}
+                onChange={handleInputChange}
+                placeholder='e.g Lagos, Nigeria'
+                required
+              />
+            </div>
+
+            {/* ::::::::::::::::::: CATEGORY */}
+            <div className="space-y-2">
+              <label className='text-[0.875rem] font-[600] text-neutral-600 uppercase' htmlFor="category">Category</label>
+              <Input
+                id="category"
+                name="category"
+                value={business.category}
+                onChange={handleInputChange}
+                placeholder='e.g IT & Programming'
+                required
+              />
+            </div>
+
+            {/* ::::::::::::::::::: MONEY */}
+            <div className="grid grid-cols-1 smd:grid-cols-2 gap-4">
+              {numberField.map((field, i) => (
+                <div key={i} className="flex flex-col space-y-2">
+                  <label className='text-[0.875rem] font-[600] text-neutral-600 uppercase' htmlFor={field.name}>
+                    {field.title}
+                  </label>
+                  <Input
+                    type="number"
+                    id={field.name}
+                    name={field.name}
+                    value={business[field.name as keyof Business] || 0}
+                    onChange={handleNumberChange}
+                    required
+                  />
+                </div>
+              ))}
+            </div>
+
+            {/* ::::::::::::::::::::: SUBMIT BUTTON */}
+            <button 
+              type="submit" 
+              className="w-full bg-neutral-800 text-neutral-100 font-[600] text-[0.875rem] px-[2rem] py-[0.875rem] rounded-[8px] outline outline-1 outline-neutral-300 hover:bg-neutral-100 hover:text-neutral-800 active:bg-neutral-200 shadow-[0_0_20px_1px_rgba(0,0,0,0.1)] ease-250"
+            >
+              {isLoading ? 'Submitting...' : 'Submit'}
+            </button>
+          </form>
+        </div>
       </div>
-    </div>
     </MainLayout>
   )
 }

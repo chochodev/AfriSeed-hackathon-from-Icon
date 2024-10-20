@@ -6,7 +6,7 @@ interface LoaderProps {
   status: 'loading' | 'success' | 'error';
 }
 
-const Loader: React.FC<LoaderProps> = ({ message, status }) => {
+const MultiStepLoader: React.FC<LoaderProps> = ({ message, status }) => {
   let color = 'text-gray-500';
   
   if (status === 'success') {
@@ -23,4 +23,4 @@ const Loader: React.FC<LoaderProps> = ({ message, status }) => {
   );
 };
 
-export default Loader;
+export default MultiStepLoader;
