@@ -9,7 +9,7 @@ interface Business {
   short_description: string
   total_amount: number
   investors: number
-  deadline: number
+  deadline: Date
   is_completed: boolean
 }
 

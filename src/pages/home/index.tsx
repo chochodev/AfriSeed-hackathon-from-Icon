@@ -15,7 +15,7 @@ interface Business {
   location: string
   category: string
   minimum_investment: number
-  deadline: number
+  deadline: Date
 
   total_amount: number
   investors: number

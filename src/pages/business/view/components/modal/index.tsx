@@ -39,7 +39,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, business }) => {
       contract,
       method: "function contribute(address _projectAddress) payable",
       params: [business.project_address],
-      value: BigInt(value * 1e18)
+      value: BigInt(Math.round(value * 1e18))
     });
 
     try {
