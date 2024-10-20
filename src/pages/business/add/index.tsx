@@ -157,114 +157,126 @@ export default function BusinessForm() {
   // :::::::::::::::::::: SUBMIT FUNCTION
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setIsLoading(true);
-
+  
     // :::::::::::::: image fields requirement
     if (!logoFile || !coverImageFile) {
       setAlert({ 
         text: 'Logo and Cover image are required before submission.', 
         title: 'Missing Files' 
       });
+      setIsLoading(false);
       return;
     }
-
+  
     // :::::::::::::: return if wallet is not connected
-    if (connectionStatus !== 'connected' ) {
+    if (connectionStatus !== 'connected') {
       setAlert({ 
         text: 'Please connect your wallet before submission.', 
         title: 'Wallet Not Connected' 
       });
+      setIsLoading(false);
       return;
     }
   
-    const jsonData = { 
-      ...business,
-      logo: logoFile,
-      cover_image: coverImageFile,
-      client_address: activeWallet?.getAccount()?.address
-    };
-    // console.log("Submitting business data:", jsonData);
+    // ::::::::::::::::: loading state
+    setTransactionMessage("Transaction is initiating");
+    setTransactionStatus("loading");
+    setIsLoading(true);
     
-    const backend_url = import.meta.env.VITE_APP_BACKEND_URL;
+    console.log('first status: ', status);
+  
     try {
-      const response = await axios.post(
-        `${backend_url}/businesses/`, 
-        jsonData, {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-          },
-          withCredentials: true,
-        }
-      );
-
-      // :::::::::::::::::::: web3 transaction after successful backend call
-      setTransactionMessage("Processing transaction...");
+      // :::::::::::::::::::: web3 section - transaction first
+      const transaction = prepareContractCall({
+        contract,
+        method: "function createProject(uint256 minimumContribution, uint256 deadline, uint256 targetContribution, string projectTitle, string projectDesc)",
+        params: [
+          BigInt(business.minimum_investment),
+          BigInt(Math.floor(Date.now() / 1000) + business.days_left * 86400),// to UNIX timestamp
+          BigInt(business.amount_raised),
+          business.name,
+          business.short_description
+        ]
+      });
+      
+      // onLoading: () => {
+      setTransactionMessage("Transaction is processing.");
       setTransactionStatus("loading");
+      // },
+  
+      // Execute the transaction
+      sendTransaction(transaction, {
+        onSuccess: async () => {
+          setTransactionMessage("Transaction successful!");
+          setTransactionStatus("success");
+  
+          // Make the backend API call after successful transaction
+          const jsonData = { 
+            ...business,
+            logo: logoFile,
+            cover_image: coverImageFile,
+            client_address: activeWallet?.getAccount()?.address
+          };
+  
+          const backend_url = import.meta.env.VITE_APP_BACKEND_URL;
+          const response = await axios.post(`${backend_url}/businesses/`, jsonData, {
+            headers: { 'Content-Type': 'multipart/form-data' },
+            withCredentials: true,
+          });
+  
+          // Reset the business form data and show alert
+          setBusiness(initialBusiness);
+          setLogoFile(null);
+          setCoverImageFile(null);
+  
+          setAlert({
+            text: `Business ${response.data.name} created successfully and smart contract transaction sent`,
+            title: 'Success',
+          });
+  
+          // Redirect after 4s
+          const timeout = setTimeout(() => {
+            setIsLoading(false);
+            const timeout2 = setTimeout(() => {
+              navigate('/business');
+            }, 4000);
 
-      // :::::::::::::::::::: web3 section
-      try {  
-        const transaction = prepareContractCall({
-          contract,
-          method: "function createProject(uint256 minimumContribution, uint256 deadline, uint256 targetContribution, string projectTitle, string projectDesc)",
-          params: [
-            BigInt(business.minimum_investment),
-            BigInt(Math.floor(Date.now() / 1000) + business.days_left * 86400), // Convert days to UNIX timestamp
-            BigInt(business.amount_raised),
-            business.name,
-            business.short_description
-          ]
-        });
-
-        // sendTransaction(transaction);
-        sendTransaction(transaction, {
-          onSuccess: () => {
-            setTransactionMessage("Transaction successful!");
-            setTransactionStatus("success");
-          },
-          onError: () => {
-            setTransactionMessage("Transaction failed. Please try again.");
-            setTransactionStatus("error");
-          }
-        });
-      } catch (error) {
-        console.error(error);
-        setTransactionMessage("Error occurred during transaction preparation.");
-        setTransactionStatus("error");
-      } finally {
-        setIsLoading(false);
-      }
-
-      // ::::::::::::::: resets the business form data and shows alert
-      setBusiness(initialBusiness);
-      setLogoFile(null);
-      setCoverImageFile(null);
-      
-      
-      // ::::::::::::: redirects after 4s 
-      if (status === 'success') {
-        const timeout = setTimeout(()=>navigate('/business'), 4000);
-        setAlert({ 
-          text: `Business ${response.data.name} created successfully and smart contract transaction sent`, 
-          title: 'Success'
-        });
-        
-        return () => clearTimeout(timeout);
-      }
-
-      // console.log(`Business ${response.data.name} created successfully`);
-      
-      // ::::::::::::: clean up after unmount
-
+            return () => clearTimeout(timeout2);
+          }, 2000);
+          return () => clearTimeout(timeout);
+        },
+        onError: (error) => {
+          setTransactionMessage("Transaction failed!");
+          setTransactionStatus("error");
+          console.error("Transaction error: ", error);
+        }
+      });
+  
     } catch (error) {
-      console.error('Error creating business:', error);
+      setTransactionMessage("Error occurred during transaction preparation or backend request.");
+      setTransactionStatus("error");
+      console.error(error);
+    } finally {
+      // setIsLoading(false);
     }
-  }
+  };
 
+  useEffect(() => {
+    if (status === 'pending') {
+      setTransactionMessage("Transaction is processing.");
+      setTransactionStatus("loading");
+    } else if (status === 'error') {
+      setTransactionMessage("Transaction failed!");
+      setTransactionStatus("error");
+      throw new Error('Transaction failed');
+    }
+  }, [status])
+  
   // const isLoading = status === 'pending';
-  const isSuccess = status === 'success';
-  const isError = status === 'error';
+  // const isSuccess = status === 'success';
+  // const isError = status === 'error';
 
-  console.log(isSuccess, isError);
+  // console.log(isSuccess, isError);
 
   return (
     <MainLayout>

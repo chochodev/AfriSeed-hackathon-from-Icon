@@ -13,12 +13,29 @@ const MultiStepLoader: React.FC<LoaderProps> = ({ message, status }) => {
     color = 'text-green-500';
   } else if (status === 'error') {
     color = 'text-red-500';
+  } else if (status === 'loading') {
+    color = 'text-black';
   }
 
   return (
-    <div className="flex flex-col items-center space-y-4">
-      <div className={`loader-circle ${status === 'loading' ? 'animate-spin' : ''} ${color}`}></div>
-      <p className={`text-lg ${color}`}>{message}</p>
+    <div 
+      className="fixed z-[100] inset-0 flex flex-col justify-center items-center space-y-4 bg-gradient-to-br from-black/50 via-black/60 to-black/80 p-[2rem] pt-[-2rem] "
+    >
+      <div className='flex items-end justify-center h-[20rem] w-full max-w-[30rem] p-[4rem] bg-gradient-to-br from-neutral-800 via-neutral-900 to-neutral-950 rounded'>
+        <div className="banter-loader">
+          <div className="banter-loader__box"></div>
+          <div className="banter-loader__box"></div>
+          <div className="banter-loader__box"></div>
+          <div className="banter-loader__box"></div>
+          <div className="banter-loader__box"></div>
+          <div className="banter-loader__box"></div>
+          <div className="banter-loader__box"></div>
+          <div className="banter-loader__box"></div>
+          <div className="banter-loader__box"></div>
+        </div>
+
+        <p className={`uppercase font-[600] text-[0.75rem] h-max bg-white ${color} text-center py-[0.5rem] px-[1rem] rounded-[4px] mx-auto mt-[1rem] `}>{message}</p>
+      </div>
     </div>
   );
 };
