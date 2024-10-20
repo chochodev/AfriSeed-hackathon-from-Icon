@@ -34,16 +34,19 @@ html {
 }
 
 .ease-250 {
-  @apply transition-all duration-[250ms] ease-in-out
+  transition: all 250ms ease-in-out;
 }
+
 .ease-300 {
-  @apply transition-all duration-[300ms] ease-in-out
+  transition: all 300ms ease-in-out;
 }
+
 .ease-350 {
-  @apply transition-all duration-[350ms] ease-in-out
+  transition: all 350ms ease-in-out;
 }
+
 .ease-400 {
-  @apply transition-all duration-[400ms] ease-in-out
+  transition: all 400ms ease-in-out;
 }
 
 
@@ -60,9 +63,4 @@ html {
 }
 .animate-pause {
   animation-play-state: paused;
-}
-@layer base {
-  :root {
-    --radius: 0.5rem;
-  }
 }
