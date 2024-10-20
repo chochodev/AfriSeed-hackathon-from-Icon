@@ -144,8 +144,10 @@ export default function BusinessForm() {
     setBusiness(prev => ({ ...prev, [name]: parseFloat(value) || 0 }))
   }
 
-  const handleDeadlineChange = (date: Date) => {
-    setBusiness(prev => ({ ...prev, days_left: date }));
+  const handleDeadlineChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const selectedDate = new Date(e.target.value);
+    // const today = new Date();
+    setBusiness(prev => ({ ...prev, days_left: selectedDate }));
   }
 
   // :::::::::::::::::::: image function
@@ -441,11 +443,16 @@ export default function BusinessForm() {
                 </div>
               ))}
 
-              <div className="space-y-2">
-                <label htmlFor="days_left">Deadline</label>
-                <DeadlineDatePicker
-                  value={business.days_left}
+              <div className="space-y-1">
+                <label htmlFor="days_left" className='text-[0.875rem] font-[600] text-neutral-600 uppercase'>Deadline</label>
+                {/* <br/> */}
+                <input
+                  type="date"
+                  id="days_left"
+                  value={business.days_left.toISOString().split('T')[0]}
+                  className='w-full py-[0.4rem] px-[0.875rem] ring-[1px] ring-neutral-300 text-neutral-500 font-[600] focus:ring-neutral-400 focus:shadow-[0_0_1px_5px_rgba(0,0,0,0.1)] rounded-[8px]'
                   onChange={handleDeadlineChange}
+                  required
                 />
               </div>
             </div>
