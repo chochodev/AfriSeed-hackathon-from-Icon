@@ -144,8 +144,8 @@ export default function BusinessForm() {
     setBusiness(prev => ({ ...prev, [name]: parseFloat(value) || 0 }))
   }
 
-  const handleDeadlineChange = (date: Date | null) => {
-    setBusiness(prev => ({ ...prev, deadline: date }))
+  const handleDeadlineChange = (date: Date) => {
+    setBusiness(prev => ({ ...prev, days_left: date }));
   }
 
   // :::::::::::::::::::: image function
@@ -441,13 +441,13 @@ export default function BusinessForm() {
                 </div>
               ))}
 
-            <div className="space-y-2">
-              <label htmlFor="days_left">Deadline</label>
-              <DeadlineDatePicker
-                selectedDate={business.days_left}
-                onChange={handleDeadlineChange}
-              />
-            </div>
+              <div className="space-y-2">
+                <label htmlFor="days_left">Deadline</label>
+                <DeadlineDatePicker
+                  value={business.days_left}
+                  onChange={handleDeadlineChange}
+                />
+              </div>
             </div>
 
             {/* ::::::::::::::::::::: SUBMIT BUTTON */}

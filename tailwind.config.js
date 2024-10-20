@@ -34,8 +34,7 @@ module.exports = {
   			},
   			secondary: '#F2B49B',
   			tertiary: '#A65E30',
-  			': '.colors,
-                ...defaultTheme.colors,: '
+        ...defaultTheme.colors,
   		},
   		borderRadius: {
   			lg: 'var(--radius)',

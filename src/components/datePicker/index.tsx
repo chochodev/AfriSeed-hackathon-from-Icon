@@ -1,52 +1,57 @@
-import { useState } from 'react'
-import DatePicker from 'react-datepicker'
-import 'react-datepicker/dist/react-datepicker.css'
-import { CalendarIcon } from 'lucide-react'
+import * as React from "react"
+import { format } from "date-fns"
+import { Calendar as CalendarIcon } from "lucide-react"
 
-interface DeadlineDatePickerProps {
-  selectedDate: Date | null
-  onChange: (date: Date | null) => void
+import { cn } from "$/lib/utils"
+import { Button } from "$/components/ui/button"
+import { Calendar } from "$/components/ui/calendar"
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "$/components/ui/popover"
+
+interface DatePickerProps {
+  value: Date
+  onChange: (date: Date) => void
 }
 
-export default function DeadlineDatePicker({ selectedDate, onChange }: DeadlineDatePickerProps) {
-  const [isOpen, setIsOpen] = useState(false)
+function DatePicker({ value, onChange }: DatePickerProps) {
+  const [date, setDate] = React.useState<Date>(value)
 
-  const handleChange = (date: Date | null) => {
-    onChange(date)
-    setIsOpen(false)
+  const handleSelect = (newDate: Date) => {
+    setDate(newDate)
+    onChange(newDate)
   }
 
   const tomorrow = new Date()
   tomorrow.setDate(tomorrow.getDate() + 1)
 
   return (
-    <div className="relative">
-      <div className="flex items-center">
-        <input
-          type="text"
-          value={selectedDate ? selectedDate.toLocaleDateString() : ''}
-          readOnly
-          className="w-full px-3 py-2 border rounded-l-md focus:outline-none focus:ring-2 focus:ring-primary-500"
-          placeholder="Select deadline"
-          onClick={() => setIsOpen(true)}
-        />
-        <button
-          type="button"
-          onClick={() => setIsOpen(true)}
-          className="px-3 py-2 bg-primary-500 text-white rounded-r-md hover:bg-primary-600 focus:outline-none focus:ring-2 focus:ring-primary-500"
+    <Popover>
+      <PopoverTrigger asChild>
+        <Button
+          variant={"outline"}
+          className={cn(
+            "w-full justify-start text-left font-normal",
+            !date && "text-muted-foreground"
+          )}
         >
-          <CalendarIcon className="w-5 h-5" />
-        </button>
-      </div>
-      {isOpen && (
-        <DatePicker
-          selected={selectedDate}
-          onChange={handleChange}
-          minDate={tomorrow}
-          inline
-          calendarClassName="absolute z-10 bg-white shadow-lg rounded-md mt-1"
+          <CalendarIcon className="mr-2 h-4 w-4" />
+          {date ? format(date, "PPP") : <span>Pick a date</span>}
+        </Button>
+      </PopoverTrigger>
+      <PopoverContent className="w-auto p-0">
+        <Calendar
+          mode="single"
+          selected={date}
+          onSelect={handleSelect}
+          disabled={(date) => date < tomorrow}
+          required
         />
-      )}
-    </div>
+      </PopoverContent>
+    </Popover>
   )
 }
+
+export default DatePicker;
