@@ -61,3 +61,8 @@ html {
 .animate-pause {
   animation-play-state: paused;
 }
+@layer base {
+  :root {
+    --radius: 0.5rem;
+  }
+}
