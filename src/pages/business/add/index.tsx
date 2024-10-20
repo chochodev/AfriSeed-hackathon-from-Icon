@@ -55,43 +55,43 @@ interface BusinessWithoutDate {
   pitch_market_opportunity: string
   pitch_traction: string
 }
-// const initialBusiness: Business = {
-//   full_name: 'John Doe',
-//   name: 'TEST-BIZ',
-//   short_description: 'AfriCommerce is a digital platform designed to help small enterprises in Africa easily set up online stores, manage inventory, accept digital payments, and connect with a larger customer base.',
-//   location: 'Lagos, Test',
-//   category: 'E-Commerce',
-//   total_amount: 12000,
-//   investors: 21,
-//   minimum_investment: 100,
-//   deadline: 10,
-
-//   // :::::::::::::::::: pitch
-//   pitch_summary: 'AfriCommerce is a digital platform designed to help small enterprises in Africa easily set up online stores, manage inventory, accept digital payments, and connect with a larger customer base. It provides tailored solutions for African businesses, focusing on ease of use, local payment methods, and business growth through technology.',
-//   pitch_problem: 'AfriCommerce is a digital platform designed to help small enterprises in Africa easily set up online stores, manage inventory, accept digital payments, and connect with a larger customer base. It provides tailored solutions for African businesses, focusing on ease of use, local payment methods, and business growth through technology.',
-//   pitch_solution: 'AfriCommerce is a digital platform designed to help small enterprises in Africa easily set up online stores, manage inventory, accept digital payments, and connect with a larger customer base. It provides tailored solutions for African businesses, focusing on ease of use, local payment methods, and business growth through technology.',
-//   pitch_market_opportunity: 'AfriCommerce is a digital platform designed to help small enterprises in Africa easily set up online stores, manage inventory, accept digital payments, and connect with a larger customer base. It provides tailored solutions for African businesses, focusing on ease of use, local payment methods, and business growth through technology.',
-//   pitch_traction: 'AfriCommerce is a digital platform designed to help small enterprises in Africa easily set up online stores, manage inventory, accept digital payments, and connect with a larger customer base. It provides tailored solutions for African businesses, focusing on ease of use, local payment methods, and business growth through technology.',
-// }
-
 const initialBusiness: Business = {
-  full_name: '',
-  name: '',
-  short_description: '',
-  location: '',
-  category: '',
-  total_amount: 0,
-  investors: 0,
-  minimum_investment: 0,
+  full_name: 'John Doe',
+  name: 'TEST-BIZ',
+  short_description: 'AfriCommerce is a digital platform designed to help small enterprises in Africa easily set up online stores, manage inventory, accept digital payments, and connect with a larger customer base.',
+  location: 'Lagos, Test',
+  category: 'E-Commerce',
+  total_amount: 12000,
+  investors: 21,
+  minimum_investment: 100,
   deadline: new Date(),
 
   // :::::::::::::::::: pitch
-  pitch_summary: '',
-  pitch_problem: '',
-  pitch_solution: '',
-  pitch_market_opportunity: '',
-  pitch_traction: '',
+  pitch_summary: 'AfriCommerce is a digital platform designed to help small enterprises in Africa easily set up online stores, businesses, focusing on ease of use, local payment methods, and business growth through technology.',
+  pitch_problem: 'AfriCommerce is a digital platform designed to help small enterprises in Africa easily set up online stores, businesses, focusing on ease of use, local payment methods, and business growth through technology.',
+  pitch_solution: 'AfriCommerce is a digital platform designed to help small enterprises in Africa easily set up online stores, businesses, focusing on ease of use, local payment methods, and business growth through technology.',
+  pitch_market_opportunity: 'AfriCommerce is a digital platform designed to help small enterprises in Africa easily set up online stores, businesses, focusing on ease of use, local payment methods, and business growth through technology.',
+  pitch_traction: 'AfriCommerce is a digital platform designed to help small enterprises in Africa easily set up online stores, businesses, focusing on ease of use, local payment methods, and business growth through technology.',
 }
+
+// const initialBusiness: Business = {
+//   full_name: '',
+//   name: '',
+//   short_description: '',
+//   location: '',
+//   category: '',
+//   total_amount: 0,
+//   investors: 0,
+//   minimum_investment: 0,
+//   deadline: new Date(),
+
+//   // :::::::::::::::::: pitch
+//   pitch_summary: '',
+//   pitch_problem: '',
+//   pitch_solution: '',
+//   pitch_market_opportunity: '',
+//   pitch_traction: '',
+// }
 
 const textAreaField = [
   {name: 'short_description', title: 'Short Description', placeholder: 'e.g AI-powered software as a service aimed at ...'},
@@ -213,12 +213,13 @@ export default function BusinessForm() {
   
     try {
       // :::::::::::::::::::: web3 section - transaction first
+      console.log('date unix: ', Math.floor(business?.deadline?.getTime() / 1000)); // cannot be today, the transaction is reading it after it's past
       const transaction = prepareContractCall({
         contract,
         method: "function createProject(uint256 minimumContribution, uint256 deadline, uint256 targetContribution, string projectTitle, string projectDesc)",
         params: [
           BigInt(business.minimum_investment),
-          BigInt(Math.floor(business?.deadline?.getTime() / 1000)),// to UNIX timestamp
+          BigInt(Math.floor(business?.deadline?.getTime() / 1000)),
           BigInt(business.total_amount),
           business.name,
           business.short_description
@@ -243,26 +244,38 @@ export default function BusinessForm() {
           };
   
           const backend_url = import.meta.env.VITE_APP_BACKEND_URL;
-          const response = await axios.post(`${backend_url}/businesses/`, jsonData, {
-            headers: { 'Content-Type': 'multipart/form-data' },
-            withCredentials: true,
-          });
-  
-          // :::::::::::::::::: Reset the business form data and show alert
-          setBusiness(initialBusiness);
-          setLogoFile(null);
-          setCoverImageFile(null);
-  
-          setAlert({
-            text: `Business ${response.data.name} created successfully and smart contract transaction sent`,
-            title: 'Success',
-          });
-  
-          // :::::::::::::: Redirect after 4s
-          const timeout = setTimeout(() => {
-            navigate('/business');
-          }, 5000);
-          return () => clearTimeout(timeout);
+          try {
+            const response = await axios.post(`${backend_url}/businesses/`, jsonData, {
+              headers: { 'Content-Type': 'multipart/form-data' },
+              withCredentials: true,
+            });
+          
+            // :::::::::::::::::: Reset the business form data and show alert
+            setBusiness(initialBusiness);
+            setLogoFile(null);
+            setCoverImageFile(null);
+          
+            setAlert({
+              text: `Business ${response.data.name} created successfully and smart contract transaction sent`,
+              title: 'Success',
+            });
+
+          } catch (error) {
+            console.error('Error creating business:', error);
+          
+            // Show an error alert or message to the user
+            // setAlert({
+            //   text: 'Failed to create the business. Please try again later.',
+            //   title: 'Error',
+            // });
+          } finally {
+            const timeout = setTimeout(() => {
+              navigate('/business');
+            }, 5000);
+            
+            // eslint-disable-next-line no-unsafe-finally
+            return () => clearTimeout(timeout);
+          }
         },
         onError: (error) => {
           setTransactionMessage("Transaction failed!");
@@ -450,6 +463,7 @@ export default function BusinessForm() {
                   id="deadline"
                   value={business.deadline.toISOString().split('T')[0]}
                   className='w-full py-[0.4rem] px-[0.875rem] ring-[1px] ring-neutral-300 text-neutral-500 font-[600] focus:ring-neutral-400 focus:shadow-[0_0_1px_5px_rgba(0,0,0,0.1)] rounded-[8px]'
+                  min={new Date(new Date().setDate(new Date().getDate() + 1)).toISOString().split('T')[0]}
                   onChange={handleDeadlineChange}
                   required
                 />
