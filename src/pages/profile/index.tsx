@@ -7,9 +7,9 @@ interface Business {
   id: number
   name: string
   short_description: string
-  amount_raised: number
+  total_amount: number
   investors: number
-  days_left: number
+  deadline: number
   is_completed: boolean
 }
 
@@ -78,7 +78,7 @@ export default function ProfilePage() {
                   <div className="grid grid-cols-2 gap-4 mb-4">
                     <div className="flex items-center">
                       <DollarSign className="text-green-500 mr-2" size={20} />
-                      <span className="text-sm">${business.amount_raised.toLocaleString()} raised</span>
+                      <span className="text-sm">${business.total_amount.toLocaleString()} raised</span>
                     </div>
                     <div className="flex items-center">
                       <Users className="text-blue-500 mr-2" size={20} />
@@ -86,7 +86,7 @@ export default function ProfilePage() {
                     </div>
                     <div className="flex items-center">
                       <Calendar className="text-purple-500 mr-2" size={20} />
-                      <span className="text-sm">{business.days_left} days left</span>
+                      <span className="text-sm">{business.deadline} days left</span>
                     </div>
                     <div className="flex items-center">
                       <CheckCircle className={`mr-2 ${business.is_completed ? 'text-green-500' : 'text-gray-400'}`} size={20} />

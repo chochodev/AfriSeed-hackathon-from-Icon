@@ -21,8 +21,8 @@ interface Business {
   location: string;
   category: string;
   minimum_investment: number;
-  days_left: number;
-  amount_raised: number;
+  deadline: number;
+  total_amount: number;
   investors: number;
   pitch_summary: string;
   pitch_problem: string;
@@ -148,7 +148,7 @@ export default function BusinessPage() {
                   <h3 className="text-xl font-bold">Funding Progress</h3>
                   <div className="flex items-center text-neutral-500">
                     <FaRegClock className="mr-1" />
-                    <span>{business.days_left} days left</span>
+                    <span>{business.deadline} days left</span>
                   </div>
                 </div>
 
@@ -158,7 +158,7 @@ export default function BusinessPage() {
                   </div>
                 </div>
 
-                <p className="text-3xl font-bold mb-2">${business.amount_raised.toLocaleString()}</p>
+                <p className="text-3xl font-bold mb-2">${business.total_amount.toLocaleString()}</p>
                 <p className="text-neutral-600 mb-6">raised of $250,000 goal</p>
                 <div className="grid grid-cols-2 gap-4 mb-6">
                   <div>

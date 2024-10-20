@@ -17,9 +17,9 @@ interface Business {
   location: string
   category: string
   minimum_investment: number
-  days_left: number
+  deadline: number
 
-  amount_raised: number
+  total_amount: number
   investors: number
 
   // ::::::::::::::: pitch

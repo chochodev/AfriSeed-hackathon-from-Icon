@@ -24,9 +24,9 @@ interface Business {
   location: string
   category: string
   minimum_investment: number
-  days_left: Date
+  deadline: Date
 
-  amount_raised: number
+  total_amount: number
   investors: number
 
   // ::::::::::::::: pitch
@@ -45,7 +45,7 @@ interface BusinessWithoutDate {
   category: string
   minimum_investment: number
 
-  amount_raised: number
+  total_amount: number
   investors: number
 
   // ::::::::::::::: pitch
@@ -61,10 +61,10 @@ interface BusinessWithoutDate {
 //   short_description: 'AfriCommerce is a digital platform designed to help small enterprises in Africa easily set up online stores, manage inventory, accept digital payments, and connect with a larger customer base.',
 //   location: 'Lagos, Test',
 //   category: 'E-Commerce',
-//   amount_raised: 12000,
+//   total_amount: 12000,
 //   investors: 21,
 //   minimum_investment: 100,
-//   days_left: 10,
+//   deadline: 10,
 
 //   // :::::::::::::::::: pitch
 //   pitch_summary: 'AfriCommerce is a digital platform designed to help small enterprises in Africa easily set up online stores, manage inventory, accept digital payments, and connect with a larger customer base. It provides tailored solutions for African businesses, focusing on ease of use, local payment methods, and business growth through technology.',
@@ -80,10 +80,10 @@ const initialBusiness: Business = {
   short_description: '',
   location: '',
   category: '',
-  amount_raised: 0,
+  total_amount: 0,
   investors: 0,
   minimum_investment: 0,
-  days_left: new Date(),
+  deadline: new Date(),
 
   // :::::::::::::::::: pitch
   pitch_summary: '',
@@ -103,7 +103,7 @@ const textAreaField = [
 ];
 
 const numberField = [
-  { name: 'amount_raised', title: 'Amount Raised ($)' },
+  { name: 'total_amount', title: 'Amount Raised ($)' },
   { name: 'investors', title: 'Number of Investors' },
   { name: 'minimum_investment', title: 'Minimum Investment ($)' }
 ]
@@ -146,7 +146,7 @@ export default function BusinessForm() {
   const handleDeadlineChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedDate = new Date(e.target.value);
     // const today = new Date();
-    setBusiness(prev => ({ ...prev, days_left: selectedDate }));
+    setBusiness(prev => ({ ...prev, deadline: selectedDate }));
   }
 
   // :::::::::::::::::::: image function
@@ -218,8 +218,8 @@ export default function BusinessForm() {
         method: "function createProject(uint256 minimumContribution, uint256 deadline, uint256 targetContribution, string projectTitle, string projectDesc)",
         params: [
           BigInt(business.minimum_investment),
-          BigInt(Math.floor(business?.days_left?.getTime() / 1000)),// to UNIX timestamp
-          BigInt(business.amount_raised),
+          BigInt(Math.floor(business?.deadline?.getTime() / 1000)),// to UNIX timestamp
+          BigInt(business.total_amount),
           business.name,
           business.short_description
         ]
@@ -443,12 +443,12 @@ export default function BusinessForm() {
               ))}
 
               <div className="space-y-1">
-                <label htmlFor="days_left" className='text-[0.875rem] font-[600] text-neutral-600 uppercase'>Deadline</label>
+                <label htmlFor="deadline" className='text-[0.875rem] font-[600] text-neutral-600 uppercase'>Deadline</label>
                 {/* <br/> */}
                 <input
                   type="date"
-                  id="days_left"
-                  value={business.days_left.toISOString().split('T')[0]}
+                  id="deadline"
+                  value={business.deadline.toISOString().split('T')[0]}
                   className='w-full py-[0.4rem] px-[0.875rem] ring-[1px] ring-neutral-300 text-neutral-500 font-[600] focus:ring-neutral-400 focus:shadow-[0_0_1px_5px_rgba(0,0,0,0.1)] rounded-[8px]'
                   onChange={handleDeadlineChange}
                   required
