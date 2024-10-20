@@ -194,16 +194,22 @@ export default function BusinessForm() {
       setBusiness(initialBusiness);
       setLogoFile(null);
       setCoverImageFile(null);
-      setAlert({ text: `Business ${response.data.name} created successfully and smart contract transaction sent`, title: 'Success'});
-
-
+      
+      
       // ::::::::::::: redirects after 4s 
-      // const timeout = setTimeout(()=>navigate('/business'), 4000);
+      if (status === 'success') {
+        const timeout = setTimeout(()=>navigate('/business'), 4000);
+        setAlert({ 
+          text: `Business ${response.data.name} created successfully and smart contract transaction sent`, 
+          title: 'Success'
+        });
+        
+        return () => clearTimeout(timeout);
+      }
 
       // console.log(`Business ${response.data.name} created successfully`);
       
       // ::::::::::::: clean up after unmount
-      // return () => clearTimeout(timeout);
 
     } catch (error) {
       console.error('Error creating business:', error);
