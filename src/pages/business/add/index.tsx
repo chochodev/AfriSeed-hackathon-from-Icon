@@ -15,7 +15,7 @@ import { prepareContractCall, getContract } from "thirdweb";
 import { defineChain } from "thirdweb/chains";
 import { CONTRACT_ADDRESS, client } from '$/lib/utils';
 import MultiStepLoader from '$/components/multiStepLoader';
-
+import DeadlineDatePicker from '$/components/datePicker';
 
 
 interface Business {
@@ -25,7 +25,26 @@ interface Business {
   location: string
   category: string
   minimum_investment: number
-  days_left: number
+  days_left: Date
+
+  amount_raised: number
+  investors: number
+
+  // ::::::::::::::: pitch
+  pitch_summary: string
+  pitch_problem: string
+  pitch_solution: string
+  pitch_market_opportunity: string
+  pitch_traction: string
+}
+
+interface BusinessWithoutDate {
+  full_name: string
+  name: string
+  short_description: string
+  location: string
+  category: string
+  minimum_investment: number
 
   amount_raised: number
   investors: number
@@ -65,7 +84,7 @@ const initialBusiness: Business = {
   amount_raised: 0,
   investors: 0,
   minimum_investment: 0,
-  days_left: 0,
+  days_left: new Date(),
 
   // :::::::::::::::::: pitch
   pitch_summary: '',
@@ -87,8 +106,7 @@ const textAreaField = [
 const numberField = [
   { name: 'amount_raised', title: 'Amount Raised ($)' },
   { name: 'investors', title: 'Number of Investors' },
-  { name: 'minimum_investment', title: 'Minimum Investment ($)' },
-  { name: 'days_left', title: 'Days Left' }
+  { name: 'minimum_investment', title: 'Minimum Investment ($)' }
 ]
 
 export default function BusinessForm() {
@@ -124,6 +142,10 @@ export default function BusinessForm() {
   const handleNumberChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target
     setBusiness(prev => ({ ...prev, [name]: parseFloat(value) || 0 }))
+  }
+
+  const handleDeadlineChange = (date: Date | null) => {
+    setBusiness(prev => ({ ...prev, deadline: date }))
   }
 
   // :::::::::::::::::::: image function
@@ -195,7 +217,7 @@ export default function BusinessForm() {
         method: "function createProject(uint256 minimumContribution, uint256 deadline, uint256 targetContribution, string projectTitle, string projectDesc)",
         params: [
           BigInt(business.minimum_investment),
-          BigInt(Math.floor(Date.now() / 1000) + business.days_left * 86400),// to UNIX timestamp
+          BigInt(Math.floor(business?.days_left?.getTime() / 1000)),// to UNIX timestamp
           BigInt(business.amount_raised),
           business.name,
           business.short_description
@@ -366,7 +388,7 @@ export default function BusinessForm() {
                 <Input
                   id={info.name}
                   name={info.name}
-                  value={business[info.name as keyof Business] || ''}
+                  value={business[info.name as keyof BusinessWithoutDate] || ''}
                   onChange={handleInputChange}
                   placeholder={info.placeholder}
                   className={`${i > 0 && 'min-h-[5rem]'}`}
@@ -412,12 +434,20 @@ export default function BusinessForm() {
                     type="number"
                     id={field.name}
                     name={field.name}
-                    value={business[field.name as keyof Business] || 0}
+                    value={business[field.name as keyof BusinessWithoutDate] || 0}
                     onChange={handleNumberChange}
                     required
                   />
                 </div>
               ))}
+
+            <div className="space-y-2">
+              <label htmlFor="days_left">Deadline</label>
+              <DeadlineDatePicker
+                selectedDate={business.days_left}
+                onChange={handleDeadlineChange}
+              />
+            </div>
             </div>
 
             {/* ::::::::::::::::::::: SUBMIT BUTTON */}
