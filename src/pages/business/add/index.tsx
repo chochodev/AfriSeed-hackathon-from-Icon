@@ -271,12 +271,6 @@ export default function BusinessForm() {
       throw new Error('Transaction failed');
     }
   }, [status])
-  
-  // const isLoading = status === 'pending';
-  // const isSuccess = status === 'success';
-  // const isError = status === 'error';
-
-  // console.log(isSuccess, isError);
 
   return (
     <MainLayout>
