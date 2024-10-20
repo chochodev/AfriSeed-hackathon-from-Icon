@@ -71,6 +71,22 @@ const initialBusiness: Business = {
 //   pitch_traction: '',
 // }
 
+const textAreaField = [
+  {name: 'short_description', title: 'Short Description', placeholder: 'e.g AI-powered software as a service aimed at ...'},
+  {name: 'pitch_summary', title: 'Pitch Summary', placeholder: 'e.g In summary, this aims to not only empower users but improve the quality of ...'},
+  {name: 'pitch_problem', title: 'Pitch Problem', placeholder: 'e.g Many businesses struggle to effectively utilize their data due to lack of expertise ...'},
+  {name: 'pitch_solution', title: 'Pitch Solution', placeholder: 'e.g Our AI-powered platform democratizes access to advanced data ...'},
+  {name: 'pitch_market_opportunity', title: 'Pitch Market Opportunity', placeholder: 'e.g The global AI market is projected to grow from $387.45 ...'},
+  {name: 'pitch_traction', title: 'Pitch Traction', placeholder: 'e.g In our first year, we&apos;ve onboarded 50+ clients across ...'},
+];
+
+const numberField = [
+  { name: 'amount_raised', title: 'Amount Raised ($)' },
+  { name: 'investors', title: 'Number of Investors' },
+  { name: 'minimum_investment', title: 'Minimum Investment ($)' },
+  { name: 'days_left', title: 'Days Left' }
+]
+
 export default function BusinessForm() {
   const [business, setBusiness] = useState<Business>(initialBusiness);
   const [logoFile, setLogoFile] = useState<File | null>(null);
@@ -136,9 +152,21 @@ export default function BusinessForm() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
+    // :::::::::::::: image fields requirement
+    if (!logoFile || !coverImageFile) {
+      setAlert({ 
+        text: 'Logo and Cover image are required before submission.', 
+        title: 'Missing Files' 
+      });
+      return;
+    }
+
     // :::::::::::::: return if wallet is not connected
     if (connectionStatus !== 'connected' ) {
-      setAlert({ text: 'Please connect your wallet before submitting.', title: 'Wallet Not Connected' });
+      setAlert({ 
+        text: 'Please connect your wallet before submission.', 
+        title: 'Wallet Not Connected' 
+      });
       return;
     }
   
@@ -256,6 +284,7 @@ export default function BusinessForm() {
             />
           </div>
 
+          {/* ::::::::::::::::: business logo */}
           <div className="space-y-2">
             <label className='text-[0.875rem] font-[600] text-neutral-600 uppercase'>Business Logo</label>
             <div {...getLogoRootProps()} className="border-2 border-dashed border-gray-300 rounded-lg p-6 cursor-pointer hover:border-neutral-500">
@@ -271,6 +300,7 @@ export default function BusinessForm() {
             </div>
           </div>
 
+          {/* ::::::::::::::::: business cover image */}
           <div className="space-y-2">
             <label className='text-[0.875rem] font-[600] text-neutral-600 uppercase'>Cover Image</label>
             <div {...getCoverRootProps()} className="border-2 border-dashed border-gray-300 rounded-lg p-6 cursor-pointer hover:border-neutral-500">
@@ -286,88 +316,20 @@ export default function BusinessForm() {
             </div>
           </div>
 
-          <div className="space-y-2">
-            <label className='text-[0.875rem] font-[600] text-neutral-600 uppercase' htmlFor="short_description">Short Description</label>
-            <Input
-              id="short_description"
-              name="short_description"
-              value={business.short_description}
-              onChange={handleInputChange}
-              placeholder='e.g AI-powered software as a service aimed at ...'
-              required
-            />
-          </div>
-
-          {/* :::::::::::::::: SUMMARY INFORMATION */}
-          <div className="space-y-2">
-            <label className='text-[0.875rem] font-[600] text-neutral-600 uppercase' htmlFor="pitch_summary">Pitch Summary</label>
-            <Input
-              id="pitch_summary"
-              name="pitch_summary"
-              type='textarea'
-              value={business.pitch_summary}
-              onChange={handleInputChange}
-              placeholder='e.g In summary, this aims to not only empower users but improve the quality of ...'
-              className='min-h-[5rem]'
-              required
-            />
-          </div>
-          
-          <div className="space-y-2">
-            <label className='text-[0.875rem] font-[600] text-neutral-600 uppercase' htmlFor="pitch_problem">Pitch Problem</label>
-            <Input
-              id="pitch_problem"
-              name="pitch_problem"
-              type='textarea'
-              value={business.pitch_problem}
-              onChange={handleInputChange}
-              placeholder='e.g Many businesses struggle to effectively utilize their data due to lack of expertise ...'
-              className='min-h-[5rem]'
-              required
-            />
-          </div>
-          
-          <div className="space-y-2">
-            <label className='text-[0.875rem] font-[600] text-neutral-600 uppercase' htmlFor="pitch_solution">Pitch Solution</label>
-            <Input
-              id="pitch_solution"
-              name="pitch_solution"
-              type='textarea'
-              value={business.pitch_solution}
-              onChange={handleInputChange}
-              placeholder='e.g Our AI-powered platform democratizes access to advanced data ...'
-              className='min-h-[5rem]'
-              required
-            />
-          </div>
-          
-          <div className="space-y-2">
-            <label className='text-[0.875rem] font-[600] text-neutral-600 uppercase' htmlFor="pitch_market_opportunity">Pitch Market Opportunity</label>
-            <Input
-              id="pitch_market_opportunity"
-              name="pitch_market_opportunity"
-              type='textarea'
-              value={business.pitch_market_opportunity}
-              onChange={handleInputChange}
-              placeholder='e.g The global AI market is projected to grow from $387.45 ...'
-              className='min-h-[5rem]'
-              required
-            />
-          </div>
-          
-          <div className="space-y-2">
-            <label className='text-[0.875rem] font-[600] text-neutral-600 uppercase' htmlFor="pitch_traction">Pitch Traction</label>
-            <Input
-              id="pitch_traction"
-              name="pitch_traction"
-              type='textarea'
-              value={business.pitch_traction}
-              onChange={handleInputChange}
-              placeholder='e.g In our first year, we&apos;ve onboarded 50+ clients across ...'
-              className='min-h-[5rem]'
-              required
-            />
-          </div>
+          {textAreaField.map((info, i) => (
+            <div key={i} className="space-y-2">
+              <label className='text-[0.875rem] font-[600] text-neutral-600 uppercase' htmlFor={info.name}>{info.title}</label>
+              <Input
+                id={info.name}
+                name={info.name}
+                value={business[info.name as keyof Business] || ''}
+                onChange={handleInputChange}
+                placeholder={info.placeholder}
+                className={`${i > 0 && 'min-h-[5rem]'}`}
+                required
+              />
+            </div>
+          ))}
 
           {/* ::::::::::::::::::: LOCATION */}
           <div className="space-y-2">
@@ -397,53 +359,21 @@ export default function BusinessForm() {
 
           {/* ::::::::::::::::::: MONEY */}
           <div className="grid grid-cols-1 smd:grid-cols-2 gap-4">
-            <div className="flex flex-col space-y-2">
-              <label className='text-[0.875rem] font-[600] text-neutral-600 uppercase' htmlFor="amount_raised">Amount Raised ($)</label>
-              <Input
-                type="number"
-                id="amount_raised"
-                name="amount_raised"
-                value={business.amount_raised}
-                onChange={handleNumberChange}
-                required
-              />
-            </div>
-
-            <div className="flex flex-col space-y-2">
-              <label className='text-[0.875rem] font-[600] text-neutral-600 uppercase' htmlFor="investors">Number of Investors</label>
-              <Input
-                type="number"
-                id="investors"
-                name="investors"
-                value={business.investors}
-                onChange={handleNumberChange}
-                required
-              />
-            </div>
-
-            <div className="flex flex-col space-y-2">
-              <label className='text-[0.875rem] font-[600] text-neutral-600 uppercase' htmlFor="minimum_investment">Minimum Investment ($)</label>
-              <Input
-                type="number"
-                id="minimum_investment"
-                name="minimum_investment"
-                value={business.minimum_investment}
-                onChange={handleNumberChange}
-                required
-              />
-            </div>
-
-            <div className="flex flex-col space-y-2">
-              <label className='text-[0.875rem] font-[600] text-neutral-600 uppercase' htmlFor="days_left">Days Left</label>
-              <Input
-                type="number"
-                id="days_left"
-                name="days_left"
-                value={business.days_left}
-                onChange={handleNumberChange}
-                required
-              />
-            </div>
+            {numberField.map((field, i) => (
+              <div key={i} className="flex flex-col space-y-2">
+                <label className='text-[0.875rem] font-[600] text-neutral-600 uppercase' htmlFor={field.name}>
+                  {field.title}
+                </label>
+                <Input
+                  type="number"
+                  id={field.name}
+                  name={field.name}
+                  value={business[field.name as keyof Business] || 0}
+                  onChange={handleNumberChange}
+                  required
+                />
+              </div>
+            ))}
           </div>
 
           {/* ::::::::::::::::::::: SUBMIT BUTTON */}
